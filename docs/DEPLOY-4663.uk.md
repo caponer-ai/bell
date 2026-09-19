@@ -23,6 +23,9 @@ forge build --sizes                                               # Bell runtime
 # симуляція, нічого не відправляє
 forge script script/Deploy.s.sol --rpc-url robinhood
 
+# один раз: покласти ключ у keystore Foundry (запитає ключ і пароль інтерактивно)
+cast wallet import bell-deployer --interactive
+
 # бойовий деплой (ключ з keystore, не з env)
 forge script script/Deploy.s.sol --rpc-url robinhood --broadcast --account bell-deployer
 ```
