@@ -7,3 +7,4 @@ node_modules/
 *.log
 poster/state/
 .ruff_cache/
+replay_settlements.json
