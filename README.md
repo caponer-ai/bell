@@ -104,6 +104,24 @@ What Bell is **not**: it is not the Nasdaq Opening Cross and not an official exc
 
 **Which rung will hold in practice is not yet measured, and we say so.** In the 38 distinct signed reports we hold, the mid (`lastSeenTimestampNs`) trails the report's own `observationsTimestamp` by a median of 2.57 s (min -0.06 s, max 5.25 s, 36 of 38 lags positive; own decode of `index.json`, 2026-09-19). A rung is a one-second target, so a report covering the bell second will usually carry a mid last seen a few seconds *before* the bell, which the `l >= O` rule proves out, moving the reference one rung up. The limit of that inference: **all 38 reports are mid-session** (obs from 2026-09-08 15:10:00 UTC to 2026-09-09 18:00:00 UTC, one poster, a 30-minute cadence), so not one of them sits on an opening rung, and the quiet-hour lag does not have to equal the lag in the first seconds after the bell, when quotes update fastest. The test that settles it is a Data Streams subscription that can request 13:30:00 directly; until then this is an observation, not a property of the open.
 
+## The consumer: SettleMini
+
+`src/SettleMini.sol` is one trade between two parties, escrowed in USDG (Paxos USDG on this chain is
+`0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168`, 6 decimals). The payoff is the simplest one that can exist,
+long wins at or above the strike, because the payoff is not the point. Three things are:
+
+- money moves only when `checkSettle` answers ALLOW, which happens only when the ladder for that trading
+  day is FINAL;
+- the `Settled` event carries the **receipt id of the DON report** behind the price, so whoever was paid
+  can be told exactly which signed statement paid them;
+- `refund()` is the mirror: if the session never resolves, the contract does not invent a price and does
+  not hold the stakes hostage. Both sides get their money back after the deadline. A silent poster can
+  cancel a settlement; it can never move one.
+
+Nine tests cover both directions of the payoff, the exact-strike case, settling while the fixing is still
+pending, the withholding case ending in a refund, refunds refused when the session did resolve, and double
+settlement.
+
 ## Prior art, stated by us
 
 - **Pyth Pro is deployed on Robinhood Chain** (proxy `0xACeA761c27A909d4D3895128EBe6370FDE2dF481`, docs.pyth.network contract addresses; onchain 2026-09-18: ERC-1967 proxy to a 7,351-byte implementation). Whether its US equities plan ($5,000 per month, pyth.network blog 2026-06-12) is purchasable for 4663 we did not verify. Pyth Core, and with it `parsePriceFeedUpdatesUnique` (first update after a given time), is not listed for 4663.
@@ -115,8 +133,10 @@ Bell's claim is therefore narrow: DON-signed session status and a calendar-fixed
 ## Tests
 
 ```
-forge test                                                        # mock proxy: 65 tests
+forge test                                                        # mock proxy: 74 tests
 forge test --fork-url robinhood --match-contract "VerifyFixture|BellRobustnessFork" -vv   # real proxy, real signed reports: 6 tests
+python script/replay_prediction_market.py                         # the audit, from public data, no key
+python poster/poster.py --dry-run                                 # the poster's plan, no credentials
 ```
 
 `test/Bell.t.sol` follows the numbered list in the spec: replay, expired report, status-2 observation before the boundary, late poster and backfill anchored to the boundary, same-rung conflict, status 0 and 4, halt via `lastSeenTimestampNs`, early close (2026-11-27), sessions not merging without overnight reports, immutability after the deadline, exact deadline boundary, wrong schema. `test/BellLadder.t.sol` is the adversarial set: withholding rung 0, proof chains, order independence, the two-second mainnet window shape, wide windows, conflicts at the same rung, a gap in the chain, the full ladder to rung 7, and the CLOSE mirror. `test/BellCorporateAction.t.sol` covers the multiplier snapshot and the issuer pause.
