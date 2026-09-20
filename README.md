@@ -6,6 +6,29 @@ Stock tokens trade 24/7. The equity behind them trades 6.5 hours a day. Every pr
 
 > Status: buildathon work in progress (Arbitrum Open House Singapore, Sept 14 to Oct 4, 2026). Not audited. Read the code, run the tests, form your own view.
 
+## Deployed
+
+| | |
+|---|---|
+| **Bell** | `0x88a5a0414c9fd615201814ddbec4e4d9e4d283d0` |
+| Chain | Robinhood Chain mainnet, chainId 4663 |
+| Deploy tx | `0xbec3cb1a8813dadf0aa52e66f87d79ecb4dd487b95413fdf2062286a6187c540`, block 68,238,358 |
+| Verifier it reads | `0xcE73c8ad08CBDEaCa6078BF0627C8fe0a9a536E7` (official Chainlink Data Streams VerifierProxy) |
+| Owner | none, and no upgrade path. The calendar is compiled in; `POLICY_VERSION` 2, `CALENDAR_VERSION` 1 |
+| Feed bindings | none. Every check works; `tokenizedReference` returns 0 until a bound instance is deployed against verified ERC-8056 addresses |
+
+Read it yourself, no wallet needed:
+
+```bash
+cast call 0x88a5a0414c9fd615201814ddbec4e4d9e4d283d0 "digestActive(bytes32)(bool)"   0x00094baebfda9b87680d8e59aa20a3e565126640ee7caeab3cd965e5568b17ee --rpc-url https://rpc.mainnet.chain.robinhood.com/
+# true: the DON config our fixtures were signed under is still routed by the proxy
+
+cast call 0x88a5a0414c9fd615201814ddbec4e4d9e4d283d0 "rungTarget(uint32,bool,uint8)(uint64)" 20260922 false 0 --rpc-url https://rpc.mainnet.chain.robinhood.com/
+# 1790083800 = 2026-09-22 13:30:00 UTC, the bell. Weekends and NYSE holidays return 0.
+```
+
+Until a poster feeds it, `checkSettle` answers `REJECT / REFERENCE_UNRESOLVED` for every day, which is the honest answer, not a failure: the contract refuses to hand out a reference it has no DON evidence for.
+
 ## The problem, measured
 
 All measurements are ours unless stated; sources and limits are next to each number. They describe *when* prices move and *what* the feeds publish; they are not causal claims about why.
