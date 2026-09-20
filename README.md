@@ -29,6 +29,44 @@ cast call 0x88a5a0414c9fd615201814ddbec4e4d9e4d283d0 "rungTarget(uint32,bool,uin
 
 Until a poster feeds it, `checkSettle` answers `REJECT / REFERENCE_UNRESOLVED` for every day, which is the honest answer, not a failure: the contract refuses to hand out a reference it has no DON evidence for.
 
+## Already live on mainnet
+
+The contract is not waiting for a subscription to be useful. Two **real DON-signed reports** we extracted
+from mainnet calldata were posted into it on 2026-09-21, verified by the official Chainlink verifier, and
+turned into receipts:
+
+| | |
+|---|---|
+| AAPL report, obs 2026-09-09 18:00:00 UTC | tx `0x3a35de5a3aa310ccdae720ed75081f485763f6c64af33064b6272428464f25bd`, block 68,272,266, 344,350 gas |
+| SPY report, same second | tx `0x9bf9d7e68af55084a3a1738d3cae1d35a8eab85fbd09f80d6485525181ebf7f1`, block 68,272,301, 344,398 gas |
+| Receipt id of the AAPL report | `0xb8584c6f20c0bb4bd8e04048867d4cf5b2eac4da7131a720c4db1a18181e88c2` |
+| Stored observation | mid 313.25735, bid 313.2128, ask 313.31, `marketStatus` 2, expires 2026-10-09 |
+
+And then the part that matters. Ask the contract whether anyone may act on that price right now:
+
+```bash
+cast call 0x88a5a0414c9fd615201814ddbec4e4d9e4d283d0 "checkLive(bytes32)(uint8,uint8)"   0x000bbd87a23775b4c11092ae9a1fc7b3393636ae1dbb9f1ef460f845c0f4cff1 --rpc-url https://rpc.mainnet.chain.robinhood.com/
+# 1 3  =  WAIT / OBS_STALE
+```
+
+A DON signature is not permission. The report is authentic, the receipt is permanent, and the answer is
+still no, because the observation is days old. That is the whole product in one call, and it is running
+now, with real signed data, on the chain the buildathon is about.
+
+What is **not** live yet: the ladder has never resolved on a real opening or closing bell, because every
+report we hold is mid-session. That needs a paid Data Streams subscription, and the README will say what
+the live day showed, whichever way it goes.
+
+## The audit: what the chain's only live stock market settles on
+
+We pointed the same question at somebody else's contract and wrote the answer down in
+[`docs/REPLAY.md`](docs/REPLAY.md), with a script that reproduces it from public data in one command.
+Short version: of 30 settlements on the chain's live parimutuel stock market, **28 read the same feed
+round on both sides**, so a tie-break rule decided the outcome rather than any price movement; the price
+was a median of 12.2 hours old at the lock call, up to 71.6 hours; and 28 of the 30 had at least one leg
+outside regular NYSE hours. Stated with the same honesty: the total ever staked in those markets is
+**0.009 ETH**, so nobody was hurt. The defect is mechanical, not yet expensive.
+
 ## The problem, measured
 
 All measurements are ours unless stated; sources and limits are next to each number. They describe *when* prices move and *what* the feeds publish; they are not causal claims about why.
