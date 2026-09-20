@@ -85,6 +85,11 @@ SEL_AGG = keccak("aggregator()")[:10]
 SEL_MARKET = keccak("markets(uint256)")[:10]
 TOPIC_LOCKED = keccak("MarketLocked(uint256,int256)")
 TOPIC_SETTLED = keccak("MarketSettled(uint256,int256,uint8)")
+# The deployed bytecode is an earlier revision than the repo's current file: it emits BetPlaced
+# without the isAgentBet flag. Both shapes are accepted; MarketCreated, MarketLocked and
+# MarketSettled match the published source exactly, which is where the quoted settle logic lives.
+TOPIC_BET = keccak("BetPlaced(uint256,address,uint8,uint256)")
+TOPIC_BET_AGENT = keccak("BetPlaced(uint256,address,uint8,uint256,bool)")
 
 
 def words(hexstr):
@@ -115,7 +120,12 @@ _rounds: dict[str, dict] = {}
 
 
 def round_at(proxy, ts):
-    """The feed round that was current at `ts` (largest updatedAt <= ts)."""
+    """The feed round that was current at `ts` (largest updatedAt <= ts).
+
+    Assumes the proxy has stayed on one aggregator phase, which is true for these feeds today
+    (every roundId we read carries phase 1). If a feed is ever migrated to a new aggregator, the
+    rounds of the older phase must be walked with that phase id instead.
+    """
     if proxy not in _rounds:
         latest = round_of(call(proxy, SEL_LATEST))
         _rounds[proxy] = {
@@ -242,12 +252,14 @@ def main():
         events: dict[int, dict] = {}
         for lg in logs:
             topic = lg["topics"][0]
-            if topic not in (TOPIC_LOCKED, TOPIC_SETTLED):
+            if topic not in (TOPIC_LOCKED, TOPIC_SETTLED, TOPIC_BET, TOPIC_BET_AGENT):
                 continue
             mid = int(lg["topics"][1], 16)
             e = events.setdefault(mid, {})
             bn = int(lg["blockNumber"], 16)
-            if topic == TOPIC_LOCKED:
+            if topic in (TOPIC_BET, TOPIC_BET_AGENT):
+                e["bets_total"] = e.get("bets_total", 0) + words(lg["data"])[1]
+            elif topic == TOPIC_LOCKED:
                 e["lock_price"], e["lock_block"] = signed(words(lg["data"])[0]), bn
             else:
                 w = words(lg["data"])
@@ -260,6 +272,14 @@ def main():
             if "lock_price" not in e or "settle_price" not in e:
                 continue
             info = read_market(contract, mid)
+            # The struct is decoded positionally, so check it against an independent source: the pools
+            # in markets(id) must equal the sum of that market's BetPlaced events. A layout drift in
+            # their contract would otherwise flip pools or winners silently.
+            if info["bull"] + info["bear"] != e.get("bets_total", 0):
+                raise SystemExit(
+                    f"layout check failed for {tag} market {mid}: struct pools "
+                    f"{info['bull'] + info['bear']} != sum of BetPlaced {e.get('bets_total', 0)}"
+                )
             proxy = "0x" + call(info["feed"], SEL_AGG)[-40:]
             lock_ts, settle_ts = (
                 block_time(e["lock_block"]),
@@ -317,11 +337,13 @@ def main():
         if r["lock_session"] != "REGULAR" or r["settle_session"] != "REGULAR"
     ]
     ages = sorted(r["price_age_h"] for r in rows if r["price_age_h"] is not None)
+    n_ages = len(ages)
+    median = (ages[n_ages // 2 - 1] + ages[n_ages // 2]) / 2 if n_ages % 2 == 0 else ages[n_ages // 2]
     print(f"\nsettlements: {n}")
     print(f"  decided by the tie rule (one feed round on both sides): {len(same)}")
     print(f"  at least one leg outside the regular NYSE session:      {len(closed)}")
     print(
-        f"  price age at lock: median {ages[len(ages) // 2]}h, max {ages[-1]}h, min {ages[0]}h"
+        f"  price age at lock: median {median:.2f}h, max {ages[-1]}h, min {ages[0]}h"
     )
     print(
         f"  total staked across every market: {sum(r['pool_wei'] for r in rows) / 1e18:.5f} ETH"

@@ -3,8 +3,13 @@
 Reproduce it yourself, no API key and no archive node:
 
 ```bash
+pip install pycryptodome        # the only dependency: keccak for event topics
 python script/replay_prediction_market.py
 ```
+
+The table below is a snapshot taken 2026-09-21 at chain head 68,272,000 and is committed as
+[`docs/replay_settlements.json`](replay_settlements.json), so a later run that finds new settlements can be
+compared against it rather than silently replacing it.
 
 ## The target
 
@@ -25,6 +30,19 @@ Two reads of a push feed, whenever the operator calls them, and a tie pays BULL.
 itself: *"a Chainlink round that hasn't updated yet between lockMarket() and settleMarket() can produce
 openPrice == closePrice"* and *"BULL wins by default, there is no REFUND market state"*.
 
+## What we checked about the code we quote
+
+The deployed bytecode is **not** byte-identical to the repo's current file: on chain the bet event is
+`BetPlaced(uint256,address,uint8,uint256)`, while the published `StockPredictionMarketV2.sol` declares it
+with a trailing `isAgentBet` flag. So the deployment is an earlier revision. What we quote above is
+unaffected: `MarketCreated(uint256,string,address)`, `MarketLocked(uint256,int256)` and
+`MarketSettled(uint256,int256,uint8)` match the published source exactly, and those three carry the
+settle logic this audit is about.
+
+The script decodes `markets(uint256)` positionally, so it checks itself: for every market the pools it
+reads from the struct must equal the sum of that market's bet events. A layout drift would stop the run
+with a named error rather than quietly flip a pool or a winner.
+
 ## What we measured
 
 Equal prices prove nothing on their own: a flat market gives the same picture. The test that separates
@@ -39,7 +57,7 @@ proxy and resolved which round was current at the lock call and at the settle ca
 | Same feed round on both sides: the two snapshots read one number, so the tie rule decided the market | **28** |
 | Price actually moved between the two calls | 2 |
 | At least one leg outside the regular NYSE session (holiday, weekend, 02:37-04:38 UTC pre-market) | **28** |
-| Age of the price at the lock call | median **12.2 h**, max **71.6 h**, min 4.4 min |
+| Age of the price at the lock call | median **11.9 h**, max **71.6 h**, min 4.2 min |
 | Total ever staked across all 30 markets | **0.009 ETH** |
 | Markets with any bet at all | 4 of 30 |
 
@@ -60,9 +78,13 @@ Bell is not a drop-in fix for that contract, and pretending otherwise would be d
 `latestRoundData`, Bell speaks a different interface. What Bell gives a settlement contract is the two
 answers the push feed cannot give:
 
-- `checkLive(feedId)` returns `WAIT / OBS_STALE` or `WAIT / OUTSIDE_SESSION` instead of a number, so a
-  settlement cannot run on a 71-hour-old price or on a closed exchange. Every one of the 28 would have
-  been refused rather than silently resolved.
+- `checkLive(feedId)` returns a reason instead of a number when the data is not fit to act on. Stated
+  precisely, because the reasons differ: 28 of the 30 settlements ran while the exchange was closed on at
+  least one leg (`OUTSIDE_SESSION`), and the remaining 2 ran inside regular hours but on observations 4
+  and 8 minutes old, well past
+  Bell's 30-second admissibility bound (`OBS_STALE`), and in every one of the 30 there was no fresh
+  signed report at all, which is `NO_DATA`. Bell hands out no price in any of the 30; what changes
+  between them is which word it answers with.
 - `checkSettle(feedId, tradingDate, isClose)` returns the session reference price only once the ladder
   is FINAL, with the receipt id of the DON report it came from, so the "open" and the "close" are fixed
   by the calendar rather than by when an operator clicks.
