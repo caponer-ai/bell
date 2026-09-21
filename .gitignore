@@ -10,3 +10,4 @@ poster/state/
 replay_settlements.json
 keeper-*.log
 keeper-*.err
+.addresses

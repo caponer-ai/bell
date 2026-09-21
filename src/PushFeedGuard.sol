@@ -62,6 +62,10 @@ contract PushFeedGuard {
         if (a <= 0) return (Verdict.REJECT, Reason.BAD_PRICE, a, u);
 
         uint64 t = uint64(block.timestamp);
+        // A price stamped in the future is not a fresher price, it is a broken round: an arbitrary
+        // address can claim any updatedAt, and without this an attacker-supplied "feed" would look
+        // permanently fresh to every consumer that trusts this guard.
+        if (u > uint256(t) + 2) return (Verdict.REJECT, Reason.ROUND_INCOMPLETE, a, u);
         SessionCalendar.Session memory s = SessionCalendar.sessionAt(t);
         if (!s.exists) return (Verdict.REJECT, Reason.NO_SESSION, a, u);
         if (t < s.openUtc || t >= s.closeUtc) return (Verdict.REJECT, Reason.OUTSIDE_SESSION, a, u);

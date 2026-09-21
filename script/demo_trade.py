@@ -19,7 +19,7 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 RPC = "https://rpc.mainnet.chain.robinhood.com/"
-TRADE = "0x5338523cB4629b460c9e21532d9e4F0c7Fc9648C"
+TRADE = "0x52a0E0d3BD4729BCD622fed437EDb428835658Ac"
 USDG = "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168"
 STAKE = 1_000_000  # 1 USDG, six decimals
 

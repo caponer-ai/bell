@@ -68,6 +68,7 @@ contract SettleOnMarkTest is Test {
     int192 constant STRIKE = 33500000000; // 335.00, 8 decimals like the feed
     uint256 constant STAKE = 1_000_000; // 1 USDG a side
     uint64 constant MAX_AGE = 900;
+    uint64 constant MARK_WINDOW = 120; // the close mark must sit within two minutes of the bell
 
     address constant LONG = address(0xA11CE);
     address constant SHORT = address(0xB0B);
@@ -78,7 +79,17 @@ contract SettleOnMarkTest is Test {
         feed = new Aggregator(33553000000, O + 60);
         usdg = new USDGToken();
         trade = new SettleOnMark(
-            sessionLog, IERC20(address(usdg)), address(feed), DAY, STRIKE, MAX_AGE, STAKE, C + 3600, LONG, SHORT
+            sessionLog,
+            IERC20(address(usdg)),
+            address(feed),
+            DAY,
+            STRIKE,
+            MAX_AGE,
+            MARK_WINDOW,
+            STAKE,
+            C + 3600,
+            LONG,
+            SHORT
         );
         usdg.mint(LONG, STAKE);
         usdg.mint(SHORT, STAKE);
@@ -154,7 +165,17 @@ contract SettleOnMarkTest is Test {
     function test_a_mark_from_a_closed_exchange_can_never_settle() public {
         // Mark the close of a real session, then build a trade that points at a Saturday.
         SettleOnMark saturdayTrade = new SettleOnMark(
-            sessionLog, IERC20(address(usdg)), address(feed), 20260926, STRIKE, MAX_AGE, STAKE, C + 3600, LONG, SHORT
+            sessionLog,
+            IERC20(address(usdg)),
+            address(feed),
+            20260926,
+            STRIKE,
+            MAX_AGE,
+            MARK_WINDOW,
+            STAKE,
+            C + 3600,
+            LONG,
+            SHORT
         );
         usdg.mint(LONG, STAKE);
         usdg.mint(SHORT, STAKE);
@@ -177,6 +198,22 @@ contract SettleOnMarkTest is Test {
         saturdayTrade.refund();
         assertEq(usdg.balanceOf(LONG), STAKE, "the long is made whole");
         assertEq(usdg.balanceOf(SHORT), STAKE, "so is the short");
+    }
+
+    /// The mark window is five minutes wide, so whoever marks first picks a second inside it. For a
+    /// settlement that is a lever, and the trade closes it: the mark must sit near the bell.
+    function test_a_mark_taken_early_in_the_window_cannot_settle() public {
+        _markClose(33800000000, C - 320, C - 290); // marked almost five minutes before the bell
+        vm.expectRevert(abi.encodeWithSelector(SettleOnMark.MarkTooFarFromTheBell.selector, C - 290, C));
+        trade.settle();
+
+        (bool ok, string memory why,,,) = trade.quote();
+        assertFalse(ok);
+        assertEq(why, "mark taken too far from the bell");
+
+        vm.warp(C + 3600);
+        trade.refund();
+        assertEq(usdg.balanceOf(LONG), STAKE, "an unusable mark pays nobody, it refunds");
     }
 
     // ------------------------------------------------------------------
@@ -216,7 +253,17 @@ contract SettleOnMarkTest is Test {
 
     function test_an_unfunded_trade_cannot_settle() public {
         SettleOnMark fresh = new SettleOnMark(
-            sessionLog, IERC20(address(usdg)), address(feed), DAY, STRIKE, MAX_AGE, STAKE, C + 3600, LONG, SHORT
+            sessionLog,
+            IERC20(address(usdg)),
+            address(feed),
+            DAY,
+            STRIKE,
+            MAX_AGE,
+            MARK_WINDOW,
+            STAKE,
+            C + 3600,
+            LONG,
+            SHORT
         );
         _markClose(33800000000, C - 120, C - 60);
         vm.expectRevert(SettleOnMark.NotFunded.selector);
@@ -225,7 +272,17 @@ contract SettleOnMarkTest is Test {
 
     function test_a_stranger_cannot_fund() public {
         SettleOnMark fresh = new SettleOnMark(
-            sessionLog, IERC20(address(usdg)), address(feed), DAY, STRIKE, MAX_AGE, STAKE, C + 3600, LONG, SHORT
+            sessionLog,
+            IERC20(address(usdg)),
+            address(feed),
+            DAY,
+            STRIKE,
+            MAX_AGE,
+            MARK_WINDOW,
+            STAKE,
+            C + 3600,
+            LONG,
+            SHORT
         );
         address stranger = address(0xDEAD);
         usdg.mint(stranger, STAKE);

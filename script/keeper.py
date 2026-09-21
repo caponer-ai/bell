@@ -25,8 +25,8 @@ import urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 RPC = "https://rpc.mainnet.chain.robinhood.com/"
-GUARD = "0x005554C0FeD814a3Ac450e226B455Ada0D04aec6"
-LOG = "0xA3f6ba97e1a346c0D6b243C2C570e04414f64BC1"
+GUARD = "0x8aF68a9fF7583097A7476060C6B56eB33dA7a711"
+LOG = "0xc482943C7fEE1dD7807Edad1c88260E4263fD0Ad"
 
 # Five flagship tickers by default: the record is about the pattern, not about breadth, and gas is real.
 WATCHED = ["AAPL / USD", "TSLA / USD", "NVDA / USD", "SPY / USD", "QQQ / USD"]

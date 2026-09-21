@@ -19,11 +19,11 @@ python script/verify.py     # no key, no wallet: reads every contract and checks
 
 | Contract | Answers | Address |
 |---|---|---|
-| **PushFeedGuard** | is this feed's price fit to act on right now, for **all 35 equity feeds** | `0x005554C0FeD814a3Ac450e226B455Ada0D04aec6` |
-| **SessionLog** | a public, write-once record of what the feeds said at each bell | `0xA3f6ba97e1a346c0D6b243C2C570e04414f64BC1` |
+| **PushFeedGuard** | is this feed's price fit to act on right now, for **all 35 equity feeds** | `0x8aF68a9fF7583097A7476060C6B56eB33dA7a711` |
+| **SessionLog** | a public, write-once record of what the feeds said at each bell | `0xc482943C7fEE1dD7807Edad1c88260E4263fD0Ad` |
 | **Bell** | session status and a session reference price from DON-signed Data Streams reports, with a receipt | `0x88a5a0414c9fd615201814ddbec4e4d9e4d283d0` |
 | **BellFeedAdapter** | the same Chainlink signature, but it reverts instead of returning an inadmissible price | `0x4F0331DDbdDfE3349e16e37F80219A868B876655` |
-| **SettleOnMark** | a USDG trade that settles only on a recorded closing mark, and refunds otherwise | `0x5338523cB4629b460c9e21532d9e4F0c7Fc9648C` |
+| **SettleOnMark** | a USDG trade that settles only on a recorded closing mark, and refunds otherwise | `0x52a0E0d3BD4729BCD622fed437EDb428835658Ac` |
 
 **What is proven today, on mainnet:**
 
@@ -60,7 +60,7 @@ python script/verify.py     # no key, no wallet: reads every contract and checks
 Two calls that need no wallet:
 
 ```bash
-cast call 0x005554C0FeD814a3Ac450e226B455Ada0D04aec6 "check(address,uint64)(uint8,uint8,int256,uint256)"   0x6B22A786bAa607d76728168703a39Ea9C99f2cD0 900 --rpc-url https://rpc.mainnet.chain.robinhood.com/
+cast call 0x8aF68a9fF7583097A7476060C6B56eB33dA7a711 "check(address,uint64)(uint8,uint8,int256,uint256)"   0x6B22A786bAa607d76728168703a39Ea9C99f2cD0 900 --rpc-url https://rpc.mainnet.chain.robinhood.com/
 # AAPL through the guard: verdict, reason, price, updatedAt
 
 cast call 0x88a5a0414c9fd615201814ddbec4e4d9e4d283d0 "checkLive(bytes32)(uint8,uint8)"   0x000bbd87a23775b4c11092ae9a1fc7b3393636ae1dbb9f1ef460f845c0f4cff1 --rpc-url https://rpc.mainnet.chain.robinhood.com/
@@ -152,7 +152,7 @@ how old is it.
 
 | | |
 |---|---|
-| Live guard | `0x005554C0FeD814a3Ac450e226B455Ada0D04aec6` |
+| Live guard | `0x8aF68a9fF7583097A7476060C6B56eB33dA7a711` |
 | Deploy tx | `0x54e40b298ae9c2d7098b297ef2ca4a2b03eea4cfadb39b7ca0d39245892f467f` |
 | Feeds covered | 35 (Chainlink reference data, listed in [`docs/equity_feeds_4663.json`](docs/equity_feeds_4663.json)) |
 | Cost to a consumer | free: a view call, no subscription, no keeper |
@@ -214,7 +214,7 @@ afterwards. No owner, first writer wins.
 
 | | |
 |---|---|
-| Live log | `0xA3f6ba97e1a346c0D6b243C2C570e04414f64BC1` |
+| Live log | `0xc482943C7fEE1dD7807Edad1c88260E4263fD0Ad` |
 | Deploy tx | `0x84199713ffe5d84eadb8c16935b409f56b45c57ca55f21248d5a67ee3eb40909` |
 | Keeper | `script/keeper.py --watch`, about 15 transactions a trading day, roughly a cent of gas |
 
@@ -280,7 +280,7 @@ because `SessionLog` refuses to record a mark on a day the calendar has no sessi
 
 | | |
 |---|---|
-| Live demo trade | `0x5338523cB4629b460c9e21532d9e4F0c7Fc9648C` |
+| Live demo trade | `0x52a0E0d3BD4729BCD622fed437EDb428835658Ac` |
 | Terms | AAPL/USD, trading day 2026-09-21, strike 335.00, 1 USDG a side, staleness budget 900 s |
 | Escrow token | Paxos USDG `0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168`, 6 decimals |
 
@@ -340,6 +340,25 @@ In US equity markets the consolidated tape is paid for by data subscribers and i
 2. Deploy on Robinhood Chain testnet (46630) and mainnet (4663).
 3. Replay: re-run the 30 settlements above against Bell's reference and report the payout difference per case, with `CONFIRMED_DEFECT / COUNTERFACTUAL / UNVERIFIABLE` kept apart.
 4. One consumer that moves USDG through a full lifecycle on Bell's reference, and one external integrator.
+
+## What we found auditing ourselves, and fixed
+
+Before a reviewer could, we attacked our own contracts and redeployed. Both findings are in the tests now,
+so a regression would fail the suite rather than surprise somebody.
+
+- **A price stamped in the future used to look fresher than a real one.** `PushFeedGuard` reads whatever
+  address a consumer hands it, and an arbitrary contract can claim any `updatedAt`. The staleness check
+  only looked backwards, so a hostile "feed" reporting a timestamp an hour ahead would have been
+  permanently admissible. It now returns `ROUND_INCOMPLETE` for anything stamped more than two seconds
+  ahead of the block, and two seconds of sequencer skew stay acceptable.
+- **The mark window was a lever for whoever called first.** `SessionLog` accepts a closing mark anywhere
+  in `[C-300, C)`, which is right for a record but wrong for money: a party to a trade could wait for a
+  favourable tick inside those five minutes. `SettleOnMark` now requires the mark it settles on to sit
+  within its own `markWindow` of the bell (120 s for the live demo trade) and refunds otherwise. This is
+  the same class of problem the ladder solves for Bell, found in our own newer code.
+
+Also tightened while we were there: every USDG transfer now checks the returned boolean instead of
+assuming a revert on failure.
 
 ## Limitations we state ourselves
 

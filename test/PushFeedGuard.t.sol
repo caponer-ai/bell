@@ -142,6 +142,22 @@ contract PushFeedGuardTest is Test {
         assertEq(uint256(r), uint256(PushFeedGuard.Reason.ROUND_INCOMPLETE));
     }
 
+    /// An arbitrary address can claim any updatedAt. A price stamped in the future must never look
+    /// fresher than a real one, or a hostile "feed" would be permanently admissible.
+    function test_rejects_a_price_stamped_in_the_future() public {
+        feed.set(PRICE, O + 3600); // an hour ahead of the block
+        (PushFeedGuard.Verdict v, PushFeedGuard.Reason r) = _check(O + 600);
+        assertEq(uint256(v), uint256(PushFeedGuard.Verdict.REJECT));
+        assertEq(uint256(r), uint256(PushFeedGuard.Reason.ROUND_INCOMPLETE));
+    }
+
+    /// Two seconds of clock skew stay admissible: sequencers are not atomic clocks.
+    function test_tolerates_two_seconds_of_skew() public {
+        feed.set(PRICE, O + 602);
+        (PushFeedGuard.Verdict v,) = _check(O + 600);
+        assertEq(uint256(v), uint256(PushFeedGuard.Verdict.ALLOW));
+    }
+
     function test_rejects_an_address_with_no_code() public {
         vm.warp(O + 90);
         (PushFeedGuard.Verdict v, PushFeedGuard.Reason r,,) = guard.check(address(0xdead), MAX_AGE);

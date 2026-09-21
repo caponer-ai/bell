@@ -3,6 +3,7 @@ pragma solidity ^0.8.26;
 
 import {SessionLog} from "./SessionLog.sol";
 import {PushFeedGuard} from "./PushFeedGuard.sol";
+import {SessionCalendar} from "./SessionCalendar.sol";
 
 interface IERC20 {
     function transfer(address to, uint256 amount) external returns (bool);
@@ -41,6 +42,7 @@ contract SettleOnMark {
     uint32 public immutable tradingDate; // YYYYMMDD
     int192 public immutable strike; // 8 decimals, like the feed
     uint64 public immutable maxPriceAge; // seconds: how stale the marked price may be
+    uint64 public immutable markWindow; // seconds before the bell within which the mark must have been taken
     uint256 public immutable stake; // USDG units (6 decimals) per side
     uint64 public immutable refundAfter;
 
@@ -64,6 +66,9 @@ contract SettleOnMark {
     error PriceTooOld(uint64 age);
     error TooEarly();
     error StillSettleable();
+    error NoSession();
+    error MarkTooFarFromTheBell(uint64 markedAt, uint64 closeUtc);
+    error TransferFailed();
 
     constructor(
         SessionLog log_,
@@ -72,6 +77,7 @@ contract SettleOnMark {
         uint32 tradingDate_,
         int192 strike_,
         uint64 maxPriceAge_,
+        uint64 markWindow_,
         uint256 stake_,
         uint64 refundAfter_,
         address long_,
@@ -83,6 +89,7 @@ contract SettleOnMark {
         tradingDate = tradingDate_;
         strike = strike_;
         maxPriceAge = maxPriceAge_;
+        markWindow = markWindow_;
         stake = stake_;
         refundAfter = refundAfter_;
         long = long_;
@@ -100,7 +107,7 @@ contract SettleOnMark {
         } else {
             revert NotAParty();
         }
-        USDG.transferFrom(msg.sender, address(this), stake);
+        if (!USDG.transferFrom(msg.sender, address(this), stake)) revert TransferFailed();
         emit Funded(msg.sender, stake);
     }
 
@@ -112,6 +119,14 @@ contract SettleOnMark {
         SessionLog.Mark memory m = LOG.getMark(feed, tradingDate, SessionLog.Kind.CLOSE);
         if (!m.set) revert NoMark();
         if (m.verdict != uint8(PushFeedGuard.Verdict.ALLOW)) revert MarkNotAdmissible(m.reason);
+
+        // The mark window is 300 s wide, so whoever calls first chooses a second inside it. For a
+        // settlement that is a lever: a party could wait for a favourable tick. Require the mark to sit
+        // close to the bell, which removes most of the choice and makes the rest visible onchain.
+        SessionCalendar.Session memory s = LOG.GUARD().sessionForDate(tradingDate);
+        if (!s.exists) revert NoSession();
+        if (m.markedAt + markWindow < s.closeUtc) revert MarkTooFarFromTheBell(m.markedAt, s.closeUtc);
+
         uint64 age = m.markedAt - m.updatedAt;
         if (age > maxPriceAge) revert PriceTooOld(age);
 
@@ -119,7 +134,7 @@ contract SettleOnMark {
         winner = m.answer >= strike ? long : short;
         closingPrice = m.answer;
         uint256 payout = stake * 2;
-        USDG.transfer(winner, payout);
+        if (!USDG.transfer(winner, payout)) revert TransferFailed();
         emit Settled(winner, m.answer, age, payout);
     }
 
@@ -128,15 +143,13 @@ contract SettleOnMark {
         if (closed) revert AlreadyClosed();
         if (block.timestamp < refundAfter) revert TooEarly();
 
+        if (_settleable()) revert StillSettleable();
         SessionLog.Mark memory m = LOG.getMark(feed, tradingDate, SessionLog.Kind.CLOSE);
-        bool settleable =
-            m.set && m.verdict == uint8(PushFeedGuard.Verdict.ALLOW) && (m.markedAt - m.updatedAt) <= maxPriceAge;
-        if (settleable) revert StillSettleable();
 
         closed = true;
-        if (longFunded) USDG.transfer(long, stake);
-        if (shortFunded) USDG.transfer(short, stake);
-        emit Refunded(!m.set ? "no closing mark" : "mark not admissible");
+        if (longFunded && !USDG.transfer(long, stake)) revert TransferFailed();
+        if (shortFunded && !USDG.transfer(short, stake)) revert TransferFailed();
+        emit Refunded(!m.set ? "no closing mark" : "mark not settleable");
     }
 
     /// @notice What would happen right now, for a UI, a judge, or the other side of the trade.
@@ -151,7 +164,20 @@ contract SettleOnMark {
         if (m.verdict != uint8(PushFeedGuard.Verdict.ALLOW)) {
             return (false, "mark not admissible", m.answer, age, address(0));
         }
+        SessionCalendar.Session memory s = LOG.GUARD().sessionForDate(tradingDate);
+        if (!s.exists) return (false, "no session on that date", m.answer, age, address(0));
+        if (m.markedAt + markWindow < s.closeUtc) {
+            return (false, "mark taken too far from the bell", m.answer, age, address(0));
+        }
         if (age > maxPriceAge) return (false, "marked price older than the budget", m.answer, age, address(0));
         return (true, "ok", m.answer, age, m.answer >= strike ? long : short);
+    }
+
+    function _settleable() internal view returns (bool) {
+        SessionLog.Mark memory m = LOG.getMark(feed, tradingDate, SessionLog.Kind.CLOSE);
+        if (!m.set || m.verdict != uint8(PushFeedGuard.Verdict.ALLOW)) return false;
+        SessionCalendar.Session memory s = LOG.GUARD().sessionForDate(tradingDate);
+        if (!s.exists || m.markedAt + markWindow < s.closeUtc) return false;
+        return (m.markedAt - m.updatedAt) <= maxPriceAge;
     }
 }

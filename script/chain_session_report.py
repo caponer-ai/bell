@@ -19,7 +19,7 @@ import pathlib
 import urllib.request
 
 RPC = "https://rpc.mainnet.chain.robinhood.com/"
-GUARD = "0x005554C0FeD814a3Ac450e226B455Ada0D04aec6"
+GUARD = "0x8aF68a9fF7583097A7476060C6B56eB33dA7a711"
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 VERDICTS = ["ALLOW", "WAIT", "REJECT"]
 REASONS = [
