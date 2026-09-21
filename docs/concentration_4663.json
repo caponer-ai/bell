@@ -1,0 +1,114 @@
+{
+ "generated": "2026-09-21T13:13:29.370896+00:00",
+ "window": {
+  "fromBlock": 66222455,
+  "toBlock": 68822455
+ },
+ "byState": {
+  "REGULAR": {
+   "swaps": 35697,
+   "distinctSenders": 216,
+   "distinctRecipients": 759,
+   "top3SwapSharePct": 52.018376894416896,
+   "top3VolumeSharePct": 53.81399013833599,
+   "top10VolumeSharePct": 82.96505323913362,
+   "topSenders": [
+    {
+     "address": "0x65050a9b7e5075a2ba5ced7b1b64ee66262c40dc",
+     "swaps": 10816,
+     "volumeUsdg": 1439365.1686830004
+    },
+    {
+     "address": "0x520ed467860d840ec6ca20f1dacb9c0fa5168aa7",
+     "swaps": 4749,
+     "volumeUsdg": 12331966.764024034
+    },
+    {
+     "address": "0xcaf681a66d020601342297493863e78c959e5cb2",
+     "swaps": 3004,
+     "volumeUsdg": 2005015.1879159953
+    },
+    {
+     "address": "0x9689992f5b5c09447f15906d8d11214944488341",
+     "swaps": 2298,
+     "volumeUsdg": 410413.24546000065
+    },
+    {
+     "address": "0x6aa80dbbed9ae5ab45fbf61f9644fada3b29326e",
+     "swaps": 1829,
+     "volumeUsdg": 504361.53648800025
+    }
+   ]
+  },
+  "CLOSED": {
+   "swaps": 98851,
+   "distinctSenders": 289,
+   "distinctRecipients": 1220,
+   "top3SwapSharePct": 61.46118906232613,
+   "top3VolumeSharePct": 43.664636051533925,
+   "top10VolumeSharePct": 75.32145201629548,
+   "topSenders": [
+    {
+     "address": "0x65050a9b7e5075a2ba5ced7b1b64ee66262c40dc",
+     "swaps": 42438,
+     "volumeUsdg": 6626341.238255876
+    },
+    {
+     "address": "0x9689992f5b5c09447f15906d8d11214944488341",
+     "swaps": 11465,
+     "volumeUsdg": 2082142.073800999
+    },
+    {
+     "address": "0xcaf681a66d020601342297493863e78c959e5cb2",
+     "swaps": 6852,
+     "volumeUsdg": 2795773.535301007
+    },
+    {
+     "address": "0x6aa80dbbed9ae5ab45fbf61f9644fada3b29326e",
+     "swaps": 6672,
+     "volumeUsdg": 1225133.8784380008
+    },
+    {
+     "address": "0x8f10b468b06c6fd214b65f87778827f7d113f996",
+     "swaps": 4633,
+     "volumeUsdg": 1359903.6933359986
+    }
+   ]
+  },
+  "WEEKEND": {
+   "swaps": 187523,
+   "distinctSenders": 298,
+   "distinctRecipients": 1698,
+   "top3SwapSharePct": 72.34259264196925,
+   "top3VolumeSharePct": 57.26268819372299,
+   "top10VolumeSharePct": 86.45631964026722,
+   "topSenders": [
+    {
+     "address": "0x65050a9b7e5075a2ba5ced7b1b64ee66262c40dc",
+     "swaps": 97496,
+     "volumeUsdg": 16244293.201795153
+    },
+    {
+     "address": "0x9689992f5b5c09447f15906d8d11214944488341",
+     "swaps": 24265,
+     "volumeUsdg": 4582713.801509975
+    },
+    {
+     "address": "0xcaf681a66d020601342297493863e78c959e5cb2",
+     "swaps": 13898,
+     "volumeUsdg": 4107301.342804013
+    },
+    {
+     "address": "0x6aa80dbbed9ae5ab45fbf61f9644fada3b29326e",
+     "swaps": 10441,
+     "volumeUsdg": 2432067.2561820024
+    },
+    {
+     "address": "0x8876789976decbfcbbbe364623c63652db8c0904",
+     "swaps": 6856,
+     "volumeUsdg": 2305963.515667004
+    }
+   ]
+  }
+ }
+}

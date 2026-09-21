@@ -107,6 +107,23 @@ The first round after each weekend lands at 00:00:2x UTC, which is 20:00 ET Sund
 three. The number a contract reads at 06:30 UTC is fresh, real and recent. It is simply not a regular-session
 number, and nothing in the response says which it is.
 
+**Who is actually trading, since a reviewer asked whether the out-of-hours flow is just bots talking to
+themselves.** Counted over three days across the six deepest pools, so a weekend falls inside the window
+([`docs/concentration_4663.json`](docs/concentration_4663.json)):
+
+| | swaps | distinct senders | distinct recipients | top 3 by swaps | top 3 by volume |
+|---|---:|---:|---:|---:|---:|
+| regular session | 35,697 | 216 | 759 | 52.0 % | 53.8 % |
+| weekday nights | 98,851 | 289 | 1,220 | 61.5 % | 43.7 % |
+| weekends | 187,523 | 298 | 1,698 | **72.3 %** | 57.3 % |
+
+The objection is half right and the half that lands is stated first: out of hours the flow is more
+mechanical, with the top three senders accounting for 72.3 % of weekend swaps against 52.0 % in session,
+and distinct recipients per thousand swaps falling from 21.3 to 9.1. But by money the concentration barely
+moves, 57.3 % against 53.8 %, and 1,698 distinct addresses received output over one weekend. It is a
+bot-heavy market, not a closed loop. Compare the percentages rather than the counts: the three-day window
+contains one full session and two weekend days, so the absolute totals have different denominators.
+
 **What this does not claim.** $418M is gross volume: an arbitrage round trip is counted on both legs, so it
 is an upper bound on economic flow, not a headcount of users. The pools hold $13,890,185 of USDG between
 them, so the week represents about thirty turns of that capital. In the largest pool (NVDA/USDG, 0.05%) over

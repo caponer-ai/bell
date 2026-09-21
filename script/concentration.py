@@ -40,7 +40,13 @@ def share(counter, top):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--window-blocks", type=int, default=6_000_000)
+    ap.add_argument("--window-blocks", type=int, default=2_600_000)  # three days, so a weekend is inside
+    ap.add_argument(
+        "--top-pools",
+        type=int,
+        default=6,
+        help="restrict to the N pools with the most USDG in them; 0 for all 58",
+    )
     args = ap.parse_args()
 
     pools = [
@@ -50,6 +56,16 @@ def main():
         )
         if p.get("genuine")
     ]
+    # The question is about who trades, not about every venue, and the answer is dominated by the pools
+    # that hold the money: restricting to the six deepest keeps the scan tractable and is stated as a
+    # limit rather than hidden. Ranking is by the tickers with the largest weekly volume in
+    # docs/equity_flow_4663.json, which is an independent measurement from this one.
+    if args.top_pools:
+        flow = json.loads((ROOT / "docs" / "equity_flow_4663.json").read_text(encoding="utf-8"))
+        ranked = sorted(flow["perTicker"].items(), key=lambda kv: -kv[1]["vol"])
+        keep = {t for t, _ in ranked[: args.top_pools]}
+        pools = [p for p in pools if p["ticker"] in keep]
+        print("restricted to %s" % ", ".join(sorted(keep)))
     by_addr = {p["pool"]: p for p in pools}
 
     head = int(rpc("eth_blockNumber", []), 16)
