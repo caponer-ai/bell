@@ -7,8 +7,9 @@ import {Bell} from "./Bell.sol";
 /// @notice Chainlink's `latestRoundData()` shape, answered by Bell instead of by a push feed.
 ///
 /// Every contract on this chain that prices a stock token already calls `latestRoundData()` on an
-/// aggregator proxy. That call cannot fail and cannot say "the exchange is closed", so it answers with
-/// whatever number was last written, hours or days ago. This adapter keeps the exact same signature and
+/// aggregator proxy. That call cannot fail and cannot say "the exchange is closed": it returns the last
+/// number written, together with the `updatedAt` of that round, and leaves the consumer to decide what
+/// either means. This adapter keeps the exact same signature and
 /// changes exactly one thing: **when the data is not fit to act on, the call reverts instead of
 /// returning a number.**
 ///

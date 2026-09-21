@@ -15,10 +15,11 @@ interface IAggregatorV3 {
 /// @title PushFeedGuard
 /// @notice The session question, asked of the feeds that already exist on this chain.
 ///
-/// Robinhood Chain carries 35 Chainlink push feeds for US equities. They are free to read, they are the
-/// price source almost every contract here already uses, and they cannot answer the two questions that
-/// decide whether a price may be acted on: **is the exchange open right now**, and **how old is this
-/// number**. `latestRoundData()` always succeeds, even at 03:00 UTC on a Sunday.
+/// Robinhood Chain carries 35 Chainlink push feeds for US equities. They are free to read and they are the
+/// price source almost every contract here already uses. They do report `updatedAt`, so the age of the
+/// round is available to any caller; what they cannot express is whether that price belongs to the regular
+/// session, to overnight trading, or to a day the exchange never opened. `latestRoundData()` always
+/// succeeds, even at 03:00 UTC on a Sunday, and the number it returns looks the same either way.
 ///
 /// This guard is stateless and serves every feed on the chain from one deployment. It combines the
 /// NYSE calendar compiled into `SessionCalendar` (DST by rule, holidays and early closes tabulated) with

@@ -3,10 +3,16 @@
 **The exchange has an opening bell. The onchain market for its shares does not.**
 
 Tokenized equities trade around the clock; the shares behind them trade six and a half hours a day. Every
-Chainlink equity feed on Robinhood Chain answers `latestRoundData()` at 03:00 on a Sunday and has no way
-to say either of the two things that decide whether a number may be acted on: **is the regular session
-open**, and **how old is this price**. Bell is the layer that answers both, on mainnet, for free, and
-refuses when it cannot.
+Chainlink equity feed on Robinhood Chain answers `latestRoundData()` at 03:00 on a Sunday, and it answers
+with a number that looks exactly like a market price.
+
+Be precise about what the feed does and does not tell you, because an earlier draft of this README was not.
+It **does** return `updatedAt`, so the age of the onchain round is available to any caller
+([Chainlink API reference](https://docs.chain.link/data-feeds/api-reference)). What no equity feed here can
+express is the other half: **whether that price belongs to the regular session**, or to overnight trading,
+or to a day the exchange never opened. And `updatedAt` is the time the round was written onchain, not the
+time of the market observation behind it. Bell is the layer that answers the session question, attaches the
+age to it, and refuses when the pair is not fit to act on.
 
 > Buildathon work (Arbitrum Open House Singapore, 14 Sept to 4 Oct 2026), solo, unaudited.
 > Everything below is live on chainId 4663 and meant to be checked rather than believed.
@@ -365,6 +371,24 @@ The same lines during the session are what we will publish before submission, wh
 out. If the feeds turn out to be seconds fresh inside regular hours, the guard's value is the session
 boundary alone and we will say so; if the tail is long, the staleness budget is the other half of the
 product. We are not going to decide which sentence is true before the data does.
+
+## The calendar, checked day by day against NYSE's own schedule
+
+A calendar bug is the quiet kind: it does not revert, it calls a closed day open or an early close a full
+session, on exactly the day a settlement is most sensitive. So the calendar is no longer asserted by
+spot checks. `test/SessionCalendarSchedule.t.sol` walks **every day of 2026 and 2027** and compares the
+contract with the holiday and early-closing list NYSE Group published itself (ir.theice.com, read
+2026-09-21, transcribed into the test so a reviewer can diff it against the press release):
+
+- 251 trading days in each year, and the existence of a session asserted for all 730 days;
+- both DST transitions, where the session moves by an hour in UTC;
+- all three early closes (2026-11-27, 2026-12-24, 2027-11-26) asserted at exactly 3 h 30 m;
+- 2025 and 2028 asserted to have no sessions at all, because the table ends and the contract fails closed.
+
+Every date in the contract matched the official list on the first run. The bug that test found was in the
+test: `(dst ? 20 : 21) * 3600` types the ternary as `uint8`, so the multiplication overflowed `uint16` and
+panicked. Worth writing down, because it is the same class of mistake the contract is meant to catch in
+other people's code.
 
 ## What we found auditing ourselves, and fixed
 
