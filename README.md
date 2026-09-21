@@ -11,6 +11,7 @@ Stock tokens trade 24/7. The equity behind them trades 6.5 hours a day. Every pr
 | | |
 |---|---|
 | **Bell** | `0x88a5a0414c9fd615201814ddbec4e4d9e4d283d0` |
+| **BellFeedAdapter** (AAPL/USD, Chainlink-shaped) | `0x4F0331DDbdDfE3349e16e37F80219A868B876655` |
 | Chain | Robinhood Chain mainnet, chainId 4663 |
 | Deploy tx | `0xbec3cb1a8813dadf0aa52e66f87d79ecb4dd487b95413fdf2062286a6187c540`, block 68,238,358 |
 | Verifier it reads | `0xcE73c8ad08CBDEaCa6078BF0627C8fe0a9a536E7` (official Chainlink Data Streams VerifierProxy) |
@@ -103,6 +104,35 @@ One contract, no owner, no upgrade (`src/Bell.sol`, spec in `docs/SPEC-v0.1.uk.m
 What Bell is **not**: it is not the Nasdaq Opening Cross and not an official exchange print. What it publishes is a **session reference price under Bell's policy** - the DON mid of the lowest rung that is not proven out, together with the receipt that produced it. A consumer who needs the exchange's official opening or closing print must take it from the tape; Bell does not claim to reproduce it.
 
 **Which rung will hold in practice is not yet measured, and we say so.** In the 38 distinct signed reports we hold, the mid (`lastSeenTimestampNs`) trails the report's own `observationsTimestamp` by a median of 2.57 s (min -0.06 s, max 5.25 s, 36 of 38 lags positive; own decode of `index.json`, 2026-09-19). A rung is a one-second target, so a report covering the bell second will usually carry a mid last seen a few seconds *before* the bell, which the `l >= O` rule proves out, moving the reference one rung up. The limit of that inference: **all 38 reports are mid-session** (obs from 2026-09-08 15:10:00 UTC to 2026-09-09 18:00:00 UTC, one poster, a 30-minute cadence), so not one of them sits on an opening rung, and the quiet-hour lag does not have to equal the lag in the first seconds after the bell, when quotes update fastest. The test that settles it is a Data Streams subscription that can request 13:30:00 directly; until then this is an observation, not a property of the open.
+
+## Integration is one address: BellFeedAdapter
+
+Every contract on this chain that prices a stock token already calls `latestRoundData()` on a Chainlink
+proxy. That call cannot fail and cannot say "the exchange is closed". `src/BellFeedAdapter.sol` keeps the
+signature and changes one thing: **when the data is not fit to act on, the call reverts instead of
+returning a number.** Integration is a constructor argument, not a rewrite.
+
+| | |
+|---|---|
+| Live adapter (AAPL/USD) | `0x4F0331DDbdDfE3349e16e37F80219A868B876655` |
+| Deploy tx | `0x25a4aad10832b3f3b65e9a7d1e78e5c7ed1c4ea4b39621c35497df46f2636515` |
+| Units | Bell keeps 18 decimals, the adapter reports **8**, matching the equity proxies on this chain |
+
+Try it on mainnet right now, against the real report we posted:
+
+```bash
+cast call 0x4F0331DDbdDfE3349e16e37F80219A868B876655 "latestRoundData()(uint80,int256,uint256,uint256,uint80)"   --rpc-url https://rpc.mainnet.chain.robinhood.com/
+# execution reverted: NotAdmissible(3)  ->  OBS_STALE
+
+cast call 0x4F0331DDbdDfE3349e16e37F80219A868B876655 "tryLatestRoundData()(bool,uint8,int256,uint256)"   --rpc-url https://rpc.mainnet.chain.robinhood.com/
+# false 3 0 0   ->  the same answer for callers that prefer a flag to a revert
+```
+
+`test/BellFeedAdapter.t.sol` includes a `NaiveMarket` written exactly like the contracts already running
+here: lock on `latestRoundData()`, settle on `latestRoundData()`, tie pays BULL. Pointed at a push feed it
+resolves markets on a weekend. Pointed at this adapter, the same contract cannot even lock, and a second
+read seconds later needs a second admissible observation instead of silently returning the first number.
+That is the audit in `docs/REPLAY.md`, turned into a test, and into one address a builder can paste.
 
 ## The consumer: SettleMini
 
