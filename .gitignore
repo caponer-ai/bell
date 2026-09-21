@@ -13,3 +13,8 @@ keeper-*.err
 .addresses
 sampler-*.log
 sampler-*.err
+
+script/.cache/
+script/__pycache__/
+morpho_ids.json
+usdg_pools.json

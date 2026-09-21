@@ -49,6 +49,56 @@ python script/verify.py     # no key, no wallet: reads every contract and checks
   chain can settle a stock market on a price from a day the exchange never opened, and nothing in the
   data it reads can tell it so.
 
+## How much money is on the other side of this question
+
+A guard is only worth as much as the flow it guards, so here is the flow, measured rather than asserted.
+Two scripts, public RPC only, no key:
+
+```bash
+python script/rh_equity_pools.py   # find the pools, drop the impostor tokens
+python script/equity_flow.py       # one week of swaps, split by session
+python script/feed_rounds.py       # what the feeds publish, and when
+```
+
+**The venue.** Robinhood Chain has 5,944 Uniswap v3 pools holding USDG. Sixty-two of them pair USDG with a
+token whose symbol matches one of the 35 Chainlink equity feeds, and four of those sixty-two are impostors:
+a fake AMD, two fake SLV, a fake USO. A symbol is a claim, not an identity, so the impostors are dropped by
+comparing `keccak(bytecode)` against the known-good AAPL token at `0xaF3D76f1834A1d425780943C99Ea8A608f8a93f9`.
+That leaves **58 pools across 17 tickers** ([`docs/equity_pools_4663.json`](docs/equity_pools_4663.json)).
+
+**The flow.** Over the seven days ending at block 68,728,047 those 58 pools saw **1,011,296 swaps and
+$418,290,551 of USDG volume**. **$212,136,382 of it, 50.7% of the volume and 64.0% of the swaps, traded
+while the regular session was shut** ([`docs/equity_flow_4663.json`](docs/equity_flow_4663.json)). The
+session split is computed by binary-searching the block at each opening and closing bell, then cross-checked
+against the deployed `PushFeedGuard.sessionAt`: **20 probes on the boundaries, 0 disagreements**.
+
+**The feeds.** Across all 35 equity feeds, the last 30 rounds each, **547 of 1,050 rounds (52.1%) were
+published outside the regular session** ([`docs/feed_rounds_4663.json`](docs/feed_rounds_4663.json)). The
+rate is not a constant a consumer could hard-code: `RHTSLA / USD` publishes 4 of 30 rounds out of session,
+while `Robinhood MSTR / USD` and `Robinhood CRCL / USD` publish 30 of 30. The longest observed gap between
+rounds is 96.0 hours, on `Robinhood SGOV-USD`.
+
+This is also where an earlier version of this README was wrong in the other direction. The feed does not
+freeze overnight. On `RHSPY / USD`, round 139 landed at 00:00:26 UTC on Monday 2026-09-21, 59.6 hours after
+the previous round and with the price **moved by +0.49%**, while NYSE had been shut since Friday 20:00 UTC.
+The first round after each weekend lands at 00:00:2x UTC, which is 20:00 ET Sunday, three weekends out of
+three. The number a contract reads at 06:30 UTC is fresh, real and recent. It is simply not a regular-session
+number, and nothing in the response says which it is.
+
+**What this does not claim.** $418M is gross volume: an arbitrage round trip is counted on both legs, so it
+is an upper bound on economic flow, not a headcount of users. The pools hold $13,890,185 of USDG between
+them, so the week represents about thirty turns of that capital. In the largest pool (NVDA/USDG, 0.05%) over
+8.4 hours, the top three senders account for 72.0% of swaps but only 31.6% of volume across 102 distinct
+senders and 311 distinct recipients, so the flow is bot-heavy in count and broader in value. None of this
+shows anyone lost money, or that anyone wants this contract.
+
+**And the honest counterweight:** lending against equities on this chain is not where the money is. Morpho
+Blue (`0x9D53d5E3bd5E8d4Cbfa6DB1ca238AEA02E651010`) carries $461,393,489 of debt on chainId 4663, of which
+equity collateral accounts for **$17,119 measured onchain** by `balanceOf` per token, times the feed price,
+against $17,548 reported by Morpho's own API. That is 0.0014% of the book. The large markets are
+stablecoin against stablecoin, where the concept of a trading session does not apply and this project has
+nothing to offer. The flow is on the DEX side; the lending side is still empty.
+
 **What is not proven yet, stated before anyone asks:**
 
 - the ladder, Bell's DON-signed session reference, has never resolved on a real bell. Every signed report
@@ -66,7 +116,7 @@ python script/verify.py     # no key, no wallet: reads every contract and checks
 | Verifier it reads | `0xcE73c8ad08CBDEaCa6078BF0627C8fe0a9a536E7` (official Chainlink Data Streams VerifierProxy) |
 | Owner | none, and no upgrade path anywhere. `POLICY_VERSION` 2, `CALENDAR_VERSION` 1 |
 | Escrow token | Paxos USDG `0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168`, 6 decimals |
-| Tests | 129 unit tests and 6 fork tests against the real verifier, all green |
+| Tests | 144 unit tests and 6 fork tests against the real verifier, all green |
 
 Two calls that need no wallet:
 

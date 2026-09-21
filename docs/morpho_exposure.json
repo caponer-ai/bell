@@ -1,0 +1,135 @@
+{
+ "generated": "2026-09-21T10:44:48.944313+00:00",
+ "morphoBlue": "0x9D53d5E3bd5E8d4Cbfa6DB1ca238AEA02E651010",
+ "api": {
+  "markets": 273,
+  "equityMarkets": 147,
+  "totalDebtUsd": 461426296.5214373,
+  "equityDebtUsd": 6359.370999422827,
+  "equityCollateralUsd": 17544.201731716475
+ },
+ "onchain": {
+  "totalUsd": 17118.861396044198,
+  "perTicker": [
+   {
+    "ticker": "AAPL",
+    "token": "0xaf3d76f1834a1d425780943c99ea8a608f8a93f9",
+    "qty": 3.0713017671185665,
+    "price": 335.52982928,
+    "usd": 1030.513357588655
+   },
+   {
+    "ticker": "AMD",
+    "token": "0x86923f96303d656e4aa86d9d42d1e57ad2023fdc",
+    "qty": 0.000625025901743486,
+    "price": 575.613,
+    "usd": 0.3597730343802732
+   },
+   {
+    "ticker": "AMZN",
+    "token": "0x12f190a9f9d7d37a250758b26824b97ce941bf54",
+    "qty": 0.010407571492272049,
+    "price": 254.97,
+    "usd": 2.653618503384604
+   },
+   {
+    "ticker": "BABA",
+    "token": "0xad25ac6c84d497db898fa1e8387bf6af3532a1c4",
+    "qty": 0.0,
+    "price": 114.83595,
+    "usd": 0.0
+   },
+   {
+    "ticker": "COIN",
+    "token": "0x6330d8c3178a418788df01a47479c0ce7ccf450b",
+    "qty": 2.0925037154540242,
+    "price": 202.72,
+    "usd": 424.1923531968398
+   },
+   {
+    "ticker": "CRCL",
+    "token": "0xdf0992e440dd0be65bd8439b609d6d4366bf1cb5",
+    "qty": 0.0,
+    "price": 95.8,
+    "usd": 0.0
+   },
+   {
+    "ticker": "GME",
+    "token": "0x1b0e319c6a659f002271b69db8a7df2f911c153e",
+    "qty": 0.0,
+    "price": 22.81505,
+    "usd": 0.0
+   },
+   {
+    "ticker": "GOOGL",
+    "token": "0x2e0847e8910a9732eb3fb1bb4b70a580adad4fe3",
+    "qty": 1.0423079542688525,
+    "price": 352.86341555,
+    "usd": 367.7923447982405
+   },
+   {
+    "ticker": "META",
+    "token": "0xc0d6457c16cc70d6790dd43521c899c87ce02f35",
+    "qty": 0.002861264286972786,
+    "price": 682.65943266,
+    "usd": 1.9532690548351614
+   },
+   {
+    "ticker": "MSFT",
+    "token": "0xe93237c50d904957cf27e7b1133b510c669c2e74",
+    "qty": 0.5646754734497254,
+    "price": 495.26943836,
+    "usd": 279.6665045911125
+   },
+   {
+    "ticker": "MU",
+    "token": "0xff080c8ce2e5feadaca0da81314ae59d232d4afd",
+    "qty": 5.0046093425924e-05,
+    "price": 1037.80264592,
+    "usd": 0.051937968175383445
+   },
+   {
+    "ticker": "NVDA",
+    "token": "0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec",
+    "qty": 22.295148102532156,
+    "price": 225.04436008,
+    "usd": 5017.397337623175
+   },
+   {
+    "ticker": "QQQ",
+    "token": "0xd5f3879160bc7c32ebb4dc785f8a4f505888de68",
+    "qty": 0.0,
+    "price": 726.96,
+    "usd": 0.0
+   },
+   {
+    "ticker": "SLV",
+    "token": "0x411efb0e7f985935daec3d4c3ebaea0d0ad7d89f",
+    "qty": 0.0,
+    "price": 59.92495,
+    "usd": 0.0
+   },
+   {
+    "ticker": "SPCX",
+    "token": "0x4a0e65a3eccec6dbe60ae065f2e7bb85fae35eea",
+    "qty": 6.953315298077275,
+    "price": 154.35,
+    "usd": 1073.2442162582274
+   },
+   {
+    "ticker": "SPY",
+    "token": "0x117cc2133c37b721f49de2a7a74833232b3b4c0c",
+    "qty": 11.61667729090715,
+    "price": 765.2925109,
+    "usd": 8890.156132273343
+   },
+   {
+    "ticker": "TSLA",
+    "token": "0x322f0929c4625ed5bad873c95208d54e1c003b2d",
+    "qty": 0.0837154894038113,
+    "price": 368.875,
+    "usd": 30.88055115383089
+   }
+  ]
+ }
+}

@@ -1,0 +1,5785 @@
+{
+ "generated": "2026-09-21T10:40:55.985729+00:00",
+ "roundsRequested": 30,
+ "feeds": [
+  {
+   "name": "Robinhood SGOV-USD",
+   "description": "Robinhood SGOV-USD",
+   "proxy": "0xa0DF4ee0fFf975306345875E3548Fcc519577A11",
+   "rounds": 30,
+   "inside": 0,
+   "outside": 30,
+   "maxGapHours": 95.9786111111111,
+   "medianMoveInsidePct": null,
+   "medianMoveOutsidePct": 0.009953717502242112,
+   "latestAnswer": 101.10821255,
+   "latestUpdatedAt": 1789948827,
+   "history": [
+    {
+     "updatedAt": 1786579256,
+     "answer": 100.83451795,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1786665663,
+     "answer": 100.84472634,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1786752089,
+     "answer": 100.85480667,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1786924850,
+     "answer": 100.86483649,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1787011276,
+     "answer": 100.86483649,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1787097681,
+     "answer": 100.88489612,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1787184107,
+     "answer": 100.88489612,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1787270525,
+     "answer": 100.92501538,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1787529632,
+     "answer": 100.94507501,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1787616046,
+     "answer": 100.95393208,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1787702463,
+     "answer": 100.95506975,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1787788888,
+     "answer": 100.97516446,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1787875314,
+     "answer": 100.98519427,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1788134441,
+     "answer": 100.98519427,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1788220859,
+     "answer": 100.95459352,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1788307271,
+     "answer": 100.92226805,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1788393684,
+     "answer": 100.91724321,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1788480114,
+     "answer": 100.97754932,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1788825637,
+     "answer": 100.98760034,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1788912037,
+     "answer": 100.98760034,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1788998446,
+     "answer": 101.00703801,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789084872,
+     "answer": 101.04790644,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789171285,
+     "answer": 101.02780441,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789344042,
+     "answer": 101.04790644,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789430450,
+     "answer": 101.03785542,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789516866,
+     "answer": 101.04790643,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789603280,
+     "answer": 101.05795746,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789689682,
+     "answer": 101.10821255,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789776105,
+     "answer": 101.10821255,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789948827,
+     "answer": 101.10821255,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood EWY / USD",
+   "description": "Robinhood EWY / USD",
+   "proxy": "0xEFdf54610B62A7753Ec30bDc380847c12D32e1D1",
+   "rounds": 30,
+   "inside": 7,
+   "outside": 23,
+   "maxGapHours": 52.805,
+   "medianMoveInsidePct": 0.5073427701445574,
+   "medianMoveOutsidePct": 0.5224205485415759,
+   "latestAnswer": 185.68255,
+   "latestUpdatedAt": 1789979463,
+   "history": [
+    {
+     "updatedAt": 1789602542,
+     "answer": 178.44125,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789603292,
+     "answer": 179.34,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789603622,
+     "answer": 178.335,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789610224,
+     "answer": 177.355,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789616766,
+     "answer": 178.275,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789623458,
+     "answer": 177.36,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789636272,
+     "answer": 178.2492,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789646342,
+     "answer": 179.17205,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789647002,
+     "answer": 180.09525,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789648172,
+     "answer": 181.0216,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789651834,
+     "answer": 181.94,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789652824,
+     "answer": 182.9216,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789653814,
+     "answer": 182.0035,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789662276,
+     "answer": 182.92,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789689675,
+     "answer": 181.925,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789691986,
+     "answer": 180.98,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789694836,
+     "answer": 180.07,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789700898,
+     "answer": 181.01999999,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789719654,
+     "answer": 181.96675,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789723525,
+     "answer": 181.0273,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789733338,
+     "answer": 180.02655,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789740330,
+     "answer": 179.09225,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789754674,
+     "answer": 179.995,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789758726,
+     "answer": 180.925,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789948824,
+     "answer": 182.505,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789949184,
+     "answer": 183.745,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789949454,
+     "answer": 182.76,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789953235,
+     "answer": 183.76,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789973851,
+     "answer": 184.72,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789979463,
+     "answer": 185.68255,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood GOOGL / USD",
+   "description": "Robinhood GOOGL / USD",
+   "proxy": "0xF6f373a037c30F0e5010d854385cA89185AE638b",
+   "rounds": 30,
+   "inside": 17,
+   "outside": 13,
+   "maxGapHours": 51.81444444444445,
+   "medianMoveInsidePct": 0.532305381149885,
+   "medianMoveOutsidePct": 0.50815917957426,
+   "latestAnswer": 352.86341555,
+   "latestUpdatedAt": 1789977680,
+   "history": [
+    {
+     "updatedAt": 1789584200,
+     "answer": 346.03199104,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789584681,
+     "answer": 344.25049563,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789585791,
+     "answer": 342.4740512,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789598065,
+     "answer": 344.58080967,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789629424,
+     "answer": 346.30714438,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789648330,
+     "answer": 348.07328682,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789652231,
+     "answer": 345.8224004,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789655622,
+     "answer": 347.56238776,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789657543,
+     "answer": 345.81704936,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789658233,
+     "answer": 347.58534221,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789660681,
+     "answer": 345.6620193,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789673975,
+     "answer": 347.39235479,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789703250,
+     "answer": 349.36773778,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789703881,
+     "answer": 351.14308201,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789706731,
+     "answer": 352.92342719,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789710002,
+     "answer": 354.69377044,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789729298,
+     "answer": 356.46911466,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789733769,
+     "answer": 354.65876365,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789738091,
+     "answer": 356.97921355,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789738721,
+     "answer": 359.21964795,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739051,
+     "answer": 357.06623043,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739291,
+     "answer": 354.87600577,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740792,
+     "answer": 352.8734175,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789741032,
+     "answer": 350.99505331,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789747184,
+     "answer": 349.16529854,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789755766,
+     "answer": 350.93804225,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761348,
+     "answer": 348.67605368,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789762308,
+     "answer": 350.47135177,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789948840,
+     "answer": 350.94304322,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789977680,
+     "answer": 352.86341555,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood QQQ / USD",
+   "description": "Robinhood QQQ / USD",
+   "proxy": "0x80901d846d5D7B030F26B480776EE3b29374C2ae",
+   "rounds": 30,
+   "inside": 10,
+   "outside": 20,
+   "maxGapHours": 59.18972222222222,
+   "medianMoveInsidePct": 0.5323571365713887,
+   "medianMoveOutsidePct": 0.5040125609748467,
+   "latestAnswer": 726.96,
+   "latestUpdatedAt": 1789977448,
+   "history": [
+    {
+     "updatedAt": 1788848349,
+     "answer": 719.155,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1788934763,
+     "answer": 720.615,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1788946917,
+     "answer": 716.90015,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789033336,
+     "answer": 714.2114,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789043208,
+     "answer": 710.59535,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789044979,
+     "answer": 707.00825,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789050320,
+     "answer": 711.12315,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789084368,
+     "answer": 707.539,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789106184,
+     "answer": 711.235,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789130942,
+     "answer": 714.92435,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789344025,
+     "answer": 706.51,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789374574,
+     "answer": 702.83645,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789393780,
+     "answer": 706.57805,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789400532,
+     "answer": 710.245,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789449014,
+     "answer": 706.68,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789535432,
+     "answer": 706.295,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789566671,
+     "answer": 709.98375,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789583823,
+     "answer": 706.40395,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789584183,
+     "answer": 709.96,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789584873,
+     "answer": 706.0419,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789585923,
+     "answer": 702.1937,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789595226,
+     "answer": 705.7202,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789602428,
+     "answer": 709.32725,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789636278,
+     "answer": 712.88115,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789648371,
+     "answer": 716.61965,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789711901,
+     "answer": 720.23,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789740499,
+     "answer": 716.46215,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761026,
+     "answer": 720.3651,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789948848,
+     "answer": 723.33,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789977448,
+     "answer": 726.96,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood TSM / USD",
+   "description": "Robinhood TSM / USD",
+   "proxy": "0x874cF94aa8eC88Fd9560094dD065f2fB3E41Fc2F",
+   "rounds": 30,
+   "inside": 16,
+   "outside": 14,
+   "maxGapHours": 52.047777777777775,
+   "medianMoveInsidePct": 0.5149248264632241,
+   "medianMoveOutsidePct": 0.5177287202434511,
+   "latestAnswer": 439.38689453,
+   "latestUpdatedAt": 1789976416,
+   "history": [
+    {
+     "updatedAt": 1789481481,
+     "answer": 415.83,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789484361,
+     "answer": 413.75,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789525962,
+     "answer": 415.8324842,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789543548,
+     "answer": 417.92053461,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789571366,
+     "answer": 420.01359233,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789579409,
+     "answer": 417.87566906,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789582080,
+     "answer": 419.97353381,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789583610,
+     "answer": 417.60006644,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789585771,
+     "answer": 415.51201603,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789587991,
+     "answer": 417.73025663,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789600746,
+     "answer": 419.99366321,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789603416,
+     "answer": 422.12167199,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789606418,
+     "answer": 419.93347529,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789608578,
+     "answer": 422.08662079,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789646780,
+     "answer": 424.22819939,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789652632,
+     "answer": 426.59801142,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789664485,
+     "answer": 428.79467049,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789707959,
+     "answer": 431.01466365,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789716393,
+     "answer": 433.25293351,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789724465,
+     "answer": 430.977259,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789733857,
+     "answer": 428.80643768,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789738269,
+     "answer": 431.45896272,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738689,
+     "answer": 434.03292298,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740219,
+     "answer": 431.84983374,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789750092,
+     "answer": 429.68271782,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789760566,
+     "answer": 431.91097305,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761466,
+     "answer": 434.26441116,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789948838,
+     "answer": 434.58988664,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789952799,
+     "answer": 436.94833207,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789976416,
+     "answer": 439.38689453,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood COIN / USD",
+   "description": "Robinhood COIN / USD",
+   "proxy": "0xA3a468A452940B7D6b69991207B508c609a98Ef2",
+   "rounds": 30,
+   "inside": 11,
+   "outside": 19,
+   "maxGapHours": 52.047777777777775,
+   "medianMoveInsidePct": 0.52098183043467,
+   "medianMoveOutsidePct": 0.5699626679443414,
+   "latestAnswer": 202.72,
+   "latestUpdatedAt": 1789986980,
+   "history": [
+    {
+     "updatedAt": 1789749703,
+     "answer": 193.85535,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789751773,
+     "answer": 194.915,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789754324,
+     "answer": 196.15,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789754685,
+     "answer": 195.105,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789755315,
+     "answer": 194.09715,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789755555,
+     "answer": 193.1068,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789755645,
+     "answer": 194.07999999,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789759396,
+     "answer": 195.07999999,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789760656,
+     "answer": 194.095,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761316,
+     "answer": 192.905,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761466,
+     "answer": 193.91,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789948838,
+     "answer": 194.88,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789948959,
+     "answer": 196.16,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789950129,
+     "answer": 197.18,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789954480,
+     "answer": 196.19,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789955470,
+     "answer": 194.96499999,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789961502,
+     "answer": 196.07999999,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789965104,
+     "answer": 195.08499999,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789968735,
+     "answer": 196.105,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789972095,
+     "answer": 197.12,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789973085,
+     "answer": 195.995,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789977767,
+     "answer": 197.745,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789979027,
+     "answer": 199.105,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789979748,
+     "answer": 200.364,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789979928,
+     "answer": 201.506,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789980348,
+     "answer": 200.375,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789980408,
+     "answer": 201.454,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789981548,
+     "answer": 202.635,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789982808,
+     "answer": 203.8,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789986980,
+     "answer": 202.72,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood PLTR / USD",
+   "description": "Robinhood PLTR / USD",
+   "proxy": "0x820ABedFF239034956B7A9d2F0a331f9F075eB4c",
+   "rounds": 30,
+   "inside": 24,
+   "outside": 6,
+   "maxGapHours": 52.03944444444444,
+   "medianMoveInsidePct": 0.5416662526138563,
+   "medianMoveOutsidePct": 0.5090852308216456,
+   "latestAnswer": 178.57205,
+   "latestUpdatedAt": 1789980525,
+   "history": [
+    {
+     "updatedAt": 1789654315,
+     "answer": 175.31,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789654705,
+     "answer": 176.24505,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789655275,
+     "answer": 177.14,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789657196,
+     "answer": 176.0695,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789659476,
+     "answer": 177.12895,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789662747,
+     "answer": 176.24,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789664158,
+     "answer": 175.19285,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789668479,
+     "answer": 176.1199,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789670190,
+     "answer": 175.21455,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789673401,
+     "answer": 176.10475,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789674901,
+     "answer": 177.05865,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789675321,
+     "answer": 176.1134,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789684671,
+     "answer": 175.2295,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789709158,
+     "answer": 176.11,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789738087,
+     "answer": 177.00655,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789738387,
+     "answer": 175.165,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738417,
+     "answer": 174.28305,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738837,
+     "answer": 173.26,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739017,
+     "answer": 172.19,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739377,
+     "answer": 173.225,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739527,
+     "answer": 174.38875,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739557,
+     "answer": 175.315,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739647,
+     "answer": 174.41,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740428,
+     "answer": 173.32025,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789741838,
+     "answer": 174.743,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789743848,
+     "answer": 175.80025,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789755462,
+     "answer": 176.685,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761494,
+     "answer": 177.6031,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789948836,
+     "answer": 177.655,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789980525,
+     "answer": 178.57205,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood RGTI / USD",
+   "description": "Robinhood RGTI / USD",
+   "proxy": "0x2A045cF1C49c61c166C036d2f06FA2D2d984f765",
+   "rounds": 30,
+   "inside": 22,
+   "outside": 8,
+   "maxGapHours": 51.3975,
+   "medianMoveInsidePct": 0.5907449950771251,
+   "medianMoveOutsidePct": 0.5364468921025225,
+   "latestAnswer": 16.1116,
+   "latestUpdatedAt": 1789984727,
+   "history": [
+    {
+     "updatedAt": 1789738299,
+     "answer": 16.02,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738419,
+     "answer": 15.9174,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738509,
+     "answer": 15.8163,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738749,
+     "answer": 15.695,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738869,
+     "answer": 15.60395,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739109,
+     "answer": 15.68499999,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739259,
+     "answer": 15.595,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739949,
+     "answer": 15.5,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740069,
+     "answer": 15.405,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740189,
+     "answer": 15.325,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740399,
+     "answer": 15.235,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789741750,
+     "answer": 15.155,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789741870,
+     "answer": 15.235,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789743490,
+     "answer": 15.145,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789746401,
+     "answer": 15.225,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789748622,
+     "answer": 15.135,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789750302,
+     "answer": 15.2148,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789754023,
+     "answer": 15.315,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789754653,
+     "answer": 15.395,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789759335,
+     "answer": 15.5047,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761045,
+     "answer": 15.6252,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761345,
+     "answer": 15.725,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761675,
+     "answer": 15.82,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789763806,
+     "answer": 15.7404,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789948837,
+     "answer": 15.84499999,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789950547,
+     "answer": 15.93,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789952978,
+     "answer": 16.015,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789977826,
+     "answer": 16.1115,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789981666,
+     "answer": 16.19265,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789984727,
+     "answer": 16.1116,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood ORCL / USD",
+   "description": "Robinhood ORCL / USD",
+   "proxy": "0x0e6a64a2B58A6693a531E6c555f3A5d042eEA844",
+   "rounds": 30,
+   "inside": 17,
+   "outside": 13,
+   "maxGapHours": 52.06333333333333,
+   "medianMoveInsidePct": 0.5703340446291489,
+   "medianMoveOutsidePct": 0.5124427055256847,
+   "latestAnswer": 149.57221192,
+   "latestUpdatedAt": 1789986903,
+   "history": [
+    {
+     "updatedAt": 1789654959,
+     "answer": 150.9525069,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789659880,
+     "answer": 151.84497572,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789662791,
+     "answer": 151.07527774,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789665132,
+     "answer": 150.25632109,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789668403,
+     "answer": 149.49774765,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789673625,
+     "answer": 150.39818405,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789703146,
+     "answer": 151.21358285,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789713559,
+     "answer": 151.98528524,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789724332,
+     "answer": 151.20280908,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789733305,
+     "answer": 150.2506586,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789737777,
+     "answer": 149.48071006,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789738107,
+     "answer": 150.64177141,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789738347,
+     "answer": 148.83834298,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738527,
+     "answer": 147.71045481,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739007,
+     "answer": 146.82389904,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739997,
+     "answer": 145.70568221,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740297,
+     "answer": 144.8313033,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789741078,
+     "answer": 145.65732553,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789752931,
+     "answer": 146.41163958,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789757043,
+     "answer": 147.19972813,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789757613,
+     "answer": 147.9517872,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789758303,
+     "answer": 148.72804967,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761394,
+     "answer": 147.96120798,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789948822,
+     "answer": 148.10171794,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789948912,
+     "answer": 148.84836508,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789949241,
+     "answer": 148.08668479,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789952933,
+     "answer": 148.84836508,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789980782,
+     "answer": 148.07115052,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789983993,
+     "answer": 148.82341003,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789986903,
+     "answer": 149.57221192,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood MSTR / USD",
+   "description": "Robinhood MSTR / USD",
+   "proxy": "0x396118bdFB181e6240E74D243F266B061c0edc3D",
+   "rounds": 30,
+   "inside": 0,
+   "outside": 30,
+   "maxGapHours": 1.3755555555555556,
+   "medianMoveInsidePct": null,
+   "medianMoveOutsidePct": 0.5393469942568888,
+   "latestAnswer": 162.18,
+   "latestUpdatedAt": 1789986866,
+   "history": [
+    {
+     "updatedAt": 1789957936,
+     "answer": 155.14,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789959827,
+     "answer": 156.06,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789960427,
+     "answer": 155.235,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789962378,
+     "answer": 156.035,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789967330,
+     "answer": 155.22,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789968680,
+     "answer": 156.12,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789971471,
+     "answer": 156.91,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789973121,
+     "answer": 156.125,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789973932,
+     "answer": 156.92,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789977833,
+     "answer": 157.8761,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789978403,
+     "answer": 157.0246,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789979033,
+     "answer": 157.83455,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789979513,
+     "answer": 158.64499999,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789979603,
+     "answer": 159.635,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789979813,
+     "answer": 160.495,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789979933,
+     "answer": 162.1524,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789980353,
+     "answer": 161.1535,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789980413,
+     "answer": 162.14,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789980684,
+     "answer": 162.95185,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789981584,
+     "answer": 163.875,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789981914,
+     "answer": 164.94,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789982064,
+     "answer": 164.0014,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789982815,
+     "answer": 164.9197,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789982965,
+     "answer": 165.77499999,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789983145,
+     "answer": 164.86,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789983505,
+     "answer": 165.735,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789983685,
+     "answer": 164.86,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789984765,
+     "answer": 164.00515,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789986206,
+     "answer": 163.065,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789986866,
+     "answer": 162.18,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood RKLB / USD",
+   "description": "Robinhood RKLB / USD",
+   "proxy": "0x045477BF65Aef6f4F2386ad0164579e48381CC74",
+   "rounds": 30,
+   "inside": 22,
+   "outside": 8,
+   "maxGapHours": 52.089444444444446,
+   "medianMoveInsidePct": 0.5607039950159645,
+   "medianMoveOutsidePct": 0.5184955889181242,
+   "latestAnswer": 65.6481,
+   "latestUpdatedAt": 1789977749,
+   "history": [
+    {
+     "updatedAt": 1789729998,
+     "answer": 68.32445,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789731648,
+     "answer": 67.9725,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789732999,
+     "answer": 67.6302,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789734079,
+     "answer": 68.04065,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789738100,
+     "answer": 68.5779,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789738250,
+     "answer": 67.845,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738310,
+     "answer": 67.087,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738400,
+     "answer": 66.745,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738430,
+     "answer": 66.2022,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738490,
+     "answer": 65.855,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738610,
+     "answer": 65.49,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738850,
+     "answer": 64.88499999,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739151,
+     "answer": 65.215,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739481,
+     "answer": 64.8737,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739841,
+     "answer": 65.3373,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740051,
+     "answer": 64.88875,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740201,
+     "answer": 64.4723,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740981,
+     "answer": 64.06995,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789742302,
+     "answer": 64.54145,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789742752,
+     "answer": 64.205,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789743232,
+     "answer": 64.565,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789743502,
+     "answer": 64.24,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789748664,
+     "answer": 63.89505,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789750044,
+     "answer": 64.215,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789755836,
+     "answer": 63.89,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789758507,
+     "answer": 64.22,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761328,
+     "answer": 64.61,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789948850,
+     "answer": 64.945,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789952841,
+     "answer": 65.28,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789977749,
+     "answer": 65.6481,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood SPCX / USD",
+   "description": "Robinhood SPCX / USD",
+   "proxy": "0xB265810950ba6c5C0Ff821c9963014a56fD8Bffb",
+   "rounds": 30,
+   "inside": 23,
+   "outside": 7,
+   "maxGapHours": 48.87555555555556,
+   "medianMoveInsidePct": 0.5441098959019633,
+   "medianMoveOutsidePct": 0.5154654049515074,
+   "latestAnswer": 154.35,
+   "latestUpdatedAt": 1789963201,
+   "history": [
+    {
+     "updatedAt": 1789704785,
+     "answer": 155.155,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789718589,
+     "answer": 155.94645,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789733263,
+     "answer": 155.1426,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789738305,
+     "answer": 156.34,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738395,
+     "answer": 155.28405,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738695,
+     "answer": 154.3251,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738875,
+     "answer": 155.16325,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738935,
+     "answer": 153.695,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739535,
+     "answer": 152.725,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740286,
+     "answer": 151.8447,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789741005,
+     "answer": 151.0,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789741306,
+     "answer": 151.78,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789743016,
+     "answer": 152.60585,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789744337,
+     "answer": 151.77499999,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789745567,
+     "answer": 151.01,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789748478,
+     "answer": 150.19,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789749078,
+     "answer": 150.94245,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789750369,
+     "answer": 151.69855,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789753610,
+     "answer": 152.465,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789754750,
+     "answer": 151.695,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789756580,
+     "answer": 150.87575,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789758411,
+     "answer": 151.67,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789759221,
+     "answer": 152.49,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761022,
+     "answer": 154.81735,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761052,
+     "answer": 153.865,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761112,
+     "answer": 152.89499999,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761772,
+     "answer": 152.0569,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789772875,
+     "answer": 152.82485,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789948827,
+     "answer": 153.555,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789963201,
+     "answer": 154.35,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood USAR-USD",
+   "description": "Robinhood USAR-USD",
+   "proxy": "0xA994d3684e8400A6c8078226925779FdeE682DD9",
+   "rounds": 30,
+   "inside": 13,
+   "outside": 17,
+   "maxGapHours": 49.26722222222222,
+   "medianMoveInsidePct": 0.5268356931182088,
+   "medianMoveOutsidePct": 0.5364010946197817,
+   "latestAnswer": 16.1604,
+   "latestUpdatedAt": 1789985864,
+   "history": [
+    {
+     "updatedAt": 1789739990,
+     "answer": 15.347,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740380,
+     "answer": 15.268,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789741700,
+     "answer": 15.345,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789742421,
+     "answer": 15.441,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789742781,
+     "answer": 15.358,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789743381,
+     "answer": 15.267,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789743771,
+     "answer": 15.187,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789747702,
+     "answer": 15.265,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789748632,
+     "answer": 15.185,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789749893,
+     "answer": 15.265,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789755264,
+     "answer": 15.344,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789758776,
+     "answer": 15.445,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761326,
+     "answer": 15.359,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761836,
+     "answer": 15.4435,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789766458,
+     "answer": 15.52495,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789771469,
+     "answer": 15.60645,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789948831,
+     "answer": 15.775,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789949882,
+     "answer": 15.69,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789950542,
+     "answer": 15.78,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789953272,
+     "answer": 15.87,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789953393,
+     "answer": 15.86499999,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789955883,
+     "answer": 15.785,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789959004,
+     "answer": 15.865,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789977700,
+     "answer": 15.9591,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789978601,
+     "answer": 16.0421,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789978871,
+     "answer": 16.12815,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789979171,
+     "answer": 16.22765,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789980851,
+     "answer": 16.14455,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789981723,
+     "answer": 16.24265,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789985864,
+     "answer": 16.1604,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood SPY / USD",
+   "description": "RHSPY / USD",
+   "proxy": "0x319724394D3A0e3669269846abE664Cd621f9f6A",
+   "rounds": 30,
+   "inside": 12,
+   "outside": 18,
+   "maxGapHours": 80.80333333333333,
+   "medianMoveInsidePct": 0.5091076251221054,
+   "medianMoveOutsidePct": 0.5056070482779974,
+   "latestAnswer": 765.2925109,
+   "latestUpdatedAt": 1789948826,
+   "history": [
+    {
+     "updatedAt": 1787865349,
+     "answer": 770.316,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1787928788,
+     "answer": 774.18065,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1787933919,
+     "answer": 770.26515,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1788134433,
+     "answer": 766.14,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1788220834,
+     "answer": 767.48972168,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1788251903,
+     "answer": 763.4776,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1788288364,
+     "answer": 759.615,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1788357719,
+     "answer": 763.49135,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1788440050,
+     "answer": 767.32875,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1788448332,
+     "answer": 771.185,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1788534759,
+     "answer": 769.59,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1788825651,
+     "answer": 768.966807,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1788912068,
+     "answer": 765.52363793,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1788966702,
+     "answer": 761.55135,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789048327,
+     "answer": 757.55,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789109305,
+     "answer": 761.44499999,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789131362,
+     "answer": 765.26375,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789344026,
+     "answer": 760.04,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789430449,
+     "answer": 761.36550517,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789458121,
+     "answer": 757.51,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789476942,
+     "answer": 761.38125,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789482150,
+     "answer": 757.505,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789568569,
+     "answer": 759.09005,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789584924,
+     "answer": 755.145,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789586124,
+     "answer": 751.28,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789597618,
+     "answer": 755.1121,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789626607,
+     "answer": 758.93,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789647703,
+     "answer": 762.85845,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789734121,
+     "answer": 761.55079369,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789948826,
+     "answer": 765.2925109,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood TSLA / USD",
+   "description": "RHTSLA / USD",
+   "proxy": "0x4A1166a659A55625345e9515b32adECea5547C38",
+   "rounds": 30,
+   "inside": 26,
+   "outside": 4,
+   "maxGapHours": 52.19777777777778,
+   "medianMoveInsidePct": 0.524912417370528,
+   "medianMoveOutsidePct": 0.5015810707665467,
+   "latestAnswer": 368.875,
+   "latestUpdatedAt": 1789977798,
+   "history": [
+    {
+     "updatedAt": 1789654126,
+     "answer": 372.425,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789655176,
+     "answer": 370.46085,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789656917,
+     "answer": 368.53095,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789657517,
+     "answer": 366.615,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789657997,
+     "answer": 364.7787,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789658897,
+     "answer": 366.82615,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789660758,
+     "answer": 368.85,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789663759,
+     "answer": 366.78499999,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789666520,
+     "answer": 368.7103,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789669461,
+     "answer": 366.84,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789715014,
+     "answer": 368.68,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789738510,
+     "answer": 366.81395,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738900,
+     "answer": 368.78,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739171,
+     "answer": 370.64,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739441,
+     "answer": 367.895,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739981,
+     "answer": 365.541,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740431,
+     "answer": 363.515,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740731,
+     "answer": 361.59275,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789741601,
+     "answer": 363.804,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789742622,
+     "answer": 365.641,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789742982,
+     "answer": 367.55499999,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789744482,
+     "answer": 365.512,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789744842,
+     "answer": 363.665,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789746163,
+     "answer": 361.845,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789753995,
+     "answer": 363.755,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789760387,
+     "answer": 361.935,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789760927,
+     "answer": 363.79999999,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789948839,
+     "answer": 365.195,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789952800,
+     "answer": 367.025,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789977798,
+     "answer": 368.875,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood SNDK / USD",
+   "description": "RHSNDK / USD",
+   "proxy": "0xfb133Fa4B7b385802B693a293606682Df47109A3",
+   "rounds": 30,
+   "inside": 21,
+   "outside": 9,
+   "maxGapHours": 51.95611111111111,
+   "medianMoveInsidePct": 0.5921463613353941,
+   "medianMoveOutsidePct": 0.5226249231433937,
+   "latestAnswer": 1816.4138,
+   "latestUpdatedAt": 1789979513,
+   "history": [
+    {
+     "updatedAt": 1789738275,
+     "answer": 1632.65999999,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738395,
+     "answer": 1647.48695,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738455,
+     "answer": 1659.55,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738725,
+     "answer": 1648.2899,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738845,
+     "answer": 1658.25,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738996,
+     "answer": 1666.72965,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739625,
+     "answer": 1675.23,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739865,
+     "answer": 1683.95995,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739985,
+     "answer": 1694.845,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740765,
+     "answer": 1704.8475,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789741066,
+     "answer": 1695.513,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789741456,
+     "answer": 1704.815,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789743166,
+     "answer": 1714.90999999,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789745627,
+     "answer": 1723.76,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789747817,
+     "answer": 1734.195,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789749948,
+     "answer": 1743.07,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789756700,
+     "answer": 1734.30285,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761021,
+     "answer": 1755.29,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761081,
+     "answer": 1764.92885,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761322,
+     "answer": 1781.11,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761502,
+     "answer": 1793.75225,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761622,
+     "answer": 1778.58005504,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789761802,
+     "answer": 1792.3206,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789948844,
+     "answer": 1796.045,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789948934,
+     "answer": 1805.31,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789965109,
+     "answer": 1795.875,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789967089,
+     "answer": 1786.505,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789971441,
+     "answer": 1796.45,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789977652,
+     "answer": 1807.17966829,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789979513,
+     "answer": 1816.4138,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood IONQ / USD",
+   "description": "Robinhood IONQ / USD",
+   "proxy": "0x22EfeC4919baf55F360E0EDee4AbEB26DE4971eb",
+   "rounds": 30,
+   "inside": 17,
+   "outside": 13,
+   "maxGapHours": 51.739444444444445,
+   "medianMoveInsidePct": 0.5929880057993937,
+   "medianMoveOutsidePct": 0.5568967685150258,
+   "latestAnswer": 39.98645,
+   "latestUpdatedAt": 1789977862,
+   "history": [
+    {
+     "updatedAt": 1789729691,
+     "answer": 40.23345,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789731281,
+     "answer": 39.9872,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789732482,
+     "answer": 40.1875,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789733082,
+     "answer": 39.97345,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789737763,
+     "answer": 40.1965,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789738213,
+     "answer": 40.5534,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738303,
+     "answer": 39.97,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738513,
+     "answer": 39.64,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738663,
+     "answer": 39.3943,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738844,
+     "answer": 39.025,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739444,
+     "answer": 38.795,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739984,
+     "answer": 38.58785,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740164,
+     "answer": 38.345,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740404,
+     "answer": 38.1262,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789744905,
+     "answer": 37.935,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789746316,
+     "answer": 38.15995,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789748477,
+     "answer": 37.9678,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789753968,
+     "answer": 38.165,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789754509,
+     "answer": 38.4073,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789757629,
+     "answer": 38.64,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789758770,
+     "answer": 38.845,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761441,
+     "answer": 39.0553,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789762011,
+     "answer": 39.29095,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789762581,
+     "answer": 39.08675,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789948843,
+     "answer": 39.295,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789950734,
+     "answer": 39.535,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789952954,
+     "answer": 39.76,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789955415,
+     "answer": 39.56,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789971500,
+     "answer": 39.765,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789977862,
+     "answer": 39.98645,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood CRCL / USD",
+   "description": "Robinhood CRCL / USD",
+   "proxy": "0x6652eDf64bA3731C4F2D3ce821A0Fb1f1f6b482a",
+   "rounds": 30,
+   "inside": 0,
+   "outside": 30,
+   "maxGapHours": 3.367777777777778,
+   "medianMoveInsidePct": null,
+   "medianMoveOutsidePct": 0.565002152389152,
+   "latestAnswer": 95.8,
+   "latestUpdatedAt": 1789987048,
+   "history": [
+    {
+     "updatedAt": 1789949596,
+     "answer": 92.425,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789950406,
+     "answer": 92.92,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789952567,
+     "answer": 92.395,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789952897,
+     "answer": 92.95,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789953828,
+     "answer": 93.44,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789954038,
+     "answer": 92.875,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789955358,
+     "answer": 92.335,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789955478,
+     "answer": 91.705,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789955808,
+     "answer": 91.24,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789956258,
+     "answer": 91.725,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789968382,
+     "answer": 92.185,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789972103,
+     "answer": 92.655,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789973063,
+     "answer": 92.185,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789974774,
+     "answer": 91.49,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789975044,
+     "answer": 91.95,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789977684,
+     "answer": 92.455,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789979005,
+     "answer": 93.05,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789979575,
+     "answer": 93.53505,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789979845,
+     "answer": 94.06,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789979935,
+     "answer": 94.735,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789980145,
+     "answer": 95.245,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789980355,
+     "answer": 94.57,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789980445,
+     "answer": 95.105,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789981616,
+     "answer": 95.7132,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789981856,
+     "answer": 96.27445,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789982846,
+     "answer": 96.9297,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789983566,
+     "answer": 97.495,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789984047,
+     "answer": 96.86535,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789984317,
+     "answer": 96.33925,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789987048,
+     "answer": 95.8,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood AMZN / USD",
+   "description": "Robinhood AMZN / USD",
+   "proxy": "0xD5a1508ceD74c084eBf3cBe853e2C968fB2a651C",
+   "rounds": 30,
+   "inside": 20,
+   "outside": 10,
+   "maxGapHours": 55.690555555555555,
+   "medianMoveInsidePct": 0.5309410472354449,
+   "medianMoveOutsidePct": 0.5313084298046704,
+   "latestAnswer": 254.97,
+   "latestUpdatedAt": 1789948838,
+   "history": [
+    {
+     "updatedAt": 1789484017,
+     "answer": 248.53175,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789501999,
+     "answer": 247.22,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789502299,
+     "answer": 248.54795,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789565695,
+     "answer": 246.84595,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789566716,
+     "answer": 248.439,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789568606,
+     "answer": 247.1838,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789585085,
+     "answer": 245.79,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789586796,
+     "answer": 244.485,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789588296,
+     "answer": 245.74465,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789600150,
+     "answer": 247.05725,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789605492,
+     "answer": 248.425,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789641053,
+     "answer": 249.9556,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789648105,
+     "answer": 251.2093,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789652786,
+     "answer": 249.93,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789654977,
+     "answer": 251.375,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789656177,
+     "answer": 252.694,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789656928,
+     "answer": 251.37,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789689427,
+     "answer": 250.03445,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789706112,
+     "answer": 251.365,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789715295,
+     "answer": 252.635,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789737968,
+     "answer": 251.36445,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789738178,
+     "answer": 252.63085,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789738899,
+     "answer": 253.97,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739049,
+     "answer": 252.38,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789743250,
+     "answer": 253.81455,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789743970,
+     "answer": 255.34,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789744450,
+     "answer": 253.89505,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789745950,
+     "answer": 252.6,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789748352,
+     "answer": 253.863,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789948838,
+     "answer": 254.97,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood INTC / USD",
+   "description": "RHINTC / USD",
+   "proxy": "0x3f390C5C24628Ac7C489515402235FeAD71D1913",
+   "rounds": 30,
+   "inside": 16,
+   "outside": 14,
+   "maxGapHours": 51.82611111111111,
+   "medianMoveInsidePct": 0.579904221971489,
+   "medianMoveOutsidePct": 0.5378494910432502,
+   "latestAnswer": 114.85499999,
+   "latestUpdatedAt": 1789979804,
+   "history": [
+    {
+     "updatedAt": 1789730031,
+     "answer": 110.34055,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789731021,
+     "answer": 109.625,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789738254,
+     "answer": 110.362,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738314,
+     "answer": 109.285,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738373,
+     "answer": 108.614,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738523,
+     "answer": 109.24,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738674,
+     "answer": 109.8175,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739514,
+     "answer": 109.185,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740114,
+     "answer": 108.465,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789742004,
+     "answer": 107.90575,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789743535,
+     "answer": 107.28,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789748697,
+     "answer": 106.69,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789759260,
+     "answer": 107.31,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789760100,
+     "answer": 107.984,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789760340,
+     "answer": 108.601,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789760460,
+     "answer": 108.035,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761030,
+     "answer": 109.07,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761240,
+     "answer": 108.49,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789762261,
+     "answer": 109.05,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789948835,
+     "answer": 111.25,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789948895,
+     "answer": 111.845,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789949165,
+     "answer": 112.475,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789951026,
+     "answer": 113.125,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789955407,
+     "answer": 112.485,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789963329,
+     "answer": 113.09,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789965700,
+     "answer": 113.725,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789967531,
+     "answer": 114.31,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789971192,
+     "answer": 113.71,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789977194,
+     "answer": 114.28,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789979804,
+     "answer": 114.85499999,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood MU / USD",
+   "description": "RHMU / USD",
+   "proxy": "0x425EEFdCf05ed6526C3cE61Af99429A228a6d596",
+   "rounds": 30,
+   "inside": 15,
+   "outside": 15,
+   "maxGapHours": 52.07972222222222,
+   "medianMoveInsidePct": 0.5525749238783539,
+   "medianMoveOutsidePct": 0.5190516089873971,
+   "latestAnswer": 1037.80264592,
+   "latestUpdatedAt": 1789980871,
+   "history": [
+    {
+     "updatedAt": 1789652430,
+     "answer": 975.18641112,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789652790,
+     "answer": 982.26649084,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789653841,
+     "answer": 976.88308806,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789656062,
+     "answer": 982.75552743,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789656482,
+     "answer": 977.20546218,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789657712,
+     "answer": 982.24798945,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789659363,
+     "answer": 976.82033337,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789676018,
+     "answer": 982.32849548,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789692133,
+     "answer": 977.34312248,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789700956,
+     "answer": 982.29849323,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789707348,
+     "answer": 987.40887558,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789715480,
+     "answer": 992.35924595,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789723733,
+     "answer": 987.17385799,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789733606,
+     "answer": 982.19848575,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789738437,
+     "answer": 987.66289458,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738947,
+     "answer": 992.9760921,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740898,
+     "answer": 998.12967768,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789741018,
+     "answer": 992.66926915,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789751131,
+     "answer": 998.36929561,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789754702,
+     "answer": 1004.29013858,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789758093,
+     "answer": 1009.3505172,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761334,
+     "answer": 1014.42589693,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789948821,
+     "answer": 1019.69129087,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789948881,
+     "answer": 1025.56173008,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789949091,
+     "answer": 1020.34133951,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789950772,
+     "answer": 1026.82682474,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789967877,
+     "answer": 1021.47642443,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789973189,
+     "answer": 1026.69681501,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789978140,
+     "answer": 1032.51785052,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789980871,
+     "answer": 1037.80264592,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood AAPL / USD",
+   "description": "Robinhood AAPL / USD",
+   "proxy": "0x6B22A786bAa607d76728168703a39Ea9C99f2cD0",
+   "rounds": 30,
+   "inside": 20,
+   "outside": 10,
+   "maxGapHours": 56.81444444444445,
+   "medianMoveInsidePct": 0.5280607267177424,
+   "medianMoveOutsidePct": 0.535852384064965,
+   "latestAnswer": 335.52982928,
+   "latestUpdatedAt": 1789948820,
+   "history": [
+    {
+     "updatedAt": 1789133991,
+     "answer": 334.3491613,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789134441,
+     "answer": 332.57815935,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789136842,
+     "answer": 334.30913867,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789139572,
+     "answer": 335.98508684,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789142183,
+     "answer": 334.24110017,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789156288,
+     "answer": 332.52277801,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789344049,
+     "answer": 331.68765554,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789352661,
+     "answer": 329.95167339,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789373126,
+     "answer": 331.79956885,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789383750,
+     "answer": 333.57752475,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789392992,
+     "answer": 331.71417054,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789393352,
+     "answer": 333.67127779,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789401472,
+     "answer": 335.49781117,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789415730,
+     "answer": 333.43364334,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789444526,
+     "answer": 331.75769516,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789479032,
+     "answer": 330.0367215,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789502155,
+     "answer": 331.81617825,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789563930,
+     "answer": 333.84052354,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789585777,
+     "answer": 332.11919969,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789603782,
+     "answer": 333.84387544,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789652216,
+     "answer": 331.72437631,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789654347,
+     "answer": 333.48367165,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789660846,
+     "answer": 335.24466795,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789671889,
+     "answer": 337.05904445,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789727573,
+     "answer": 338.90403827,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789729223,
+     "answer": 337.02527535,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789739427,
+     "answer": 335.33742043,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740927,
+     "answer": 333.63575769,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789744288,
+     "answer": 335.3847472,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789948820,
+     "answer": 335.52982928,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood NVDA / USD",
+   "description": "RHNVDA / USD",
+   "proxy": "0x379EC4f7C378F34a1B47E4F3cbeBCbAC3E8E9F15",
+   "rounds": 30,
+   "inside": 14,
+   "outside": 16,
+   "maxGapHours": 52.08,
+   "medianMoveInsidePct": 0.5252987829771723,
+   "medianMoveOutsidePct": 0.5065517639089901,
+   "latestAnswer": 225.04436008,
+   "latestUpdatedAt": 1789983721,
+   "history": [
+    {
+     "updatedAt": 1789399974,
+     "answer": 211.93915933,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789416154,
+     "answer": 210.86557778,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789418195,
+     "answer": 211.92775049,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789476946,
+     "answer": 213.04386499,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789483955,
+     "answer": 211.92474816,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789528493,
+     "answer": 213.03500813,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789560423,
+     "answer": 214.17253921,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789566815,
+     "answer": 215.30176386,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789571406,
+     "answer": 216.42233181,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789580379,
+     "answer": 215.32278014,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789582119,
+     "answer": 216.53471886,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789583320,
+     "answer": 215.3117716,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789585000,
+     "answer": 214.22392902,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789586051,
+     "answer": 213.08504688,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789587701,
+     "answer": 214.17088793,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789598414,
+     "answer": 215.25672898,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789630103,
+     "answer": 216.33756615,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789635835,
+     "answer": 217.42841108,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789648379,
+     "answer": 218.56929476,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789654501,
+     "answer": 219.67214898,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789701825,
+     "answer": 220.78601173,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789716259,
+     "answer": 221.89186828,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789729253,
+     "answer": 220.59086058,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789733305,
+     "answer": 219.48500403,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789740747,
+     "answer": 220.61057585,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789741887,
+     "answer": 219.31552275,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761332,
+     "answer": 222.44729849,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789948820,
+     "answer": 222.80257368,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789953441,
+     "answer": 223.91843798,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789983721,
+     "answer": 225.04436008,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood DELL-USD",
+   "description": "Robinhood DELL-USD",
+   "proxy": "0x1C6c8cADBe02E19129c39dDB92281cE4c0bf206b",
+   "rounds": 30,
+   "inside": 13,
+   "outside": 17,
+   "maxGapHours": 52.056111111111115,
+   "medianMoveInsidePct": 0.5349462809145543,
+   "medianMoveOutsidePct": 0.524312260927473,
+   "latestAnswer": 585.61655644,
+   "latestUpdatedAt": 1789978553,
+   "history": [
+    {
+     "updatedAt": 1789673466,
+     "answer": 593.37775086,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789675087,
+     "answer": 590.20349865,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789692570,
+     "answer": 586.91738931,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789701152,
+     "answer": 589.95258267,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789704393,
+     "answer": 592.92277188,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789712136,
+     "answer": 596.04297065,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789724110,
+     "answer": 592.92837224,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789727951,
+     "answer": 595.95126481,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789729662,
+     "answer": 592.92507203,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789734554,
+     "answer": 589.93723169,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789737404,
+     "answer": 586.5577664,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789738005,
+     "answer": 589.51585484,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789738214,
+     "answer": 593.04507967,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738305,
+     "answer": 588.2044713,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740525,
+     "answer": 583.56717589,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789743346,
+     "answer": 580.51698157,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789745627,
+     "answer": 583.42511684,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789748658,
+     "answer": 580.41597514,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789754569,
+     "answer": 577.42578465,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789755740,
+     "answer": 574.20462945,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789760631,
+     "answer": 571.31334526,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761352,
+     "answer": 574.22358066,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761442,
+     "answer": 570.72415773,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789948844,
+     "answer": 573.12151045,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789948904,
+     "answer": 576.14670317,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789951095,
+     "answer": 579.39691022,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789955236,
+     "answer": 576.25671018,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789974232,
+     "answer": 579.3369064,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789977443,
+     "answer": 582.56211186,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789978553,
+     "answer": 585.61655644,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood NBIS / USD",
+   "description": "Robinhood NBIS / USD",
+   "proxy": "0xE1D87B116Ba0fe898998f1D140339D1fA1E09705",
+   "rounds": 30,
+   "inside": 11,
+   "outside": 19,
+   "maxGapHours": 51.40611111111111,
+   "medianMoveInsidePct": 0.5341742574338776,
+   "medianMoveOutsidePct": 0.558561703613196,
+   "latestAnswer": 226.54135,
+   "latestUpdatedAt": 1789985313,
+   "history": [
+    {
+     "updatedAt": 1789748061,
+     "answer": 218.255,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789748420,
+     "answer": 216.7626,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789749831,
+     "answer": 217.90025,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789750221,
+     "answer": 219.07645,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789752322,
+     "answer": 220.2467,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789757633,
+     "answer": 221.365,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789758984,
+     "answer": 222.5148,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789759854,
+     "answer": 221.40095,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789760424,
+     "answer": 222.68755,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761054,
+     "answer": 224.0048,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761144,
+     "answer": 222.8145,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789762315,
+     "answer": 223.9849,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789763785,
+     "answer": 222.7135,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789948847,
+     "answer": 224.475,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789948937,
+     "answer": 225.73,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789949927,
+     "answer": 224.275,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789950197,
+     "answer": 225.605,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789950978,
+     "answer": 226.745,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789952928,
+     "answer": 227.89499999,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789953438,
+     "answer": 229.11,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789955329,
+     "answer": 227.935,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789955809,
+     "answer": 226.64,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789956619,
+     "answer": 227.93,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789957699,
+     "answer": 229.16,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789966852,
+     "answer": 227.88,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789967873,
+     "answer": 226.59,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789968983,
+     "answer": 227.82999999,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789984383,
+     "answer": 226.63185,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789984473,
+     "answer": 225.29955,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789985313,
+     "answer": 226.54135,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood CLSK / USD",
+   "description": "Robinhood CLSK / USD",
+   "proxy": "0x810c12D3a554Bc47fd39597Fe3b3AAC4941F50eF",
+   "rounds": 30,
+   "inside": 15,
+   "outside": 15,
+   "maxGapHours": 48.32861111111111,
+   "medianMoveInsidePct": 0.5690381009657905,
+   "medianMoveOutsidePct": 0.531599114900966,
+   "latestAnswer": 15.0814,
+   "latestUpdatedAt": 1789984419,
+   "history": [
+    {
+     "updatedAt": 1789749603,
+     "answer": 13.995,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789749723,
+     "answer": 13.9055,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789749843,
+     "answer": 13.985,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789750053,
+     "answer": 14.055,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789751884,
+     "answer": 14.1335,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789753624,
+     "answer": 14.213925,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789753894,
+     "answer": 14.285,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789754554,
+     "answer": 14.36399999,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789754674,
+     "answer": 14.275025,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789755515,
+     "answer": 14.36399999,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789755755,
+     "answer": 14.45135,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789756745,
+     "answer": 14.375,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789760407,
+     "answer": 14.295,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761036,
+     "answer": 14.37775,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761577,
+     "answer": 14.454,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789774841,
+     "answer": 14.3656,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789948824,
+     "answer": 14.55,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789949094,
+     "answer": 14.635,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789950504,
+     "answer": 14.71,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789951915,
+     "answer": 14.62999999,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789952245,
+     "answer": 14.705,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789955816,
+     "answer": 14.6,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789970460,
+     "answer": 14.675,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789979103,
+     "answer": 14.74875,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789979823,
+     "answer": 14.8232,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789981148,
+     "answer": 14.902,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789981749,
+     "answer": 15.0028,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789983159,
+     "answer": 15.0841,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789983999,
+     "answer": 15.1602,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789984419,
+     "answer": 15.0814,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood ASML / USD",
+   "description": "Robinhood ASML / USD",
+   "proxy": "0xB4106147E8cce40b7d46124090d373A71b70f87D",
+   "rounds": 30,
+   "inside": 12,
+   "outside": 18,
+   "maxGapHours": 51.97638888888889,
+   "medianMoveInsidePct": 0.5163798377480373,
+   "medianMoveOutsidePct": 0.5304604130982302,
+   "latestAnswer": 1714.67406875,
+   "latestUpdatedAt": 1789979209,
+   "history": [
+    {
+     "updatedAt": 1789650601,
+     "answer": 1648.49491394,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789651682,
+     "answer": 1639.49265189,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789652011,
+     "answer": 1629.22006114,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789661044,
+     "answer": 1620.92922117,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789669176,
+     "answer": 1629.1850576,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789710838,
+     "answer": 1638.7110227,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789714829,
+     "answer": 1652.11738094,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789715069,
+     "answer": 1660.84826548,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789718491,
+     "answer": 1652.03812291,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789724544,
+     "answer": 1643.74708292,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789729255,
+     "answer": 1635.00029676,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789734087,
+     "answer": 1626.59349504,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789738348,
+     "answer": 1636.26577497,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738768,
+     "answer": 1646.35679732,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739728,
+     "answer": 1637.5009001,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789741139,
+     "answer": 1645.88359938,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789745460,
+     "answer": 1654.38261044,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789749931,
+     "answer": 1646.09177047,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789759774,
+     "answer": 1654.34260638,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761305,
+     "answer": 1662.76345953,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761335,
+     "answer": 1676.39874096,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761665,
+     "answer": 1665.17009737,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789761725,
+     "answer": 1676.62606399,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789948840,
+     "answer": 1678.83508779,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789951211,
+     "answer": 1687.90600679,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789953942,
+     "answer": 1696.59188679,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789955952,
+     "answer": 1688.04602098,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789973207,
+     "answer": 1696.69689742,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789974017,
+     "answer": 1705.92283213,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789979209,
+     "answer": 1714.67406875,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood BABA / USD",
+   "description": "Robinhood BABA / USD",
+   "proxy": "0x62Cc8F9b5f56a33c9C8A60c8B92779f523c4E984",
+   "rounds": 30,
+   "inside": 6,
+   "outside": 24,
+   "maxGapHours": 51.159444444444446,
+   "medianMoveInsidePct": 0.5289195550981192,
+   "medianMoveOutsidePct": 0.5595162891435791,
+   "latestAnswer": 114.83595,
+   "latestUpdatedAt": 1789979309,
+   "history": [
+    {
+     "updatedAt": 1789660611,
+     "answer": 108.55,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789695079,
+     "answer": 109.55,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789695109,
+     "answer": 110.25,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789695139,
+     "answer": 109.66499999,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789695289,
+     "answer": 110.215,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789695439,
+     "answer": 110.81,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789695529,
+     "answer": 110.19,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789695829,
+     "answer": 110.835,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789696880,
+     "answer": 111.555,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789697089,
+     "answer": 110.94,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789708163,
+     "answer": 111.545,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789711914,
+     "answer": 112.345,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789715395,
+     "answer": 111.775,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789716986,
+     "answer": 111.14,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789738297,
+     "answer": 111.79915,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739167,
+     "answer": 112.55965,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740127,
+     "answer": 113.155,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789749821,
+     "answer": 113.74,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789754172,
+     "answer": 113.1688,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789764645,
+     "answer": 113.772,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789948819,
+     "answer": 114.555,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789953501,
+     "answer": 113.89,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789954221,
+     "answer": 112.66,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789954281,
+     "answer": 113.445,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789954401,
+     "answer": 114.235,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789957372,
+     "answer": 113.625,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789968745,
+     "answer": 113.055,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789972136,
+     "answer": 113.645,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789974177,
+     "answer": 114.255,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789979309,
+     "answer": 114.83595,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood USO / USD",
+   "description": "RHUSO / USD",
+   "proxy": "0x75a9c76Ef439e2C7c2E5a34Ab105EcFe3766431c",
+   "rounds": 30,
+   "inside": 4,
+   "outside": 26,
+   "maxGapHours": 48.17138888888889,
+   "medianMoveInsidePct": 0.5644402031138744,
+   "medianMoveOutsidePct": 0.5297433048131219,
+   "latestAnswer": 149.7565,
+   "latestUpdatedAt": 1789985885,
+   "history": [
+    {
+     "updatedAt": 1789682596,
+     "answer": 154.99605,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789712592,
+     "answer": 154.2,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789713343,
+     "answer": 153.38,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789716524,
+     "answer": 152.54,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789718474,
+     "answer": 153.3721,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789724026,
+     "answer": 154.16745,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789724446,
+     "answer": 155.0288,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789727057,
+     "answer": 154.2111,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789729458,
+     "answer": 153.4346,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789729548,
+     "answer": 154.393,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789733989,
+     "answer": 155.21355,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789736449,
+     "answer": 156.02075,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789737320,
+     "answer": 156.8193,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789743082,
+     "answer": 156.0307,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789748903,
+     "answer": 155.15,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789749594,
+     "answer": 154.17655,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789758206,
+     "answer": 153.38275,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789775432,
+     "answer": 154.54265,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789948849,
+     "answer": 153.93,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789950230,
+     "answer": 153.095,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789951220,
+     "answer": 152.135,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789952781,
+     "answer": 151.325,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789953441,
+     "answer": 150.565,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789956382,
+     "answer": 151.325,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789969766,
+     "answer": 152.17,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789971506,
+     "answer": 151.345,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789979129,
+     "answer": 150.56325,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789980514,
+     "answer": 151.3219,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789984475,
+     "answer": 150.55405,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789985885,
+     "answer": 149.7565,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood META / USD",
+   "description": "Robinhood META / USD",
+   "proxy": "0x7C38C00C30BEe9378381E7B6135d7283356D71b1",
+   "rounds": 30,
+   "inside": 21,
+   "outside": 9,
+   "maxGapHours": 52.113055555555555,
+   "medianMoveInsidePct": 0.5537225592047507,
+   "medianMoveOutsidePct": 0.5265184614938152,
+   "latestAnswer": 682.65943266,
+   "latestUpdatedAt": 1789972620,
+   "history": [
+    {
+     "updatedAt": 1789652260,
+     "answer": 675.12825,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789652620,
+     "answer": 671.655,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789652680,
+     "answer": 667.5354,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789653010,
+     "answer": 671.255,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789653910,
+     "answer": 675.125,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789657571,
+     "answer": 671.735,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789658231,
+     "answer": 675.18975,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789660392,
+     "answer": 678.6702,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789674917,
+     "answer": 682.42815,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789712451,
+     "answer": 685.855,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789731087,
+     "answer": 689.31095,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789731597,
+     "answer": 693.42465,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789734808,
+     "answer": 689.83165,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789738139,
+     "answer": 685.734,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789738439,
+     "answer": 682.2349,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738589,
+     "answer": 678.515,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739009,
+     "answer": 674.69415,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739249,
+     "answer": 670.855,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739429,
+     "answer": 675.3903,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740900,
+     "answer": 670.9949,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789742160,
+     "answer": 674.52015,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789743061,
+     "answer": 677.91,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789745371,
+     "answer": 674.065,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789747893,
+     "answer": 670.64,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761036,
+     "answer": 663.15345,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761216,
+     "answer": 666.7615,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789948823,
+     "answer": 671.91,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789955456,
+     "answer": 675.55558829,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789966679,
+     "answer": 679.11251318,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789972620,
+     "answer": 682.65943266,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood MSFT / USD",
+   "description": "RHMSFT / USD",
+   "proxy": "0x45C3C877C15E6BA2EBB19eA114Ea508d14C1Af2E",
+   "rounds": 30,
+   "inside": 19,
+   "outside": 11,
+   "maxGapHours": 51.314166666666665,
+   "medianMoveInsidePct": 0.529409985073859,
+   "medianMoveOutsidePct": 0.5284175266955082,
+   "latestAnswer": 495.26943836,
+   "latestUpdatedAt": 1789948844,
+   "history": [
+    {
+     "updatedAt": 1789412606,
+     "answer": 505.95735014,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789439914,
+     "answer": 503.38778947,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789456779,
+     "answer": 500.41156094,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789479051,
+     "answer": 502.9726181,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789479591,
+     "answer": 505.82379501,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789480101,
+     "answer": 503.24688131,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789480881,
+     "answer": 500.59178533,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789495766,
+     "answer": 497.94119121,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789564564,
+     "answer": 495.37353133,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789565464,
+     "answer": 492.34953308,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789566065,
+     "answer": 495.35332299,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789567985,
+     "answer": 492.84843902,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789585931,
+     "answer": 490.27737773,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789586801,
+     "answer": 487.67685428,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789588451,
+     "answer": 490.13822029,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789598505,
+     "answer": 492.61459249,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789630465,
+     "answer": 495.53454779,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789651683,
+     "answer": 499.80230945,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789651921,
+     "answer": 496.05976459,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789655162,
+     "answer": 498.56014671,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789657353,
+     "answer": 496.03975634,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789674729,
+     "answer": 498.66584034,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789683221,
+     "answer": 496.03080264,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789710877,
+     "answer": 498.52578252,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789737915,
+     "answer": 495.81561381,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789739055,
+     "answer": 493.16241862,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789755710,
+     "answer": 495.65959941,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761022,
+     "answer": 493.01350715,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789764113,
+     "answer": 495.82266672,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789948844,
+     "answer": 495.26943836,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood SLV / USD",
+   "description": "Robinhood SLV / USD",
+   "proxy": "0x209b73908e92Ae021826eD79609845451Ecba2ce",
+   "rounds": 30,
+   "inside": 8,
+   "outside": 22,
+   "maxGapHours": 52.06305555555556,
+   "medianMoveInsidePct": 0.5095647815554256,
+   "medianMoveOutsidePct": 0.5153353835923863,
+   "latestAnswer": 59.92495,
+   "latestUpdatedAt": 1789985823,
+   "history": [
+    {
+     "updatedAt": 1789647727,
+     "answer": 59.17025,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789649077,
+     "answer": 58.87,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789650518,
+     "answer": 59.2249,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789653909,
+     "answer": 59.525,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789656970,
+     "answer": 59.2,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789660811,
+     "answer": 59.50499999,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789666723,
+     "answer": 59.205,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789673055,
+     "answer": 58.905,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789690423,
+     "answer": 59.20999999,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789693304,
+     "answer": 59.53,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789696005,
+     "answer": 59.23,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789698706,
+     "answer": 59.54,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789701797,
+     "answer": 59.23,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789702547,
+     "answer": 59.53,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789708099,
+     "answer": 59.855,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789709959,
+     "answer": 60.155,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789715871,
+     "answer": 60.465,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789721843,
+     "answer": 60.77495,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789724964,
+     "answer": 60.46365,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789733487,
+     "answer": 60.1448,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789734327,
+     "answer": 59.84,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789734837,
+     "answer": 60.18045,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789739668,
+     "answer": 59.855,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789749061,
+     "answer": 60.16,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761395,
+     "answer": 59.855,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789948822,
+     "answer": 59.92,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789952483,
+     "answer": 60.265,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789957345,
+     "answer": 59.925,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789969739,
+     "answer": 59.62,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789985823,
+     "answer": 59.92495,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood CRWV / USD",
+   "description": "Robinhood CRWV / USD",
+   "proxy": "0xe1b3aABCAFAd1c94708dc1367dcfF8Aa4407487C",
+   "rounds": 30,
+   "inside": 21,
+   "outside": 9,
+   "maxGapHours": 52.39333333333333,
+   "medianMoveInsidePct": 0.5848234955514122,
+   "medianMoveOutsidePct": 0.511135450894487,
+   "latestAnswer": 82.6276,
+   "latestUpdatedAt": 1789984667,
+   "history": [
+    {
+     "updatedAt": 1789734773,
+     "answer": 80.38855,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789735523,
+     "answer": 79.98175,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789738374,
+     "answer": 80.65985,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738734,
+     "answer": 81.095,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738794,
+     "answer": 80.55,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739004,
+     "answer": 80.984,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739034,
+     "answer": 80.46115,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739184,
+     "answer": 80.91,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739394,
+     "answer": 80.505,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739994,
+     "answer": 79.96,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740294,
+     "answer": 79.445,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740625,
+     "answer": 79.91,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789741224,
+     "answer": 80.365,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789743235,
+     "answer": 79.913,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789744165,
+     "answer": 80.38035,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789745396,
+     "answer": 79.92,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789746806,
+     "answer": 80.41,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789747677,
+     "answer": 80.00535,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789748127,
+     "answer": 79.505,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789749927,
+     "answer": 79.90985,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789752478,
+     "answer": 80.325,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789757910,
+     "answer": 80.83915,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789760220,
+     "answer": 81.3349,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789948836,
+     "answer": 81.745,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789952016,
+     "answer": 82.17,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789953817,
+     "answer": 82.59,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789960809,
+     "answer": 83.05,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789967141,
+     "answer": 82.625,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789980225,
+     "answer": 83.04665,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789984667,
+     "answer": 82.6276,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood AMD / USD",
+   "description": "RHAMD / USD",
+   "proxy": "0x943A29E7ae51A4798823ca9eEd2ed533B2A22C72",
+   "rounds": 30,
+   "inside": 19,
+   "outside": 11,
+   "maxGapHours": 52.04277777777778,
+   "medianMoveInsidePct": 0.5367635156259073,
+   "medianMoveOutsidePct": 0.5329105585332002,
+   "latestAnswer": 575.613,
+   "latestUpdatedAt": 1789981660,
+   "history": [
+    {
+     "updatedAt": 1789655795,
+     "answer": 537.645,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789656785,
+     "answer": 540.35,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789657325,
+     "answer": 543.35,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789660026,
+     "answer": 546.464,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789661514,
+     "answer": 549.56999999,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789666735,
+     "answer": 546.80505,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789671387,
+     "answer": 543.86999999,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789672617,
+     "answer": 546.62095,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789688823,
+     "answer": 543.78385,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789703497,
+     "answer": 546.785,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789712050,
+     "answer": 549.71499999,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789715350,
+     "answer": 552.63,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789724413,
+     "answer": 549.6701,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789730926,
+     "answer": 546.74085,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789738548,
+     "answer": 549.66,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738878,
+     "answer": 545.86,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739178,
+     "answer": 549.104,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740048,
+     "answer": 552.485,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740169,
+     "answer": 549.6427,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789741999,
+     "answer": 546.76,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789742719,
+     "answer": 543.98499999,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789760335,
+     "answer": 546.73499999,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761025,
+     "answer": 550.675,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761325,
+     "answer": 556.49,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761475,
+     "answer": 559.42445,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789948829,
+     "answer": 563.12,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789948919,
+     "answer": 566.88,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789950300,
+     "answer": 569.725,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789977789,
+     "answer": 572.6328,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789981660,
+     "answer": 575.613,
+     "session": "CLOSED"
+    }
+   ]
+  },
+  {
+   "name": "Robinhood GME / USD",
+   "description": "Robinhood GME / USD",
+   "proxy": "0x27C71df6A64fB476468EdF256CF72c038baB5B67",
+   "rounds": 30,
+   "inside": 11,
+   "outside": 19,
+   "maxGapHours": 51.69777777777778,
+   "medianMoveInsidePct": 0.5238235574355691,
+   "medianMoveOutsidePct": 0.5447809980387884,
+   "latestAnswer": 22.81505,
+   "latestUpdatedAt": 1789981095,
+   "history": [
+    {
+     "updatedAt": 1789670237,
+     "answer": 22.595,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789674919,
+     "answer": 22.713,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789686323,
+     "answer": 22.58395,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789686653,
+     "answer": 22.7054,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789690194,
+     "answer": 22.825,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789738329,
+     "answer": 22.70525,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738419,
+     "answer": 22.575,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789738569,
+     "answer": 22.68795,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789739079,
+     "answer": 22.568,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789740640,
+     "answer": 22.449,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789746671,
+     "answer": 22.565,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789749702,
+     "answer": 22.449,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789754774,
+     "answer": 22.56485,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789761076,
+     "answer": 22.68305,
+     "session": "REGULAR"
+    },
+    {
+     "updatedAt": 1789762726,
+     "answer": 22.55175,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789948838,
+     "answer": 22.58,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789950399,
+     "answer": 22.695,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789952589,
+     "answer": 22.82,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789960572,
+     "answer": 22.95,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789962072,
+     "answer": 23.06499999,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789962402,
+     "answer": 23.21,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789962582,
+     "answer": 23.435,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789962642,
+     "answer": 23.22999999,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789962912,
+     "answer": 23.11,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789963152,
+     "answer": 23.235,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789963723,
+     "answer": 23.095,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789967084,
+     "answer": 22.945,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789968134,
+     "answer": 22.82,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789978007,
+     "answer": 22.9364,
+     "session": "CLOSED"
+    },
+    {
+     "updatedAt": 1789981095,
+     "answer": 22.81505,
+     "session": "CLOSED"
+    }
+   ]
+  }
+ ],
+ "totals": {
+  "inside": 503,
+  "outside": 547
+ }
+}
