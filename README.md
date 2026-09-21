@@ -346,6 +346,26 @@ In US equity markets the consolidated tape is paid for by data subscribers and i
 3. Replay: re-run the 30 settlements above against Bell's reference and report the payout difference per case, with `CONFIRMED_DEFECT / COUNTERFACTUAL / UNVERIFIABLE` kept apart.
 4. One consumer that moves USDG through a full lifecycle on Bell's reference, and one external integrator.
 
+## The number we are still missing, and how it is being measured
+
+Everything measured so far describes closed markets, where a quiet feed is exactly what a 24/5 schedule
+with a 0.5 % deviation band should produce. The number that decides whether a staleness guard is worth
+anything is the other one: **while the exchange is open, how old is the price a contract would read?**
+
+`script/staleness_sampler.py` samples all 35 feeds every five minutes and appends to
+[`docs/staleness_samples.csv`](docs/staleness_samples.csv). View calls only, no key and no gas. A first
+snapshot, 2026-09-21 08:54 UTC with the session closed, for the shape of the thing:
+
+```
+35 feeds, session CLOSED: median age 3036 s, p90 32060 s, max 32078 s
+older than 1 min 94%, 5 min 89%, 15 min 74%, 1 h 31%
+```
+
+The same lines during the session are what we will publish before submission, whichever way they come
+out. If the feeds turn out to be seconds fresh inside regular hours, the guard's value is the session
+boundary alone and we will say so; if the tail is long, the staleness budget is the other half of the
+product. We are not going to decide which sentence is true before the data does.
+
 ## What we found auditing ourselves, and fixed
 
 Before a reviewer could, we attacked our own contracts and redeployed. Both findings are in the tests now,

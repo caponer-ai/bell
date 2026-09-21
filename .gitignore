@@ -11,3 +11,5 @@ replay_settlements.json
 keeper-*.log
 keeper-*.err
 .addresses
+sampler-*.log
+sampler-*.err
