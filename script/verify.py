@@ -255,9 +255,14 @@ def main():
                 )
             )
             if m[0]:
-                age = m[5] - m[6]
+                # Mark is (bool set, uint8 verdict, uint8 reason, uint32 tradingDate, uint64 markedAt,
+                # uint64 updatedAt, int192 answer): seven fields, indices 0 to 6. An earlier version read
+                # m[7] and only ever ran on days with no mark, so nothing caught it until a real mark
+                # existed. That is the same class of bug this repo keeps finding elsewhere.
+                age = m[4] - m[5]
                 print(
-                    f"    AAPL {label} mark: price {signed(m[7]) / 1e8:,.2f}, {age}s old when marked, verdict {VERDICT[m[1]]}"
+                    f"    AAPL {label} mark: price {signed(m[6]) / 1e8:,.2f}, {age}s old when marked, "
+                    f"verdict {VERDICT[m[1]]}"
                 )
             else:
                 print(f"    AAPL {label} mark: not recorded yet today")
@@ -293,9 +298,14 @@ def main():
     # data files and looking for the same figure in README.md. If a measurement is rerun and the prose is
     # not updated, this fails, which is the whole point: a README that drifts from its own data is exactly
     # the failure this project keeps finding in other people's work.
-    readme = (ROOT / "README.md").read_text(encoding="utf-8")
-
+    # The prose lives in two files since the README was cut from 630 lines to 223: the short one a judge
+    # reads and the long one a reader digs into. A number may sit in either, so both are searched.
     drift = [0]
+    readme = ""
+    for name in ("README.md", "docs/DETAILS.md"):
+        path = ROOT / name
+        if path.exists():
+            readme += path.read_text(encoding="utf-8")
 
     def claim(label, value, fmt="{:,.0f}"):
         text = fmt.format(value)
@@ -306,7 +316,9 @@ def main():
         return present
 
     try:
-        flow = json.loads((ROOT / "docs" / "equity_flow_4663.json").read_text(encoding="utf-8"))
+        flow = json.loads(
+            (ROOT / "docs" / "equity_flow_4663.json").read_text(encoding="utf-8")
+        )
         claim("weekly USDG volume in the equity pools", flow["totalUsdg"])
         claim("of it while the exchange was shut", flow["closedUsdg"])
         claim("swaps counted", flow["swaps"])
@@ -315,7 +327,9 @@ def main():
         line(False, "docs/equity_flow_4663.json missing")
 
     try:
-        rounds = json.loads((ROOT / "docs" / "feed_rounds_4663.json").read_text(encoding="utf-8"))
+        rounds = json.loads(
+            (ROOT / "docs" / "feed_rounds_4663.json").read_text(encoding="utf-8")
+        )
         hist = [r for f in rounds["feeds"] for r in f["history"]]
         newest = max(r["updatedAt"] for r in hist)
         window = [r for r in hist if r["updatedAt"] >= newest - 10 * 86400]
@@ -326,17 +340,30 @@ def main():
         line(False, "docs/feed_rounds_4663.json missing")
 
     try:
-        gap = json.loads((ROOT / "docs" / "price_gap_4663.json").read_text(encoding="utf-8"))
+        gap = json.loads(
+            (ROOT / "docs" / "price_gap_4663.json").read_text(encoding="utf-8")
+        )
         for state in ("REGULAR", "CLOSED", "WEEKEND"):
             if state in gap["totals"]:
-                claim(f"median pool-to-feed gap, {state.lower()}", gap["totals"][state]["gapP50Pct"], "{:.3f}")
+                claim(
+                    f"median pool-to-feed gap, {state.lower()}",
+                    gap["totals"][state]["gapP50Pct"],
+                    "{:.3f}",
+                )
     except FileNotFoundError:
         line(False, "docs/price_gap_4663.json missing")
 
     try:
-        morpho = json.loads((ROOT / "docs" / "morpho_exposure.json").read_text(encoding="utf-8"))
-        claim("equity collateral on Morpho, read onchain", morpho["onchain"]["totalUsd"])
-        line(True, f"against {morpho['api']['equityCollateralUsd']:,.0f} from Morpho's own API")
+        morpho = json.loads(
+            (ROOT / "docs" / "morpho_exposure.json").read_text(encoding="utf-8")
+        )
+        claim(
+            "equity collateral on Morpho, read onchain", morpho["onchain"]["totalUsd"]
+        )
+        line(
+            True,
+            f"against {morpho['api']['equityCollateralUsd']:,.0f} from Morpho's own API",
+        )
     except FileNotFoundError:
         line(False, "docs/morpho_exposure.json missing")
 
