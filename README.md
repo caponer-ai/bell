@@ -13,6 +13,7 @@ Stock tokens trade 24/7. The equity behind them trades 6.5 hours a day. Every pr
 | **Bell** | `0x88a5a0414c9fd615201814ddbec4e4d9e4d283d0` |
 | **BellFeedAdapter** (AAPL/USD, Chainlink-shaped) | `0x4F0331DDbdDfE3349e16e37F80219A868B876655` |
 | **PushFeedGuard** (all 35 equity push feeds) | `0x005554C0FeD814a3Ac450e226B455Ada0D04aec6` |
+| **SessionLog** (public bell-by-bell record) | `0xA3f6ba97e1a346c0D6b243C2C570e04414f64BC1` |
 | Chain | Robinhood Chain mainnet, chainId 4663 |
 | Deploy tx | `0xbec3cb1a8813dadf0aa52e66f87d79ecb4dd487b95413fdf2062286a6187c540`, block 68,238,358 |
 | Verifier it reads | `0xcE73c8ad08CBDEaCa6078BF0627C8fe0a9a536E7` (official Chainlink Data Streams VerifierProxy) |
@@ -155,6 +156,34 @@ check can accept an hour, and `PushFeedGuard` makes that choice explicit instead
 consumer integrates by changing one address. 19 tests cover the session boundaries to the second, the
 early-close day, Thanksgiving, the staleness budget, a zero price, an incomplete round, a reverting feed
 and a feed address with no code at all.
+
+## The record that grows on its own: SessionLog
+
+Every claim about oracle latency on this chain is a screenshot in somebody's README, ours included.
+`src/SessionLog.sol` turns the claim into a public record. Anyone may call it inside a bounded window
+around a session boundary; it writes what the feed answered at that moment and cannot be rewritten
+afterwards. No owner, first writer wins.
+
+| | |
+|---|---|
+| Live log | `0xA3f6ba97e1a346c0D6b243C2C570e04414f64BC1` |
+| Deploy tx | `0x84199713ffe5d84eadb8c16935b409f56b45c57ca55f21248d5a67ee3eb40909` |
+| Keeper | `script/keeper.py --watch`, about 15 transactions a trading day, roughly a cent of gas |
+
+Three marks per feed per day:
+
+- **`markOpen`**, inside `[O, O+300)`: exactly what a contract reading at the opening bell would have
+  been told, including how old that price already was;
+- **`markFirstPrint`**, any time in the session: the feed's first update stamped at or after the bell.
+  The stored delay is measured from the bell to the feed's own `updatedAt`, so a late caller cannot make
+  it look smaller than it was, only larger;
+- **`markClose`**, inside `[C-300, C)`: the last state before the exchange shuts.
+
+This is the honest version of the number we have been quoting from an off-chain script since 2026-09-17
+("first AAPL print after the open: median 5.0 min, p90 29 min, max 340 min"). From now on the same
+measurement accumulates on mainnet, signed by nobody, checkable by anyone, growing one session at a time.
+12 tests cover the windows to the second, the immutability of a written mark, the refusal outside a
+trading day, and the fact that a late caller cannot understate a delay.
 
 ## Integration is one address: BellFeedAdapter
 
