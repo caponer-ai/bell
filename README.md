@@ -33,10 +33,15 @@ python script/verify.py     # no key, no wallet: reads every contract and checks
 - Bell verified two **real DON-signed reports** through the official Chainlink verifier, wrote receipts,
   and then refused to serve them: `checkLive` answers `WAIT / OBS_STALE`. A valid signature is not
   permission;
-- the audit in [`docs/REPLAY.md`](docs/REPLAY.md) shows what the absence of this layer already does: of
-  30 settlements on the chain's only live stock market, **28 read the same feed round on both sides**, so
-  a tie-break rule decided them, with the price a median of 11.9 hours old. Total ever staked there:
-  **0.009 ETH**, which we state as plainly as the defect.
+- the audit in [`docs/REPLAY.md`](docs/REPLAY.md) shows what the absence of this layer already permits:
+  of 30 settlements on the chain's only live stock market, **28 read the same feed round on both sides**,
+  so a tie-break rule decided them rather than any price movement. The same section attacks its own
+  sample: 23 of those 30 were locked and settled within a minute of each other, which looks like an
+  operator testing rather than a market trading; the 11.9 hour median price age is an out-of-session
+  number, while the two fully in-session cases were 4 and 8 minutes old; and 26 of the 30 markets had no
+  bet at all, with 0.009 ETH ever staked across all of them. What survives: a deployed contract on this
+  chain can settle a stock market on a price from a day the exchange never opened, and nothing in the
+  data it reads can tell it so.
 
 **What is not proven yet, stated before anyone asks:**
 

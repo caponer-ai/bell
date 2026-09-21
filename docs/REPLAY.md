@@ -61,6 +61,28 @@ proxy and resolved which round was current at the lock call and at the settle ca
 | Total ever staked across all 30 markets | **0.009 ETH** |
 | Markets with any bet at all | 4 of 30 |
 
+### What this does not say, checked by attacking our own sample
+
+Three things weaken the table above, and they are ours to state, not a reviewer's to discover.
+
+- **Most of these look like test runs, not trading.** The median interval between `lockMarket` and
+  `settleMarket` is **4.5 seconds**, and 23 of the 30 settled within a minute of being locked. An operator
+  locking and settling in the same breath is exercising a contract, not running a market. The defect that
+  remains after saying so is still a defect, and it is a design one: `settleMarket` has no minimum
+  interval after `lockMarket`, so the window in which the price is allowed to move can be zero seconds
+  wide, and the tie rule then decides by construction.
+- **The 11.9 hour median is an out-of-session number.** It is driven by the 28 settlements with at least
+  one leg outside regular hours (median 12.4 h there). In the only two settlements that ran entirely
+  inside the session, the price was **4 and 8 minutes old**. Quoting 11.9 hours as though it described
+  trading hours would be dishonest; outside the session the feeds are quiet, which is exactly what a 24/5
+  schedule with a 0.5 % deviation band produces.
+- **Almost nobody was playing.** 26 of the 30 markets had no bet at all; the 0.009 ETH sits in four of
+  them. This is a mechanism audit on a market that was barely used, and it is worth reading as one.
+
+What survives all three: on this chain, today, a deployed contract can resolve a stock market on a price
+from a day the exchange never opened, with the winner chosen by a tie-break rule, and nothing in the data
+it reads can tell it otherwise. That is worth fixing before the size arrives, not after.
+
 Read the last two rows before the first six. **Nobody lost real money here**: this market is tiny, and
 we are not going to inflate 0.009 ETH into a disaster. What the audit establishes is mechanical, and it
 does not depend on the size of the pool: on this chain, today, a contract can settle a stock market on a
