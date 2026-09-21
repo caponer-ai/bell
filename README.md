@@ -14,6 +14,7 @@ Stock tokens trade 24/7. The equity behind them trades 6.5 hours a day. Every pr
 | **BellFeedAdapter** (AAPL/USD, Chainlink-shaped) | `0x4F0331DDbdDfE3349e16e37F80219A868B876655` |
 | **PushFeedGuard** (all 35 equity push feeds) | `0x005554C0FeD814a3Ac450e226B455Ada0D04aec6` |
 | **SessionLog** (public bell-by-bell record) | `0xA3f6ba97e1a346c0D6b243C2C570e04414f64BC1` |
+| **SettleOnMark** (USDG demo trade, 2026-09-21) | `0x5338523cB4629b460c9e21532d9e4F0c7Fc9648C` |
 | Chain | Robinhood Chain mainnet, chainId 4663 |
 | Deploy tx | `0xbec3cb1a8813dadf0aa52e66f87d79ecb4dd487b95413fdf2062286a6187c540`, block 68,238,358 |
 | Verifier it reads | `0xcE73c8ad08CBDEaCa6078BF0627C8fe0a9a536E7` (official Chainlink Data Streams VerifierProxy) |
@@ -226,6 +227,33 @@ here: lock on `latestRoundData()`, settle on `latestRoundData()`, tie pays BULL.
 resolves markets on a weekend. Pointed at this adapter, the same contract cannot even lock, and a second
 read seconds later needs a second admissible observation instead of silently returning the first number.
 That is the audit in `docs/REPLAY.md`, turned into a test, and into one address a builder can paste.
+
+## The consumer that can run today: SettleOnMark
+
+`SettleMini` settles on Bell's DON-signed session reference and waits for a Data Streams subscription.
+`src/SettleOnMark.sol` settles on something that exists right now: the **closing mark** that `SessionLog`
+recorded for a feed on a trading day. Same discipline, no subscription.
+
+Money moves only if three checks on the *record* pass, and each one is a check the audited market skipped:
+
+1. a closing mark for that feed and trading day exists, and marks are write-once;
+2. its verdict is ALLOW, so the exchange was open and the number was a real price;
+3. the marked price was younger than the trade's own `maxPriceAge` at the moment it was recorded.
+
+Otherwise there is no settlement, only `refund()`. A trade pointed at a Saturday can never pay out,
+because `SessionLog` refuses to record a mark on a day the calendar has no session at all. That is the
+2026-07-03 holiday settlement from [`docs/REPLAY.md`](docs/REPLAY.md), made structurally impossible.
+
+| | |
+|---|---|
+| Live demo trade | `0x5338523cB4629b460c9e21532d9e4F0c7Fc9648C` |
+| Terms | AAPL/USD, trading day 2026-09-21, strike 335.00, 1 USDG a side, staleness budget 900 s |
+| Escrow token | Paxos USDG `0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168`, 6 decimals |
+
+Both sides of that particular trade are wallets we control, and we say so rather than dressing it up as
+adoption: the demo is about where the number comes from, not about who won. 12 tests cover both payoff
+directions, the exact-strike rule, a missing mark, a mark from a closed exchange, a marked price older
+than the budget, refunds refused while a trade is still settleable, and double settlement.
 
 ## The consumer: SettleMini
 
