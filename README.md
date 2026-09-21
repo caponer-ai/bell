@@ -9,7 +9,7 @@ sessions. **1,003 rounds published, 509 of them outside those columns**, and the
 row: `RHTSLA / USD` publishes 4 rounds in 30 out of session, `Robinhood MSTR / USD` publishes 30 in 30.
 
 The obvious claim to make here would be that the out-of-hours price is worse, so we measured it on
-**994,000 swaps and $418M of USDG volume** across the 58 tokenized-equity pools on this chain. It is not
+**982,364 swaps and $418M of USDG volume** across the 58 tokenized-equity pools on this chain. It is not
 worse: the median gap between the pool's own price and the feed is 0.169 % during the session, 0.159 % at
 night and 0.063 % at weekends. That hypothesis is dead, and the measurement that killed it is in this repo.
 
@@ -84,8 +84,8 @@ the same beacon, so this proves lineage, not issuance. What closes the practical
 carry 17 tickers across 17 distinct token addresses, with no ticker claimed twice. Absent a published
 registry from the issuer, that is the strongest check available from the chain alone.
 
-**The flow.** Over the seven days ending at block 68,728,047 those 58 pools saw **1,011,296 swaps and
-$418,290,551 of USDG volume**. **$212,136,382 of it, 50.7% of the volume and 64.0% of the swaps, traded
+**The flow.** Over the seven days ending at block 68,736,522 those 58 pools saw **1,009,490 swaps and
+$417,892,608 of USDG volume**. **$211,738,439 of it, 50.7% of the volume and 64.0% of the swaps, traded
 while the regular session was shut** ([`docs/equity_flow_4663.json`](docs/equity_flow_4663.json)). The
 session split is computed by binary-searching the block at each opening and closing bell, then cross-checked
 against the deployed `PushFeedGuard.sessionAt`: **20 probes on the boundaries, 0 disagreements**.
@@ -156,7 +156,7 @@ the exchange is shut. We measured exactly that, and it is not true.
 
 `script/price_gap.py` takes each swap's `sqrtPriceX96` as the pool's own mid, finds the Chainlink round a
 contract would have read at that same moment, and splits the gap by session state. Over one week and
-994,000 swaps ([`docs/price_gap_4663.json`](docs/price_gap_4663.json)):
+982,364 swaps ([`docs/price_gap_4663.json`](docs/price_gap_4663.json)):
 
 | | swaps | USDG volume | median gap | p90 | p99 |
 |---|---:|---:|---:|---:|---:|

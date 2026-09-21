@@ -13,6 +13,8 @@ import datetime as dt
 import json
 import pathlib
 import sys
+import time
+import urllib.error
 import urllib.request
 
 RPC = "https://rpc.mainnet.chain.robinhood.com/"
@@ -65,7 +67,13 @@ def keccak(text):
     return "0x" + k.hexdigest()
 
 
-def rpc(method, params):
+def rpc(method, params, tries=8):
+    """One JSON-RPC call, patient with the public node.
+
+    The node rate-limits, and this script is the first thing a reader runs. Falling over with a 429
+    halfway through a verification run would make the repo look broken when it is the node that is busy,
+    so this backs off and keeps going.
+    """
     req = urllib.request.Request(
         RPC,
         data=json.dumps(
@@ -73,7 +81,14 @@ def rpc(method, params):
         ).encode(),
         headers={"Content-Type": "application/json", "User-Agent": "bell-verify/0.1"},
     )
-    out = json.loads(urllib.request.urlopen(req, timeout=60).read())
+    for attempt in range(tries):
+        try:
+            out = json.loads(urllib.request.urlopen(req, timeout=60).read())
+            break
+        except urllib.error.HTTPError as e:
+            if e.code != 429 or attempt == tries - 1:
+                raise
+            time.sleep(min(15.0, 1.5 * (attempt + 1) ** 1.5))
     if "error" in out:
         return {"__error__": out["error"].get("message", "")}
     return out["result"]
@@ -272,6 +287,60 @@ def main():
         True,
         f"longFunded {bool(funded[0])}, shortFunded {bool(funded[1])}, closed {bool(funded[2])}",
     )
+
+    section("the numbers in the README against the files they came from")
+    # Contracts are checked above by calling them. The measured claims are checked here, by reading the
+    # data files and looking for the same figure in README.md. If a measurement is rerun and the prose is
+    # not updated, this fails, which is the whole point: a README that drifts from its own data is exactly
+    # the failure this project keeps finding in other people's work.
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+
+    drift = [0]
+
+    def claim(label, value, fmt="{:,.0f}"):
+        text = fmt.format(value)
+        present = text in readme
+        if not present:
+            drift[0] += 1
+        line(present, f"{label}: {text}" + ("" if present else "  NOT FOUND IN README"))
+        return present
+
+    try:
+        flow = json.loads((ROOT / "docs" / "equity_flow_4663.json").read_text(encoding="utf-8"))
+        claim("weekly USDG volume in the equity pools", flow["totalUsdg"])
+        claim("of it while the exchange was shut", flow["closedUsdg"])
+        claim("swaps counted", flow["swaps"])
+        line(True, f"pools counted: {flow['pools']}")
+    except FileNotFoundError:
+        line(False, "docs/equity_flow_4663.json missing")
+
+    try:
+        rounds = json.loads((ROOT / "docs" / "feed_rounds_4663.json").read_text(encoding="utf-8"))
+        hist = [r for f in rounds["feeds"] for r in f["history"]]
+        newest = max(r["updatedAt"] for r in hist)
+        window = [r for r in hist if r["updatedAt"] >= newest - 10 * 86400]
+        outside = sum(1 for r in window if r["session"] != "REGULAR")
+        claim("rounds published in a common ten-day window", len(window))
+        claim("of them outside the regular session", outside)
+    except FileNotFoundError:
+        line(False, "docs/feed_rounds_4663.json missing")
+
+    try:
+        gap = json.loads((ROOT / "docs" / "price_gap_4663.json").read_text(encoding="utf-8"))
+        for state in ("REGULAR", "CLOSED", "WEEKEND"):
+            if state in gap["totals"]:
+                claim(f"median pool-to-feed gap, {state.lower()}", gap["totals"][state]["gapP50Pct"], "{:.3f}")
+    except FileNotFoundError:
+        line(False, "docs/price_gap_4663.json missing")
+
+    try:
+        morpho = json.loads((ROOT / "docs" / "morpho_exposure.json").read_text(encoding="utf-8"))
+        claim("equity collateral on Morpho, read onchain", morpho["onchain"]["totalUsd"])
+        line(True, f"against {morpho['api']['equityCollateralUsd']:,.0f} from Morpho's own API")
+    except FileNotFoundError:
+        line(False, "docs/morpho_exposure.json missing")
+
+    failures += drift[0]
 
     section("result")
     if failures:
