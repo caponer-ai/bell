@@ -1,1 +1,21 @@
 [15:00:34Z] keeper up. mark window 1790106900..1790107200, feed 0x6B22A786bAa607d76728168703a39Ea9C99f2cD0, trade 0x52a0E0d3BD4729BCD622fed437EDb428835658Ac
+[15:04:35Z] 1730 min to the window. price 337.49, age 56 min
+[15:14:38Z] 1720 min to the window. price 337.49, age 66 min
+[15:24:41Z] 1710 min to the window. price 337.49, age 77 min
+[15:34:44Z] 1700 min to the window. price 337.49, age 87 min
+[15:44:46Z] 1690 min to the window. price 337.49, age 97 min
+[15:54:49Z] 1680 min to the window. price 337.49, age 107 min
+[16:04:52Z] 1670 min to the window. price 337.49, age 117 min
+[16:14:55Z] 1660 min to the window. price 337.49, age 127 min
+[16:24:58Z] 1650 min to the window. price 337.49, age 137 min
+[16:35:01Z] 1640 min to the window. price 337.49, age 147 min
+[18:24:32Z] 1530 min to the window. price 339.24, age 101 min
+[18:34:34Z] 1520 min to the window. price 339.24, age 111 min
+[18:44:37Z] 1510 min to the window. price 339.24, age 121 min
+[18:54:41Z] 1500 min to the window. price 339.24, age 131 min
+[19:04:44Z] 1490 min to the window. price 339.24, age 141 min
+[19:14:47Z] 1480 min to the window. price 339.24, age 151 min
+[19:24:50Z] 1470 min to the window. price 339.24, age 161 min
+[19:34:53Z] 1460 min to the window. price 339.24, age 171 min
+[19:44:55Z] 1450 min to the window. price 339.24, age 181 min
+[19:54:58Z] 1440 min to the window. price 339.24, age 191 min
