@@ -1,59 +1,70 @@
 # Bell
 
-**Onchain session status and a session reference price for tokenized US equities on Robinhood Chain, computed from DON-signed Chainlink Data Streams reports under a published policy.**
+**The exchange has an opening bell. The onchain market for its shares does not.**
 
-Stock tokens trade 24/7. The equity behind them trades 6.5 hours a day. Every protocol on Robinhood Chain that settles, lends or prices against a stock token needs to know two things the existing push feeds cannot tell it: *is the market open right now*, and *what the regular-session reference price was at the open and at the close, under a stated policy*. Bell answers both, with a receipt, under a selection rule that nobody, including the poster, can bend.
+Tokenized equities trade around the clock; the shares behind them trade six and a half hours a day. Every
+Chainlink equity feed on Robinhood Chain answers `latestRoundData()` at 03:00 on a Sunday and has no way
+to say either of the two things that decide whether a number may be acted on: **is the regular session
+open**, and **how old is this price**. Bell is the layer that answers both, on mainnet, for free, and
+refuses when it cannot.
 
-> Status: buildathon work in progress (Arbitrum Open House Singapore, Sept 14 to Oct 4, 2026). Not audited. Read the code, run the tests, form your own view.
+> Buildathon work (Arbitrum Open House Singapore, 14 Sept to 4 Oct 2026), solo, unaudited.
+> Everything below is live on chainId 4663 and meant to be checked rather than believed.
 
-## Deployed
+## Sixty seconds
+
+```bash
+python script/verify.py     # no key, no wallet: reads every contract and checks every claim here
+```
+
+| Contract | Answers | Address |
+|---|---|---|
+| **PushFeedGuard** | is this feed's price fit to act on right now, for **all 35 equity feeds** | `0x005554C0FeD814a3Ac450e226B455Ada0D04aec6` |
+| **SessionLog** | a public, write-once record of what the feeds said at each bell | `0xA3f6ba97e1a346c0D6b243C2C570e04414f64BC1` |
+| **Bell** | session status and a session reference price from DON-signed Data Streams reports, with a receipt | `0x88a5a0414c9fd615201814ddbec4e4d9e4d283d0` |
+| **BellFeedAdapter** | the same Chainlink signature, but it reverts instead of returning an inadmissible price | `0x4F0331DDbdDfE3349e16e37F80219A868B876655` |
+| **SettleOnMark** | a USDG trade that settles only on a recorded closing mark, and refunds otherwise | `0x5338523cB4629b460c9e21532d9e4F0c7Fc9648C` |
+
+**What is proven today, on mainnet:**
+
+- the guard answers for all 35 Chainlink equity feeds from one stateless deployment, with the reason
+  attached, and a run six hours before the bell returned **35 REJECT / OUTSIDE_SESSION** while every one
+  of those feeds was happily serving a price ([full output](docs/session_report_2026-09-21T0714Z.txt));
+- Bell verified two **real DON-signed reports** through the official Chainlink verifier, wrote receipts,
+  and then refused to serve them: `checkLive` answers `WAIT / OBS_STALE`. A valid signature is not
+  permission;
+- the audit in [`docs/REPLAY.md`](docs/REPLAY.md) shows what the absence of this layer already does: of
+  30 settlements on the chain's only live stock market, **28 read the same feed round on both sides**, so
+  a tie-break rule decided them, with the price a median of 11.9 hours old. Total ever staked there:
+  **0.009 ETH**, which we state as plainly as the defect.
+
+**What is not proven yet, stated before anyone asks:**
+
+- the ladder, Bell's DON-signed session reference, has never resolved on a real bell. Every signed report
+  we hold is mid-session, and US equity Data Streams are not sold to a self-serve account today, so that
+  half is code and tests waiting for access, not a live claim ([Limitations](#limitations-we-state-ourselves));
+- nobody outside this repo uses any of it yet. The adapter exists so that integrating is one address
+  change rather than a rewrite, but a one-line integration is still not an integration.
+
+## Deployed, in full
 
 | | |
 |---|---|
-| **Bell** | `0x88a5a0414c9fd615201814ddbec4e4d9e4d283d0` |
-| **BellFeedAdapter** (AAPL/USD, Chainlink-shaped) | `0x4F0331DDbdDfE3349e16e37F80219A868B876655` |
-| **PushFeedGuard** (all 35 equity push feeds) | `0x005554C0FeD814a3Ac450e226B455Ada0D04aec6` |
-| **SessionLog** (public bell-by-bell record) | `0xA3f6ba97e1a346c0D6b243C2C570e04414f64BC1` |
-| **SettleOnMark** (USDG demo trade, 2026-09-21) | `0x5338523cB4629b460c9e21532d9e4F0c7Fc9648C` |
 | Chain | Robinhood Chain mainnet, chainId 4663 |
-| Deploy tx | `0xbec3cb1a8813dadf0aa52e66f87d79ecb4dd487b95413fdf2062286a6187c540`, block 68,238,358 |
+| Bell deploy tx | `0xbec3cb1a8813dadf0aa52e66f87d79ecb4dd487b95413fdf2062286a6187c540`, block 68,238,358 |
 | Verifier it reads | `0xcE73c8ad08CBDEaCa6078BF0627C8fe0a9a536E7` (official Chainlink Data Streams VerifierProxy) |
-| Owner | none, and no upgrade path. The calendar is compiled in; `POLICY_VERSION` 2, `CALENDAR_VERSION` 1 |
-| Feed bindings | none. Every check works; `tokenizedReference` returns 0 until a bound instance is deployed against verified ERC-8056 addresses |
+| Owner | none, and no upgrade path anywhere. `POLICY_VERSION` 2, `CALENDAR_VERSION` 1 |
+| Escrow token | Paxos USDG `0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168`, 6 decimals |
+| Tests | 129 unit tests and 6 fork tests against the real verifier, all green |
 
-Read it yourself, no wallet needed:
-
-```bash
-cast call 0x88a5a0414c9fd615201814ddbec4e4d9e4d283d0 "digestActive(bytes32)(bool)"   0x00094baebfda9b87680d8e59aa20a3e565126640ee7caeab3cd965e5568b17ee --rpc-url https://rpc.mainnet.chain.robinhood.com/
-# true: the DON config our fixtures were signed under is still routed by the proxy
-
-cast call 0x88a5a0414c9fd615201814ddbec4e4d9e4d283d0 "rungTarget(uint32,bool,uint8)(uint64)" 20260922 false 0 --rpc-url https://rpc.mainnet.chain.robinhood.com/
-# 1790083800 = 2026-09-22 13:30:00 UTC, the bell. Weekends and NYSE holidays return 0.
-```
-
-Until a poster feeds it, `checkSettle` answers `REJECT / REFERENCE_UNRESOLVED` for every day, which is the honest answer, not a failure: the contract refuses to hand out a reference it has no DON evidence for.
-
-## Check everything in one command
+Two calls that need no wallet:
 
 ```bash
-python script/verify.py
-```
+cast call 0x005554C0FeD814a3Ac450e226B455Ada0D04aec6 "check(address,uint64)(uint8,uint8,int256,uint256)"   0x6B22A786bAa607d76728168703a39Ea9C99f2cD0 900 --rpc-url https://rpc.mainnet.chain.robinhood.com/
+# AAPL through the guard: verdict, reason, price, updatedAt
 
-No key, no wallet, no subscription: it reads the deployed contracts and prints what they answer at the
-current block, then exits non-zero if any claim in this README fails to hold. A run from
-2026-09-21 07:40 UTC:
-
-```
-[  ok  ] chainId 4663 (Robinhood Chain), block 68625397
-[  ok  ] trading day 20260921: session 13:30:00 to 20:00:00 UTC, right now before the open
-[  ok  ] 35 feeds answered: 0 ALLOW, 0 WAIT, 35 REJECT
-[  ok  ] every verdict agrees with the calendar state above
-[  ok  ] POLICY_VERSION 2 (the ladder)
-[  ok  ] digestActive(0x00094baebfda…) = True
-[  ok  ] stored AAPL observation: mid 313.25735, observed 2026-09-09 18:00:00 UTC, marketStatus 2
-[  ok  ] checkLive says WAIT / OBS_STALE: a valid DON signature is not permission
-[  ok  ] BellFeedAdapter.latestRoundData() reverts rather than returning that price
-all checks hold at this block.
+cast call 0x88a5a0414c9fd615201814ddbec4e4d9e4d283d0 "checkLive(bytes32)(uint8,uint8)"   0x000bbd87a23775b4c11092ae9a1fc7b3393636ae1dbb9f1ef460f845c0f4cff1 --rpc-url https://rpc.mainnet.chain.robinhood.com/
+# 1 3 = WAIT / OBS_STALE
 ```
 
 ## Already live on mainnet
