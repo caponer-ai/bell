@@ -178,6 +178,18 @@ have been raised against a positive one:
 - **Direction.** Buying the share and selling it both come out at **+0.048 %** in session (n = 179,614 and
   178,343). Identical signs, so this is a level, not a one-sided flow artefact.
 
+Two more objections, both measured rather than waved away, on a shorter three-day window so the sensitivity
+question does not disturb the headline sample ([`docs/price_gap_sensitivity_3d.json`](docs/price_gap_sensitivity_3d.json)):
+
+- **Does the effect live in the minutes around the bell?** Removing every swap within five minutes of an
+  opening or closing bell leaves the ordering unchanged: 0.215 % in session, 0.188 % at night, 0.063 % at
+  weekends. It is not a boundary artefact. Note the sample: three days contain one full session, so the
+  in-session cell there rests on 7,979 swaps and is the weakest number on this page.
+- **Could a feed round written later in the same block have been invisible to the swap?** Blocks here are
+  0.1 s and feeds publish hours apart, so this counts rather than assumes: across the three-day sample,
+  **180 swaps share a second with a feed round** (77 in session, 103 at night, 0 at weekends), out of
+  roughly 360,000. That is 0.05 % of the sample and cannot move a median.
+
 And the strongest boring explanation, removed rather than argued with: a threshold feed lags because it has
 not crossed its 0.5 % trigger yet. Conditioning on rounds published within the last five minutes, so the
 feed has just spoken, leaves 0.161 % in session against **0.121 % at night** (n = 62,413 and 17,698). Still

@@ -36,6 +36,10 @@ from equity_flow import (
 from rh_equity_pools import ROOT, USDG, keccak, post, rpc, words
 
 OUT = ROOT / "docs" / "price_gap_4663.json"
+# A shorter window answers the sensitivity questions without disturbing the headline measurement, which is
+# the seven-day one. Mixing them in one file is how a README ends up quoting a median from a sample that
+# contains a single trading session.
+SENSITIVITY_OUT = ROOT / "docs" / "price_gap_sensitivity_3d.json"
 ANCHOR_STEP = 25_000  # about 42 minutes of chain; feeds move on a scale of hours
 
 
@@ -562,7 +566,8 @@ def main():
             )
         )
 
-    OUT.write_text(
+    out_path = OUT if args.window_blocks >= 5_000_000 else SENSITIVITY_OUT
+    out_path.write_text(
         json.dumps(
             {
                 "generated": dt.datetime.now(dt.timezone.utc).isoformat(),
@@ -577,7 +582,7 @@ def main():
         encoding="utf-8",
     )
     print("")
-    print("wrote %s" % OUT)
+    print("wrote %s" % out_path)
 
 
 if __name__ == "__main__":
