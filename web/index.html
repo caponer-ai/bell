@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bell: session status on Robinhood Chain</title>
+<style>
+  :root{
+    --bg:#0b0d10; --panel:#12151a; --line:#1e232b; --text:#e6e9ee; --dim:#8b95a5;
+    --allow:#3ddc84; --wait:#f5b544; --reject:#ff6b6b; --accent:#7aa2ff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+       font:15px/1.5 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+  .wrap{max-width:1040px;margin:0 auto;padding:32px 16px 64px}
+  h1{font-size:22px;margin:0 0 4px;letter-spacing:-.01em}
+  .sub{color:var(--dim);font-size:13px;margin-bottom:24px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:16px}
+  .state{display:flex;flex-wrap:wrap;gap:24px;align-items:baseline}
+  .state div{min-width:150px}
+  .label{color:var(--dim);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+  .big{font-size:20px;font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  th{text-align:left;color:var(--dim);font-size:12px;text-transform:uppercase;letter-spacing:.06em;
+     font-weight:500;padding:8px 10px;border-bottom:1px solid var(--line)}
+  td{padding:8px 10px;border-bottom:1px solid var(--line);font-size:14px}
+  tr:last-child td{border-bottom:none}
+  .num{text-align:right;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600;letter-spacing:.02em}
+  .ALLOW{background:rgba(61,220,132,.13);color:var(--allow)}
+  .WAIT{background:rgba(245,181,68,.13);color:var(--wait)}
+  .REJECT{background:rgba(255,107,107,.12);color:var(--reject)}
+  .reason{color:var(--dim);font-size:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--dim)}
+  .foot{color:var(--dim);font-size:12px;margin-top:24px;line-height:1.8}
+  .err{color:var(--reject)}
+  @media (max-width:640px){ .hide-s{display:none} .wrap{padding:20px 12px 48px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Bell</h1>
+  <div class="sub">
+    Session status for the 35 Chainlink equity feeds on Robinhood Chain, read live from mainnet.
+    Nothing here is stored: every number on this page is an <code>eth_call</code> your browser just made.
+  </div>
+
+  <div class="card">
+    <div class="state">
+      <div><div class="label">Chain time</div><div class="big" id="now">…</div></div>
+      <div><div class="label">Trading day</div><div class="big" id="day">…</div></div>
+      <div><div class="label">Regular session</div><div class="big" id="session">…</div></div>
+      <div><div class="label">Verdicts now</div><div class="big" id="tally">…</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>Feed</th><th>Verdict</th><th class="hide-s">Reason</th>
+          <th class="num">Price</th><th class="num">Age of price</th>
+        </tr>
+      </thead>
+      <tbody id="rows"><tr><td colspan="5">loading…</td></tr></tbody>
+    </table>
+  </div>
+
+  <div class="foot">
+    Staleness budget for the verdicts above: <span id="budget">900</span> s, which is the caller's choice
+    and not a property of the data. A feed that has not moved inside its 0.5&nbsp;% band is quiet, not broken.<br>
+    PushFeedGuard <code>0x005554C0FeD814a3Ac450e226B455Ada0D04aec6</code> ·
+    SessionLog <code>0xA3f6ba97e1a346c0D6b243C2C570e04414f64BC1</code> ·
+    Bell <code>0x88a5a0414c9fd615201814ddbec4e4d9e4d283d0</code><br>
+    <span id="status"></span>
+  </div>
+</div>
+
+<script>
+const RPC   = "https://rpc.mainnet.chain.robinhood.com/";
+const GUARD = "0x005554c0fed814a3ac450e226b455ada0d04aec6";
+const BUDGET = 900;
+const VERDICT = ["ALLOW","WAIT","REJECT"];
+const REASON  = ["OK","NO_SESSION","OUTSIDE_SESSION","PRICE_STALE","ROUND_INCOMPLETE","BAD_PRICE","NO_FEED"];
+// selectors: keccak256("checkMany(address[],uint64)") and keccak256("sessionAt(uint64)")
+const SEL_MANY = "0xe6ae85dc", SEL_SESSION = "0x243bd5bb";
+
+let FEEDS = [];
+
+const pad  = (h) => h.replace(/^0x/,"").padStart(64,"0");
+const hex  = (n) => BigInt(n).toString(16);
+const word = (d,i) => BigInt("0x"+d.slice(2+i*64, 2+(i+1)*64));
+
+async function call(to, data){
+  const r = await fetch(RPC, {
+    method:"POST", headers:{"content-type":"application/json"},
+    body: JSON.stringify({jsonrpc:"2.0", id:1, method:"eth_call", params:[{to, data}, "latest"]})
+  });
+  const j = await r.json();
+  if (j.error) throw new Error(j.error.message);
+  return j.result;
+}
+
+async function blockTime(){
+  const r = await fetch(RPC, {
+    method:"POST", headers:{"content-type":"application/json"},
+    body: JSON.stringify({jsonrpc:"2.0", id:1, method:"eth_getBlockByNumber", params:["latest", false]})
+  });
+  const j = await r.json();
+  return Number(BigInt(j.result.timestamp));
+}
+
+const utc = (ts) => new Date(ts*1000).toISOString().slice(11,19)+" UTC";
+const fmtAge = (s) => s === 0 ? "-" : s < 90 ? s+" s" : s < 5400 ? (s/60).toFixed(0)+" min" : (s/3600).toFixed(1)+" h";
+const fmtPrice = (v) => v <= 0n ? "-" : (Number(v)/1e8).toLocaleString("en-US",{minimumFractionDigits:2, maximumFractionDigits:2});
+
+async function load(){
+  const status = document.getElementById("status");
+  try{
+    FEEDS = await (await fetch("../docs/equity_feeds_4663.json")).json();
+  }catch(e){
+    try { FEEDS = await (await fetch("equity_feeds_4663.json")).json(); }
+    catch(e2){ status.innerHTML = '<span class="err">could not load the feed list</span>'; return; }
+  }
+  const now = await blockTime();
+  document.getElementById("now").textContent = utc(now);
+  document.getElementById("budget").textContent = BUDGET;
+
+  const s = await call(GUARD, SEL_SESSION + pad(hex(now)));
+  const exists = word(s,0) === 1n, early = word(s,1) === 1n;
+  const day = Number(word(s,2)), open = Number(word(s,3)), close = Number(word(s,4));
+  document.getElementById("day").textContent = exists ? String(day) : "none";
+  document.getElementById("session").textContent = exists
+    ? utc(open).slice(0,5) + " to " + utc(close).slice(0,5) + (early ? " (early)" : "")
+    : "weekend or holiday";
+
+  const addrs = FEEDS.map(f => f.proxy);
+  const data = SEL_MANY
+    + pad("40")                       // offset of the address array
+    + pad(hex(BUDGET))                // maxAge
+    + pad(hex(addrs.length))
+    + addrs.map(a => pad(a.toLowerCase())).join("");
+  const res = await call(GUARD, data);
+
+  const n = addrs.length;
+  const off = [0,1,2,3].map(i => Number(word(res,i))/32);
+  const verdicts = [], reasons = [], answers = [], ages = [];
+  for (let i=0;i<n;i++){
+    verdicts.push(Number(word(res, off[0]+1+i)));
+    reasons.push(Number(word(res, off[1]+1+i)));
+    let a = word(res, off[2]+1+i);
+    if (a > (1n<<255n)) a -= (1n<<256n);
+    answers.push(a);
+    ages.push(Number(word(res, off[3]+1+i)));
+  }
+
+  const rows = FEEDS.map((f,i) => {
+    const v = VERDICT[verdicts[i]];
+    return `<tr>
+      <td>${f.name.replace("Robinhood ","")}</td>
+      <td><span class="pill ${v}">${v}</span></td>
+      <td class="hide-s reason">${REASON[reasons[i]]}</td>
+      <td class="num">${fmtPrice(answers[i])}</td>
+      <td class="num">${fmtAge(ages[i])}</td>
+    </tr>`;
+  }).join("");
+  document.getElementById("rows").innerHTML = rows;
+
+  const t = [0,1,2].map(k => verdicts.filter(v => v===k).length);
+  document.getElementById("tally").innerHTML =
+    `<span class="pill ALLOW">${t[0]}</span> <span class="pill WAIT">${t[1]}</span> <span class="pill REJECT">${t[2]}</span>`;
+  status.textContent = "last read at " + utc(now) + ", refreshing every 30 s";
+}
+
+load();
+setInterval(load, 30000);
+</script>
+</body>
+</html>

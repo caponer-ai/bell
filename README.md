@@ -157,6 +157,19 @@ consumer integrates by changing one address. 19 tests cover the session boundari
 early-close day, Thanksgiving, the staleness budget, a zero price, an incomplete round, a reverting feed
 and a feed address with no code at all.
 
+## The page: web/index.html
+
+One HTML file, no build step, no framework, no backend. It reads the chain from the visitor's own
+browser: `eth_call` to `PushFeedGuard.checkMany` for all 35 feeds plus one call for the calendar, then
+renders the verdicts. Serve it from anywhere, or open it locally:
+
+```bash
+python -m http.server 8765 && open http://127.0.0.1:8765/web/index.html
+```
+
+Every number on that page is a call the visitor made, not a number we cached, which is the same standard
+the rest of this repo holds itself to.
+
 ## The record that grows on its own: SessionLog
 
 Every claim about oracle latency on this chain is a screenshot in somebody's README, ours included.

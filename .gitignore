@@ -8,3 +8,5 @@ node_modules/
 poster/state/
 .ruff_cache/
 replay_settlements.json
+keeper-*.log
+keeper-*.err
