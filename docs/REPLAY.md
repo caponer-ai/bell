@@ -51,15 +51,21 @@ adapter; the real Chainlink proxy is its `aggregator()` (for TSLA `0x4A1166a659A
 the `proxyAddress` of "Robinhood TSLA / USD" in Chainlink's reference data). We read `getRoundData` on that
 proxy and resolved which round was current at the lock call and at the settle call.
 
-| Result | Count |
-|---|---|
-| Settlements audited (2026-07-03 to 2026-09-08) | **30** |
-| Same feed round on both sides: the two snapshots read one number, so the tie rule decided the market | **28** |
-| Price actually moved between the two calls | 2 |
-| At least one leg outside the regular NYSE session (holiday, weekend, 02:37-04:38 UTC pre-market) | **28** |
-| Age of the price at the lock call | median **11.9 h**, max **71.6 h**, min 4.2 min |
-| Total ever staked across all 30 markets | **0.009 ETH** |
-| Markets with any bet at all | 4 of 30 |
+| Result | Count | Interval |
+|---|---|---|
+| Settlements audited (2026-07-03 to 2026-09-08) | **30** | this is the whole population, not a sample |
+| Same feed round on both sides: the two snapshots read one number, so the tie rule decided the market | **28** (93.3 %) | 95 % Wilson: **78.7 % to 98.2 %** |
+| Price actually moved between the two calls | 2 (6.7 %) | |
+| At least one leg outside the regular NYSE session (holiday, weekend, 02:37-04:38 UTC pre-market) | **28** (93.3 %) | 95 % Wilson: **78.7 % to 98.2 %** |
+| Age of the price at the lock call | median **11.9 h** | Q1 2.45 h, Q3 15.38 h, **IQR 12.9 h**; min 4.2 min, max 71.6 h |
+| Interval between `lockMarket` and `settleMarket` | median **4 s** | Q1 4 s, Q3 10 s, max 10.8 h |
+| Total ever staked across all 30 markets | **0.009 ETH** | |
+| Markets with any bet at all | 4 of 30 | |
+
+Thirty is a small number and the table now says so out loud. The Wilson interval on 28 of 30 runs from
+78.7 % to 98.2 %: the defect is clearly common in this contract's history, and anyone claiming the precise
+93.3 % transfers to some other market is overreading. The age of the price is quoted with its quartiles
+rather than its maximum, because 71.6 hours is one holiday weekend and not a description of the sample.
 
 ### What this does not say, checked by attacking our own sample
 

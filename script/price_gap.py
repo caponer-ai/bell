@@ -95,6 +95,29 @@ def feed_history(feeds, tickers, rounds):
     return history
 
 
+USDG_USD_FEED = "0x61b7e5650328764b076a108eff5fa7282a1b9ad2"
+
+
+def usdg_history(rounds=60):
+    """The USDG/USD feed, so the pool price can be stated in dollars rather than in a stablecoin.
+
+    A pool quotes shares in USDG; the equity feed quotes them in USD. Treating the two as the same thing
+    hides any depeg inside the measured gap, and a depeg would move every ticker at once, which is exactly
+    what a session effect must not look like. Measured 21.09 the range is 1.31 basis points over the last
+    seven days and 4.44 over two months, so this correction is small, but small and applied beats small
+    and assumed.
+    """
+    sel = keccak("getRoundData(uint80)")[:10]
+    latest = decode_round(calls([(USDG_USD_FEED, keccak("latestRoundData()")[:10])])[0])
+    dec_raw = calls([(USDG_USD_FEED, keccak("decimals()")[:10])])[0]
+    scale = 10 ** (int(dec_raw, 16) if dec_raw else 8)
+    ids = [latest["roundId"] - i for i in range(rounds)]
+    raw = calls([(USDG_USD_FEED, sel + hex(i)[2:].rjust(64, "0")) for i in ids])
+    rows = sorted({(r["updatedAt"], r["answer"] / scale) for r in (decode_round(x) for x in raw) if r})
+    print("  USDG/USD: %d rounds, %.6f to %.6f" % (len(rows), min(r[1] for r in rows), max(r[1] for r in rows)))
+    return rows
+
+
 def _ticker_of(feed):
     return (
         feed["name"]
@@ -146,6 +169,21 @@ def pool_price(sqrt_price_x96, usdg_is_token0, stock_decimals):
     if usdg_is_token0:
         return (1 / ratio) * 10 ** (stock_decimals - 6)
     return ratio * 10 ** (stock_decimals - 6)
+
+
+def pre_swap_sqrt(sqrt_after, liquidity, amount1):
+    """The pool price before the swap moved it.
+
+    `sqrtPriceX96` in a Swap event is the price *after* the trade, so it already contains that trade's own
+    impact. In a single tick the relationship is exact: d(sqrtP) = dy / L. Crossing a tick breaks it, so
+    this is an approximation for large swaps and exact for the small ones that dominate the sample, and
+    both the pre and post figures are reported rather than one being quietly preferred.
+    """
+    if not liquidity:
+        return None
+    delta = (amount1 * (1 << 96)) // liquidity
+    before = sqrt_after - delta
+    return before if before > 0 else None
 
 
 def quantiles(values, weights=None):
@@ -206,6 +244,13 @@ def main():
     print("feed history:")
     history = feed_history(feeds, tickers, args.rounds)
     stamps = {t: [r[0] for r in rows] for t, rows in history.items()}
+
+    usdg_rows = usdg_history()
+    usdg_stamps = [r[0] for r in usdg_rows]
+
+    def usdg_usd(ts):
+        i = bisect.bisect_right(usdg_stamps, ts) - 1
+        return usdg_rows[i][1] if i >= 0 else 1.0
 
     print("clock and session boundaries:")
     clock = build_clock(from_block, head)
@@ -277,8 +322,21 @@ def main():
             if feed_px <= 0:
                 continue
             mult = multiplier.get(pool["other"], 1.0)
-            gap = (px * mult / feed_px - 1) * 100
+            # state the pool price in dollars before comparing it with a dollar feed
+            px_usd = px * mult * usdg_usd(ts)
+            gap = (px_usd / feed_px - 1) * 100
             gap_raw = (px / feed_px - 1) * 100
+
+            # the same comparison on the price before this swap moved it
+            pre = pre_swap_sqrt(sqrt_price, w[3], a1)
+            gap_pre = None
+            if pre:
+                px_pre = pool_price(pre, usdg_is_0, decimals.get(pool["other"], 18))
+                if px_pre:
+                    gap_pre = (px_pre * mult * usdg_usd(ts) / feed_px - 1) * 100
+
+            # which way the trade went: a buyer of the share pushes the pool price up
+            buying_share = (a0 > 0) if usdg_is_0 else (a1 > 0)
             age = ts - feed_ts
             state = state_of(block)
             if state == "CLOSED" and is_weekend(block):
@@ -297,6 +355,9 @@ def main():
                     "ages": [],
                     "freshGaps": [],
                     "freshWeights": [],
+                    "preGaps": [],
+                    "buyGaps": [],
+                    "sellGaps": [],
                 },
             )
             b["n"] += 1
@@ -306,6 +367,9 @@ def main():
             b["raw"].append(abs(gap_raw))
             b["weights"].append(usdg)
             b["ages"].append(age)
+            if gap_pre is not None:
+                b["preGaps"].append(abs(gap_pre))
+            (b["buyGaps"] if buying_share else b["sellGaps"]).append(gap)
             # The strongest boring explanation for any gap is simply that a threshold feed has not yet
             # crossed its 0.5% trigger. Conditioning on a feed younger than five minutes removes it: what
             # is left cannot be the feed lagging, because the feed has just spoken.
@@ -388,7 +452,16 @@ def main():
             [g for b in rows for g in b["freshGaps"]], [w for b in rows for w in b["freshWeights"]]
         )
         signed_sorted = sorted(g for b in rows for g in b["signed"])
+        pre_sorted = sorted(g for b in rows for g in b["preGaps"])
+        buys = sorted(g for b in rows for g in b["buyGaps"])
+        sells = sorted(g for b in rows for g in b["sellGaps"])
+        med = lambda xs: xs[len(xs) // 2] if xs else None  # noqa: E731
         totals[s] = {
+            "gapPreSwapP50Pct": med(pre_sorted),
+            "signedP50WhenBuyingSharePct": med(buys),
+            "signedP50WhenSellingSharePct": med(sells),
+            "buySwaps": len(buys),
+            "sellSwaps": len(sells),
             "signedP50Pct": signed_sorted[len(signed_sorted) // 2] if signed_sorted else None,
             "freshFeedSwaps": sum(len(b["freshGaps"]) for b in rows),
             "freshGapP50Pct": qfresh.get("p50"),
@@ -403,6 +476,20 @@ def main():
             "volumeOverThresholdUsdg": sum(b["overVol"] for b in rows),
             "swapsOverThreshold": sum(b["overN"] for b in rows),
         }
+    print("")
+    print("controls: price before the swap, and the sign split by trade direction")
+    for s_name, v in totals.items():
+        print(
+            "  %-9s pre-swap p50 %s   buying the share %s (n=%s)   selling it %s (n=%s)"
+            % (
+                s_name,
+                ("%.3f%%" % v["gapPreSwapP50Pct"]) if v["gapPreSwapP50Pct"] is not None else "n/a",
+                ("%+.3f%%" % v["signedP50WhenBuyingSharePct"]) if v["signedP50WhenBuyingSharePct"] is not None else "n/a",
+                "{:,}".format(v["buySwaps"]),
+                ("%+.3f%%" % v["signedP50WhenSellingSharePct"]) if v["signedP50WhenSellingSharePct"] is not None else "n/a",
+                "{:,}".format(v["sellSwaps"]),
+            )
+        )
     print("")
     print("conditioned on a feed younger than five minutes, which removes the threshold-lag explanation:")
     for s, v in totals.items():
