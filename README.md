@@ -2,20 +2,31 @@
 
 **The exchange has an opening bell. The onchain market for its shares does not.**
 
-Tokenized equities trade around the clock; the shares behind them trade six and a half hours a day. Every
-Chainlink equity feed on Robinhood Chain answers `latestRoundData()` at 03:00 on a Sunday, and it answers
-with a number that looks exactly like a market price.
+![When each Chainlink equity feed published a round, against the hours the exchange was open](docs/feed_rounds.svg)
 
-Be precise about what the feed does and does not tell you, because an earlier draft of this README was not.
-It **does** return `updatedAt`, so the age of the onchain round is available to any caller
-([Chainlink API reference](https://docs.chain.link/data-feeds/api-reference)). What no equity feed here can
-express is the other half: **whether that price belongs to the regular session**, or to overnight trading,
-or to a day the exchange never opened. And `updatedAt` is the time the round was written onchain, not the
-time of the market observation behind it. Bell is the layer that answers the session question, attaches the
-age to it, and refuses when the pair is not fit to act on.
+Thirty-five Chainlink equity feeds on Robinhood Chain, ten days. The shaded columns are the regular NYSE
+sessions. **1,003 rounds published, 509 of them outside those columns**, and the rate is different for every
+row: `RHTSLA / USD` publishes 4 rounds in 30 out of session, `Robinhood MSTR / USD` publishes 30 in 30.
+
+The obvious claim to make here would be that the out-of-hours price is worse, so we measured it on
+**994,000 swaps and $418M of USDG volume** across the 58 tokenized-equity pools on this chain. It is not
+worse: the median gap between the pool's own price and the feed is 0.169 % during the session, 0.159 % at
+night and 0.063 % at weekends. That hypothesis is dead, and the measurement that killed it is in this repo.
+
+**So the defect is not accuracy, it is that the number does not say which market it came from.** A feed
+answers `latestRoundData()` at 03:00 on a Sunday with a real, recent, roughly right number, and nothing in
+the response distinguishes it from a regular-session price. `updatedAt` gives the age of the onchain round
+([Chainlink API reference](https://docs.chain.link/data-feeds/api-reference)), not the session it belongs to
+and not the time of the market observation behind it.
+
+That gap has a measured cost. In the only live stock market on this chain, **28 of 30 settlements read the
+same feed round on both sides** (93.3 %, 95 % Wilson interval 78.7 % to 98.2 %), so a tie-break rule decided
+them rather than any price movement. Bell is the layer that answers the session question, attaches the age
+to it, and refuses when the pair is not fit to act on.
 
 > Buildathon work (Arbitrum Open House Singapore, 14 Sept to 4 Oct 2026), solo, unaudited.
 > Everything below is live on chainId 4663 and meant to be checked rather than believed.
+> Nobody outside this repo uses it yet, which is said again in its own section rather than buried here.
 
 ## Sixty seconds
 
@@ -270,7 +281,8 @@ outside regular NYSE hours. Stated with the same honesty: the total ever staked 
 
 All measurements are ours unless stated; sources and limits are next to each number. They describe *when* prices move and *what* the feeds publish; they are not causal claims about why.
 
-- **Push feeds have no session status and sleep off-hours.** Of the 57 Chainlink feeds on Robinhood Chain (chainId 4663), 35 are US-equity feeds on the `us_equities_24/5` schedule; all 57 run with a 24 h heartbeat and a 0.5 % deviation threshold (Chainlink reference-data directory, `feeds-robinhood-mainnet.json`, snapshot 2026-09-17). Chainlink's own docs: the feeds "may hold the last published price" and have "no heartbeats during off-hours" (docs.chain.link, tokenized-equity-feeds/robinhood).
+- **Push feeds carry no session status.** Of the 57 Chainlink feeds on Robinhood Chain (chainId 4663), 35 are US-equity feeds on the `us_equities_24/5` schedule; all 57 run with a 24 h heartbeat and a 0.5 % deviation threshold (Chainlink reference-data directory, `feeds-robinhood-mainnet.json`, snapshot 2026-09-17). Chainlink's docs say the feeds "may hold the last published price" and have "no heartbeats during off-hours" (docs.chain.link, tokenized-equity-feeds/robinhood).
+  **Our own measurement qualifies that, and the qualification matters more than the quote.** Over one common ten-day window these feeds published 1,003 rounds and **509 of them landed outside the regular session** ([`docs/feed_rounds_4663.json`](docs/feed_rounds_4663.json)), with the price genuinely moving: `RHSPY / USD` round 139 arrived at 00:00:26 UTC on Monday 2026-09-21, 59.6 hours after the previous round, with the answer **+0.49 %** while NYSE had been shut since Friday 20:00 UTC. The schedule these feeds track is the 24/5 extended one, not the regular session: after each of three consecutive weekends the first new round landed at 00:00:2x UTC, which is 20:00 ET on Sunday. So the problem is not a sleeping feed. It is that the round says nothing about which of those markets produced it, and the out-of-session rate is not a constant a consumer could hard-code, running from 4 rounds in 30 on `RHTSLA / USD` to 30 in 30 on `Robinhood MSTR / USD`.
 - **The first print after the open is late and unlabelled** - on the *push* feeds, which is the unit this bullet is about. Over the last 300 rounds per feed (read via `getRoundData`, 2026-09-17): first AAPL update after 13:30 UTC came at a median of 5.0 min, p90 29 min, max 340 min (33 weekdays; only 52 % of days within 5 min). Pauses inside the regular session reached 6.4 h. Weekends: 52 to 78 h without a print. No round says which session its price came from.
 > **Two different products, one honest line between them.** Everything measured above is Chainlink *push* feeds, the ones a contract reads with `getRoundData`. Bell consumes Chainlink *Data Streams*, a pull product with its own latency profile, and **we have not measured how quickly a Data Streams equity report is available at the opening bell**: our 38 fixtures are all mid-session. So Bell's claim is not "the stream is slow". It is that no contract on this chain publishes DON-signed session status at all, and that a reference price needs a selection rule a poster cannot bend. The open-latency question is answered by a live day on a paid stream, and the answer will be written here either way.
 
@@ -597,6 +609,9 @@ assuming a revert on failure.
 - Data Streams access is a paid subscription (from $150 per stream per month); a shared, sponsored poster is the honest ask to the chain.
 - The calendar table covers 2026 and 2027 only (`SessionCalendar._yearSupported`). From 2028 every day answers `NO_SESSION`, fail closed: no new fixing can open, while every reference and receipt recorded before then stays readable forever. A new year means a new deployment, which is the price of having no owner and no upgrade.
 - The contract compiles with `via_ir` (stack depth in the ladder loop); gas numbers will be published with the deployment.
+- **One attack in our own threat model works.** If nobody writes the closing mark, the day produces nothing and `refund()` turns a loss into a draw. It cannot be fixed inside the contract, because the alternative is inventing a price, and the mitigation is operational: the mark is permissionless and cheap, so a product built on this should ship a keeper. [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md) has the test.
+- **The price-gap measurement covers one week.** That is one weekend episode, so the weekend column rests on a single occurrence of the thing it describes, and the tail figures there should be read as indicative rather than as a distribution. It also measures Uniswap v3 only: the v4 PoolManager on this chain holds more than ten thousand further USDG pools, so $418M is a floor on equity flow, not a total.
+- **The genuine-token test proves lineage, not issuance.** Anyone can deploy an identical beacon proxy on the same beacon. What closes the gap in practice is that the 58 surviving pools carry 17 tickers across 17 distinct addresses with no ticker claimed twice; absent a registry published by the issuer, that is the strongest check the chain alone allows.
 
 ## License
 

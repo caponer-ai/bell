@@ -214,6 +214,12 @@ def main():
     ap.add_argument("--window-blocks", type=int, default=6_000_000)
     ap.add_argument("--rounds", type=int, default=200)
     ap.add_argument(
+        "--edge-minutes",
+        type=int,
+        default=5,
+        help="also report the sample with swaps this close to an opening or closing bell removed",
+    )
+    ap.add_argument(
         "--threshold",
         type=float,
         default=0.5,
@@ -356,6 +362,9 @@ def main():
                     "freshGaps": [],
                     "freshWeights": [],
                     "preGaps": [],
+                    "awayFromEdge": [],
+                    "awayWeights": [],
+                    "sameBlockAsFeed": 0,
                     "buyGaps": [],
                     "sellGaps": [],
                 },
@@ -369,6 +378,16 @@ def main():
             b["ages"].append(age)
             if gap_pre is not None:
                 b["preGaps"].append(abs(gap_pre))
+            # Kimi's sensitivity check: an effect that lives in the five minutes around a bell is an
+            # artefact of the boundary, not of the session. Removing that band must not change the answer.
+            if min(abs(ts - e["ts"]) for e in edges) > args.edge_minutes * 60:
+                b["awayFromEdge"].append(abs(gap))
+                b["awayWeights"].append(usdg)
+            # GPT's ordering objection: a feed round written later in the same block was not available to
+            # this swap. Blocks are 0.1 s here and feeds publish hours apart, so this counts how often the
+            # two even land together instead of assuming it never happens.
+            if abs(ts - feed_ts) <= 1:
+                b["sameBlockAsFeed"] += 1
             (b["buyGaps"] if buying_share else b["sellGaps"]).append(gap)
             # The strongest boring explanation for any gap is simply that a threshold feed has not yet
             # crossed its 0.5% trigger. Conditioning on a feed younger than five minutes removes it: what
@@ -453,11 +472,19 @@ def main():
         )
         signed_sorted = sorted(g for b in rows for g in b["signed"])
         pre_sorted = sorted(g for b in rows for g in b["preGaps"])
+        qaway = quantiles(
+            [g for b in rows for g in b["awayFromEdge"]], [w for b in rows for w in b["awayWeights"]]
+        )
+        same_block = sum(b["sameBlockAsFeed"] for b in rows)
         buys = sorted(g for b in rows for g in b["buyGaps"])
         sells = sorted(g for b in rows for g in b["sellGaps"])
         med = lambda xs: xs[len(xs) // 2] if xs else None  # noqa: E731
         totals[s] = {
             "gapPreSwapP50Pct": med(pre_sorted),
+            "gapAwayFromBellsP50Pct": qaway.get("p50"),
+            "gapAwayFromBellsP90Pct": qaway.get("p90"),
+            "swapsAwayFromBells": sum(len(b["awayFromEdge"]) for b in rows),
+            "swapsInTheSameSecondAsAFeedRound": same_block,
             "signedP50WhenBuyingSharePct": med(buys),
             "signedP50WhenSellingSharePct": med(sells),
             "buySwaps": len(buys),
@@ -476,6 +503,19 @@ def main():
             "volumeOverThresholdUsdg": sum(b["overVol"] for b in rows),
             "swapsOverThreshold": sum(b["overN"] for b in rows),
         }
+    print("")
+    print("sensitivity: the same sample with swaps within %d min of a bell removed" % args.edge_minutes)
+    for s_name, v in totals.items():
+        print(
+            "  %-9s p50 %s  p90 %s  (n=%s)   swaps sharing a second with a feed round: %s"
+            % (
+                s_name,
+                ("%.3f%%" % v["gapAwayFromBellsP50Pct"]) if v["gapAwayFromBellsP50Pct"] is not None else "n/a",
+                ("%.3f%%" % v["gapAwayFromBellsP90Pct"]) if v["gapAwayFromBellsP90Pct"] is not None else "n/a",
+                "{:,}".format(v["swapsAwayFromBells"]),
+                "{:,}".format(v["swapsInTheSameSecondAsAFeedRound"]),
+            )
+        )
     print("")
     print("controls: price before the swap, and the sign split by trade direction")
     for s_name, v in totals.items():
