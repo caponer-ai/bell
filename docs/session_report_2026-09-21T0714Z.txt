@@ -1,0 +1,41 @@
+chain time 2026-09-21 07:20:06 UTC, block 68613055, staleness budget 900s
+calendar: trading day 20260921, session 13:30 to 20:00 UTC
+
+feed                         verdict  reason                   price        age
+SGOV-USD                     REJECT   OUTSIDE_SESSION         101.11       7.3h
+EWY / USD                    REJECT   OUTSIDE_SESSION         184.72      1355s
+GOOGL / USD                  REJECT   OUTSIDE_SESSION         350.94       7.3h
+QQQ / USD                    REJECT   OUTSIDE_SESSION         723.33       7.3h
+TSM / USD                    REJECT   OUTSIDE_SESSION         436.95       6.2h
+COIN / USD                   REJECT   OUTSIDE_SESSION         196.00      2121s
+PLTR / USD                   REJECT   OUTSIDE_SESSION         177.66       7.3h
+RGTI / USD                   REJECT   OUTSIDE_SESSION          16.02       6.2h
+ORCL / USD                   REJECT   OUTSIDE_SESSION         148.85       6.2h
+MSTR / USD                   REJECT   OUTSIDE_SESSION         156.92      1274s
+RKLB / USD                   REJECT   OUTSIDE_SESSION          65.28       6.2h
+SPCX / USD                   REJECT   OUTSIDE_SESSION         154.35       3.3h
+USAR-USD                     REJECT   OUTSIDE_SESSION          15.87       4.5h
+SPY / USD                    REJECT   OUTSIDE_SESSION         765.29       7.3h
+TSLA / USD                   REJECT   OUTSIDE_SESSION         367.02       6.2h
+SNDK / USD                   REJECT   OUTSIDE_SESSION       1,796.45       1.0h
+IONQ / USD                   REJECT   OUTSIDE_SESSION          39.77       1.0h
+CRCL / USD                   REJECT   OUTSIDE_SESSION          91.95       162s
+AMZN / USD                   REJECT   OUTSIDE_SESSION         254.97       7.3h
+INTC / USD                   REJECT   OUTSIDE_SESSION         113.71       1.1h
+MU / USD                     REJECT   OUTSIDE_SESSION       1,026.70      2017s
+AAPL / USD                   REJECT   OUTSIDE_SESSION         335.53       7.3h
+NVDA / USD                   REJECT   OUTSIDE_SESSION         223.92       6.0h
+DELL-USD                     REJECT   OUTSIDE_SESSION         579.34       974s
+NBIS / USD                   REJECT   OUTSIDE_SESSION         227.83       1.7h
+CLSK / USD                   REJECT   OUTSIDE_SESSION          14.68       1.3h
+ASML / USD                   REJECT   OUTSIDE_SESSION       1,705.92      1189s
+BABA / USD                   REJECT   OUTSIDE_SESSION         114.25      1029s
+USO / USD                    REJECT   OUTSIDE_SESSION         151.34       1.0h
+META / USD                   REJECT   OUTSIDE_SESSION         682.66      2586s
+MSFT / USD                   REJECT   OUTSIDE_SESSION         495.27       7.3h
+SLV / USD                    REJECT   OUTSIDE_SESSION          59.62       1.5h
+CRWV / USD                   REJECT   OUTSIDE_SESSION          82.62       2.2h
+AMD / USD                    REJECT   OUTSIDE_SESSION         569.73       6.9h
+GME / USD                    REJECT   OUTSIDE_SESSION          22.82       2.0h
+
+35 equity feeds: 0 ALLOW, 0 WAIT, 35 REJECT

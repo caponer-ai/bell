@@ -12,6 +12,7 @@ Stock tokens trade 24/7. The equity behind them trades 6.5 hours a day. Every pr
 |---|---|
 | **Bell** | `0x88a5a0414c9fd615201814ddbec4e4d9e4d283d0` |
 | **BellFeedAdapter** (AAPL/USD, Chainlink-shaped) | `0x4F0331DDbdDfE3349e16e37F80219A868B876655` |
+| **PushFeedGuard** (all 35 equity push feeds) | `0x005554C0FeD814a3Ac450e226B455Ada0D04aec6` |
 | Chain | Robinhood Chain mainnet, chainId 4663 |
 | Deploy tx | `0xbec3cb1a8813dadf0aa52e66f87d79ecb4dd487b95413fdf2062286a6187c540`, block 68,238,358 |
 | Verifier it reads | `0xcE73c8ad08CBDEaCa6078BF0627C8fe0a9a536E7` (official Chainlink Data Streams VerifierProxy) |
@@ -104,6 +105,56 @@ One contract, no owner, no upgrade (`src/Bell.sol`, spec in `docs/SPEC-v0.1.uk.m
 What Bell is **not**: it is not the Nasdaq Opening Cross and not an official exchange print. What it publishes is a **session reference price under Bell's policy** - the DON mid of the lowest rung that is not proven out, together with the receipt that produced it. A consumer who needs the exchange's official opening or closing print must take it from the tape; Bell does not claim to reproduce it.
 
 **Which rung will hold in practice is not yet measured, and we say so.** In the 38 distinct signed reports we hold, the mid (`lastSeenTimestampNs`) trails the report's own `observationsTimestamp` by a median of 2.57 s (min -0.06 s, max 5.25 s, 36 of 38 lags positive; own decode of `index.json`, 2026-09-19). A rung is a one-second target, so a report covering the bell second will usually carry a mid last seen a few seconds *before* the bell, which the `l >= O` rule proves out, moving the reference one rung up. The limit of that inference: **all 38 reports are mid-session** (obs from 2026-09-08 15:10:00 UTC to 2026-09-09 18:00:00 UTC, one poster, a 30-minute cadence), so not one of them sits on an opening rung, and the quiet-hour lag does not have to equal the lag in the first seconds after the bell, when quotes update fastest. The test that settles it is a Data Streams subscription that can request 13:30:00 directly; until then this is an observation, not a property of the open.
+
+## Every equity feed on the chain, asked the session question: PushFeedGuard
+
+Bell's reference needs DON-signed Data Streams reports, and those are not sold to a self-serve account
+today (see [Limitations](#limitations-we-state-ourselves)). The session logic does not need them.
+`src/PushFeedGuard.sol` is stateless, serves **all 35 Chainlink equity push feeds on this chain from one
+deployment**, and answers the question those feeds cannot: is this number from the regular session, and
+how old is it.
+
+| | |
+|---|---|
+| Live guard | `0x005554C0FeD814a3Ac450e226B455Ada0D04aec6` |
+| Deploy tx | `0x54e40b298ae9c2d7098b297ef2ca4a2b03eea4cfadb39b7ca0d39245892f467f` |
+| Feeds covered | 35 (Chainlink reference data, listed in [`docs/equity_feeds_4663.json`](docs/equity_feeds_4663.json)) |
+| Cost to a consumer | free: a view call, no subscription, no keeper |
+
+```bash
+python script/chain_session_report.py      # one eth_call, all 35 feeds, live
+```
+
+A real run, 2026-09-21 07:14:02 UTC, six hours before the opening bell
+([full output](docs/session_report_2026-09-21T0714Z.txt)):
+
+```
+calendar: trading day 20260921, session 13:30 to 20:00 UTC
+
+feed                         verdict  reason                   price        age
+AAPL / USD                   REJECT   OUTSIDE_SESSION         335.53       7.2h
+TSLA / USD                   REJECT   OUTSIDE_SESSION         367.02       6.1h
+SPY  / USD                   REJECT   OUTSIDE_SESSION         765.29       7.2h
+CRCL / USD                   REJECT   OUTSIDE_SESSION          91.49        68s
+...
+35 equity feeds: 0 ALLOW, 0 WAIT, 35 REJECT
+```
+
+Read that carefully, because the honest reading is more interesting than the loud one. Those feeds are
+not broken and not asleep: they run on a 24/5 schedule, so `CRCL` had moved 68 seconds earlier in
+overnight trading, while `AAPL` had simply not travelled 0.5 % since the previous close. Both are valid
+numbers. Neither is a regular-session price, and `latestRoundData()` has no way to say so. A contract
+that settles, liquidates or prices at 07:14 UTC gets a number that looks exactly like a market price.
+
+The guard returns `REJECT / OUTSIDE_SESSION` for all 35, and during the session it returns `ALLOW` with
+the price and its age, or `WAIT / PRICE_STALE` when the feed has gone quieter than the caller's budget.
+The staleness budget is a parameter, not a house rule: a settlement wants minutes, a slow collateral
+check can accept an hour, and `PushFeedGuard` makes that choice explicit instead of implicit.
+
+`GuardedPushFeed` binds one feed and one budget behind the exact Chainlink signature, so an existing
+consumer integrates by changing one address. 19 tests cover the session boundaries to the second, the
+early-close day, Thanksgiving, the staleness budget, a zero price, an incomplete round, a reverting feed
+and a feed address with no code at all.
 
 ## Integration is one address: BellFeedAdapter
 
