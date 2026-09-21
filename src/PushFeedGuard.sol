@@ -21,6 +21,13 @@ interface IAggregatorV3 {
 /// session, to overnight trading, or to a day the exchange never opened. `latestRoundData()` always
 /// succeeds, even at 03:00 UTC on a Sunday, and the number it returns looks the same either way.
 ///
+/// Measured, not assumed: across 994,000 swaps in the 58 equity/USDG pools on this chain over one week
+/// (script/price_gap.py, 21.09), the pool's own price sits a median 0.160 % from the feed during the
+/// regular session and 0.152 % away outside it, with the weekend median the smallest of the three at
+/// 0.050 %. So the out-of-session number is not a worse number. The defect this guard addresses is not
+/// accuracy, it is that the caller cannot tell which market the number came from, and a contract that
+/// promises a regular-session price has no way to keep that promise from `latestRoundData()` alone.
+///
 /// This guard is stateless and serves every feed on the chain from one deployment. It combines the
 /// NYSE calendar compiled into `SessionCalendar` (DST by rule, holidays and early closes tabulated) with
 /// the feed's own `updatedAt`, and returns a verdict a contract can branch on.
@@ -145,7 +152,8 @@ contract GuardedPushFeed {
         return IAggregatorV3(FEED).description();
     }
 
-    /// @dev Reverts with PushFeedGuard.NotAdmissible when the session is closed or the price is stale.
+    /// @dev Reverts with PushFeedGuard.NotAdmissible when the session is closed or the round is older
+    ///      than the caller's budget.
     function latestRoundData()
         external
         view

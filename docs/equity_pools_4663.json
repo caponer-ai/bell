@@ -10,7 +10,8 @@
   "symbol": "AAPL",
   "ticker": "AAPL",
   "feed": "0x6B22A786bAa607d76728168703a39Ea9C99f2cD0",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -23,7 +24,8 @@
   "symbol": "AAPL",
   "ticker": "AAPL",
   "feed": "0x6B22A786bAa607d76728168703a39Ea9C99f2cD0",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -36,7 +38,8 @@
   "symbol": "AAPL",
   "ticker": "AAPL",
   "feed": "0x6B22A786bAa607d76728168703a39Ea9C99f2cD0",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -49,7 +52,8 @@
   "symbol": "AMD",
   "ticker": "AMD",
   "feed": "0x943A29E7ae51A4798823ca9eEd2ed533B2A22C72",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -62,7 +66,8 @@
   "symbol": "AMD",
   "ticker": "AMD",
   "feed": "0x943A29E7ae51A4798823ca9eEd2ed533B2A22C72",
-  "genuine": false
+  "genuine": false,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -75,7 +80,8 @@
   "symbol": "AMD",
   "ticker": "AMD",
   "feed": "0x943A29E7ae51A4798823ca9eEd2ed533B2A22C72",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -88,7 +94,8 @@
   "symbol": "AMD",
   "ticker": "AMD",
   "feed": "0x943A29E7ae51A4798823ca9eEd2ed533B2A22C72",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -101,7 +108,8 @@
   "symbol": "AMZN",
   "ticker": "AMZN",
   "feed": "0xD5a1508ceD74c084eBf3cBe853e2C968fB2a651C",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -114,7 +122,8 @@
   "symbol": "AMZN",
   "ticker": "AMZN",
   "feed": "0xD5a1508ceD74c084eBf3cBe853e2C968fB2a651C",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -127,7 +136,8 @@
   "symbol": "AMZN",
   "ticker": "AMZN",
   "feed": "0xD5a1508ceD74c084eBf3cBe853e2C968fB2a651C",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -140,7 +150,8 @@
   "symbol": "AMZN",
   "ticker": "AMZN",
   "feed": "0xD5a1508ceD74c084eBf3cBe853e2C968fB2a651C",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -153,7 +164,8 @@
   "symbol": "BABA",
   "ticker": "BABA",
   "feed": "0x62Cc8F9b5f56a33c9C8A60c8B92779f523c4E984",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -166,7 +178,8 @@
   "symbol": "BABA",
   "ticker": "BABA",
   "feed": "0x62Cc8F9b5f56a33c9C8A60c8B92779f523c4E984",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -179,7 +192,8 @@
   "symbol": "BABA",
   "ticker": "BABA",
   "feed": "0x62Cc8F9b5f56a33c9C8A60c8B92779f523c4E984",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -192,7 +206,8 @@
   "symbol": "COIN",
   "ticker": "COIN",
   "feed": "0xA3a468A452940B7D6b69991207B508c609a98Ef2",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -205,7 +220,8 @@
   "symbol": "COIN",
   "ticker": "COIN",
   "feed": "0xA3a468A452940B7D6b69991207B508c609a98Ef2",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -218,7 +234,8 @@
   "symbol": "COIN",
   "ticker": "COIN",
   "feed": "0xA3a468A452940B7D6b69991207B508c609a98Ef2",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -231,7 +248,8 @@
   "symbol": "COIN",
   "ticker": "COIN",
   "feed": "0xA3a468A452940B7D6b69991207B508c609a98Ef2",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -244,7 +262,8 @@
   "symbol": "CRCL",
   "ticker": "CRCL",
   "feed": "0x6652eDf64bA3731C4F2D3ce821A0Fb1f1f6b482a",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -257,7 +276,8 @@
   "symbol": "CRCL",
   "ticker": "CRCL",
   "feed": "0x6652eDf64bA3731C4F2D3ce821A0Fb1f1f6b482a",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -270,7 +290,8 @@
   "symbol": "CRCL",
   "ticker": "CRCL",
   "feed": "0x6652eDf64bA3731C4F2D3ce821A0Fb1f1f6b482a",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -283,7 +304,8 @@
   "symbol": "GME",
   "ticker": "GME",
   "feed": "0x27C71df6A64fB476468EdF256CF72c038baB5B67",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -296,7 +318,8 @@
   "symbol": "GME",
   "ticker": "GME",
   "feed": "0x27C71df6A64fB476468EdF256CF72c038baB5B67",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -309,7 +332,8 @@
   "symbol": "GME",
   "ticker": "GME",
   "feed": "0x27C71df6A64fB476468EdF256CF72c038baB5B67",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -322,7 +346,8 @@
   "symbol": "GME",
   "ticker": "GME",
   "feed": "0x27C71df6A64fB476468EdF256CF72c038baB5B67",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -335,7 +360,8 @@
   "symbol": "GOOGL",
   "ticker": "GOOGL",
   "feed": "0xF6f373a037c30F0e5010d854385cA89185AE638b",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -348,7 +374,8 @@
   "symbol": "GOOGL",
   "ticker": "GOOGL",
   "feed": "0xF6f373a037c30F0e5010d854385cA89185AE638b",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -361,7 +388,8 @@
   "symbol": "GOOGL",
   "ticker": "GOOGL",
   "feed": "0xF6f373a037c30F0e5010d854385cA89185AE638b",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -374,7 +402,8 @@
   "symbol": "GOOGL",
   "ticker": "GOOGL",
   "feed": "0xF6f373a037c30F0e5010d854385cA89185AE638b",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -387,7 +416,8 @@
   "symbol": "META",
   "ticker": "META",
   "feed": "0x7C38C00C30BEe9378381E7B6135d7283356D71b1",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -400,7 +430,8 @@
   "symbol": "META",
   "ticker": "META",
   "feed": "0x7C38C00C30BEe9378381E7B6135d7283356D71b1",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -413,7 +444,8 @@
   "symbol": "META",
   "ticker": "META",
   "feed": "0x7C38C00C30BEe9378381E7B6135d7283356D71b1",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -426,7 +458,8 @@
   "symbol": "MSFT",
   "ticker": "MSFT",
   "feed": "0x45C3C877C15E6BA2EBB19eA114Ea508d14C1Af2E",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -439,7 +472,8 @@
   "symbol": "MSFT",
   "ticker": "MSFT",
   "feed": "0x45C3C877C15E6BA2EBB19eA114Ea508d14C1Af2E",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -452,7 +486,8 @@
   "symbol": "MSFT",
   "ticker": "MSFT",
   "feed": "0x45C3C877C15E6BA2EBB19eA114Ea508d14C1Af2E",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -465,7 +500,8 @@
   "symbol": "MSFT",
   "ticker": "MSFT",
   "feed": "0x45C3C877C15E6BA2EBB19eA114Ea508d14C1Af2E",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -478,7 +514,8 @@
   "symbol": "MU",
   "ticker": "MU",
   "feed": "0x425EEFdCf05ed6526C3cE61Af99429A228a6d596",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -491,7 +528,8 @@
   "symbol": "MU",
   "ticker": "MU",
   "feed": "0x425EEFdCf05ed6526C3cE61Af99429A228a6d596",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -504,7 +542,8 @@
   "symbol": "NVDA",
   "ticker": "NVDA",
   "feed": "0x379EC4f7C378F34a1B47E4F3cbeBCbAC3E8E9F15",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -517,7 +556,8 @@
   "symbol": "NVDA",
   "ticker": "NVDA",
   "feed": "0x379EC4f7C378F34a1B47E4F3cbeBCbAC3E8E9F15",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -530,7 +570,8 @@
   "symbol": "NVDA",
   "ticker": "NVDA",
   "feed": "0x379EC4f7C378F34a1B47E4F3cbeBCbAC3E8E9F15",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -543,7 +584,8 @@
   "symbol": "NVDA",
   "ticker": "NVDA",
   "feed": "0x379EC4f7C378F34a1B47E4F3cbeBCbAC3E8E9F15",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -556,7 +598,8 @@
   "symbol": "QQQ",
   "ticker": "QQQ",
   "feed": "0x80901d846d5D7B030F26B480776EE3b29374C2ae",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -569,7 +612,8 @@
   "symbol": "QQQ",
   "ticker": "QQQ",
   "feed": "0x80901d846d5D7B030F26B480776EE3b29374C2ae",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -582,7 +626,8 @@
   "symbol": "QQQ",
   "ticker": "QQQ",
   "feed": "0x80901d846d5D7B030F26B480776EE3b29374C2ae",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -595,7 +640,8 @@
   "symbol": "SLV",
   "ticker": "SLV",
   "feed": "0x209b73908e92Ae021826eD79609845451Ecba2ce",
-  "genuine": false
+  "genuine": false,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -608,7 +654,8 @@
   "symbol": "SLV",
   "ticker": "SLV",
   "feed": "0x209b73908e92Ae021826eD79609845451Ecba2ce",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -621,7 +668,8 @@
   "symbol": "SLV",
   "ticker": "SLV",
   "feed": "0x209b73908e92Ae021826eD79609845451Ecba2ce",
-  "genuine": false
+  "genuine": false,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -634,7 +682,8 @@
   "symbol": "SLV",
   "ticker": "SLV",
   "feed": "0x209b73908e92Ae021826eD79609845451Ecba2ce",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -647,7 +696,8 @@
   "symbol": "SLV",
   "ticker": "SLV",
   "feed": "0x209b73908e92Ae021826eD79609845451Ecba2ce",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -660,7 +710,8 @@
   "symbol": "SPCX",
   "ticker": "SPCX",
   "feed": "0xB265810950ba6c5C0Ff821c9963014a56fD8Bffb",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -673,7 +724,8 @@
   "symbol": "SPCX",
   "ticker": "SPCX",
   "feed": "0xB265810950ba6c5C0Ff821c9963014a56fD8Bffb",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -686,7 +738,8 @@
   "symbol": "SPCX",
   "ticker": "SPCX",
   "feed": "0xB265810950ba6c5C0Ff821c9963014a56fD8Bffb",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -699,7 +752,8 @@
   "symbol": "SPCX",
   "ticker": "SPCX",
   "feed": "0xB265810950ba6c5C0Ff821c9963014a56fD8Bffb",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -712,7 +766,8 @@
   "symbol": "SPY",
   "ticker": "SPY",
   "feed": "0x319724394D3A0e3669269846abE664Cd621f9f6A",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -725,7 +780,8 @@
   "symbol": "SPY",
   "ticker": "SPY",
   "feed": "0x319724394D3A0e3669269846abE664Cd621f9f6A",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -738,7 +794,8 @@
   "symbol": "SPY",
   "ticker": "SPY",
   "feed": "0x319724394D3A0e3669269846abE664Cd621f9f6A",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -751,7 +808,8 @@
   "symbol": "TSLA",
   "ticker": "TSLA",
   "feed": "0x4A1166a659A55625345e9515b32adECea5547C38",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -764,7 +822,8 @@
   "symbol": "TSLA",
   "ticker": "TSLA",
   "feed": "0x4A1166a659A55625345e9515b32adECea5547C38",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -777,7 +836,8 @@
   "symbol": "TSLA",
   "ticker": "TSLA",
   "feed": "0x4A1166a659A55625345e9515b32adECea5547C38",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -790,7 +850,8 @@
   "symbol": "TSLA",
   "ticker": "TSLA",
   "feed": "0x4A1166a659A55625345e9515b32adECea5547C38",
-  "genuine": true
+  "genuine": true,
+  "genuineBy": "beacon"
  },
  {
   "version": "v3",
@@ -803,6 +864,7 @@
   "symbol": "USO",
   "ticker": "USO",
   "feed": "0x75a9c76Ef439e2C7c2E5a34Ab105EcFe3766431c",
-  "genuine": false
+  "genuine": false,
+  "genuineBy": "beacon"
  }
 ]

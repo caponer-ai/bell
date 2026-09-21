@@ -62,9 +62,16 @@ python script/feed_rounds.py       # what the feeds publish, and when
 
 **The venue.** Robinhood Chain has 5,944 Uniswap v3 pools holding USDG. Sixty-two of them pair USDG with a
 token whose symbol matches one of the 35 Chainlink equity feeds, and four of those sixty-two are impostors:
-a fake AMD, two fake SLV, a fake USO. A symbol is a claim, not an identity, so the impostors are dropped by
-comparing `keccak(bytecode)` against the known-good AAPL token at `0xaF3D76f1834A1d425780943C99Ea8A608f8a93f9`.
-That leaves **58 pools across 17 tickers** ([`docs/equity_pools_4663.json`](docs/equity_pools_4663.json)).
+a fake AMD, two fake SLV, a fake USO. A symbol is a claim, not an identity. The genuine tokens are 283-byte
+beacon proxies with the stock-token beacon `0xe10b6f6b275de231345c20d14ab812db62151b00` burned into their
+runtime code, so the test is where a contract gets its logic, not what string it returns. The impostors are
+3,877 to 8,120 bytes of unrelated code and fail it. That leaves **58 pools across 17 tickers**
+([`docs/equity_pools_4663.json`](docs/equity_pools_4663.json)).
+
+The limit of that test, stated because it is weaker than it looks: anyone can deploy an identical proxy on
+the same beacon, so this proves lineage, not issuance. What closes the practical gap is that the 58 pools
+carry 17 tickers across 17 distinct token addresses, with no ticker claimed twice. Absent a published
+registry from the issuer, that is the strongest check available from the chain alone.
 
 **The flow.** Over the seven days ending at block 68,728,047 those 58 pools saw **1,011,296 swaps and
 $418,290,551 of USDG volume**. **$212,136,382 of it, 50.7% of the volume and 64.0% of the swaps, traded
@@ -72,11 +79,26 @@ while the regular session was shut** ([`docs/equity_flow_4663.json`](docs/equity
 session split is computed by binary-searching the block at each opening and closing bell, then cross-checked
 against the deployed `PushFeedGuard.sessionAt`: **20 probes on the boundaries, 0 disagreements**.
 
-**The feeds.** Across all 35 equity feeds, the last 30 rounds each, **547 of 1,050 rounds (52.1%) were
-published outside the regular session** ([`docs/feed_rounds_4663.json`](docs/feed_rounds_4663.json)). The
-rate is not a constant a consumer could hard-code: `RHTSLA / USD` publishes 4 of 30 rounds out of session,
-while `Robinhood MSTR / USD` and `Robinhood CRCL / USD` publish 30 of 30. The longest observed gap between
-rounds is 96.0 hours, on `Robinhood SGOV-USD`.
+Turn that around before anyone else does, because the flattering framing is not the true one. The regular
+session is 32.5 of the window's 168.3 hours, 19.3% of it, and it carries $6,343,205 per hour against
+$1,561,718 per hour while shut: **intensity inside the session is 4.1x higher**. This chain does hear the
+bell. The claim is narrower and survives the arithmetic: half the week's flow still lands in the hours when
+the feed's number belongs to a different session, and the feed does not say so. The figure is also a floor,
+because only Uniswap v3 is measured here; the v4 PoolManager on this chain holds more than ten thousand
+further USDG pools that this count ignores.
+
+**The feeds.** Over one common ten-day window, the 35 equity feeds published 1,003 rounds, of which
+**509 landed outside the regular session** ([`docs/feed_rounds_4663.json`](docs/feed_rounds_4663.json),
+drawn in [`docs/feed_rounds.svg`](docs/feed_rounds.svg)). The window matters: an earlier version of this
+paragraph counted "the last 30 rounds of each feed", and those thirty rounds span a day and a half on
+`Robinhood MSTR / USD` and forty-four days on `RHMSFT / USD`, so the pooled figure was adding up different
+amounts of time. A common window says the same thing without the sleight of hand.
+
+**The rate is not a constant a consumer could hard-code.** `RHTSLA / USD` publishes 4 rounds of 30 outside
+the session, `Robinhood PLTR / USD` 6, `RHSPY / USD` 18, and `Robinhood MSTR / USD` and
+`Robinhood CRCL / USD` 30 of 30. The longest observed gap between rounds is 96.0 hours, on
+`Robinhood SGOV-USD`. The chart is the argument: the marks do not line up with the shading, and they do not
+line up the same way from one row to the next.
 
 This is also where an earlier version of this README was wrong in the other direction. The feed does not
 freeze overnight. On `RHSPY / USD`, round 139 landed at 00:00:26 UTC on Monday 2026-09-21, 59.6 hours after

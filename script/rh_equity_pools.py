@@ -36,6 +36,32 @@ def keccak(text):
     return "0x" + k.hexdigest()
 
 
+# The ERC-8056 stock tokens on this chain are 283-byte beacon proxies: the beacon address is burned into
+# the runtime code and every call is forwarded to whatever `implementation()` that beacon returns. A token
+# is treated as genuine here when its code carries this beacon, which is a statement about where the
+# contract gets its logic rather than about a symbol string anyone can choose.
+#
+# Stated limit, because this is weaker than it looks: an identical proxy pointing at the same beacon can
+# be deployed by anyone, so this test proves lineage, not issuance. What closes the practical gap is that
+# among the 58 pools that pass it there are 17 tickers and 17 distinct token addresses, with no ticker
+# claimed twice. Without a published registry from the issuer to check the list against, that is the
+# strongest test available from the chain alone.
+STOCK_TOKEN_BEACON = "0xe10b6f6b275de231345c20d14ab812db62151b00"
+
+
+def genuine_tokens(tokens):
+    """Which of these token addresses are beacon proxies on the canonical stock-token beacon."""
+    out = post(
+        [
+            {"jsonrpc": "2.0", "id": n, "method": "eth_getCode", "params": [t, "latest"]}
+            for n, t in enumerate(tokens)
+        ]
+    )
+    by_id = {r["id"]: r.get("result") or "0x" for r in out}
+    needle = STOCK_TOKEN_BEACON[2:].lower()
+    return {t: (needle in (by_id.get(n) or "").lower()) for n, t in enumerate(tokens)}
+
+
 _last = [0.0]
 
 

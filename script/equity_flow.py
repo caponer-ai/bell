@@ -178,6 +178,49 @@ def _session_edges(day):
     return (midnight + (13 if dst else 14) * 3600 + 1800, midnight + close_hour * 3600)
 
 
+def weekend_boundary_blocks(lo_block, hi_block):
+    """The block where each weekend starts (Saturday 00:00 UTC) and ends (Monday 00:00 UTC)."""
+    times = _exact_times([lo_block, hi_block])
+    t_lo, t_hi = times[str(lo_block)], times[str(hi_block)]
+    marks = []
+    day = dt.datetime.fromtimestamp(t_lo, dt.timezone.utc).date() - dt.timedelta(2)
+    last = dt.datetime.fromtimestamp(t_hi, dt.timezone.utc).date() + dt.timedelta(2)
+    while day <= last:
+        midnight = dt.datetime(day.year, day.month, day.day, tzinfo=dt.timezone.utc).timestamp()
+        if day.weekday() == 5 and t_lo < midnight < t_hi:
+            marks.append({"kind": "start", "ts": midnight, "date": day.isoformat()})
+        if day.weekday() == 0 and t_lo < midnight < t_hi:
+            marks.append({"kind": "end", "ts": midnight, "date": day.isoformat()})
+        day += dt.timedelta(1)
+    marks.sort(key=lambda m: m["ts"])
+    return _locate(marks, lo_block, hi_block)
+
+
+def _locate(marks, lo_block, hi_block):
+    """Binary-search the first block at or after each timestamp, all searches in lockstep."""
+    if not marks:
+        return marks
+    los = [lo_block] * len(marks)
+    his = [hi_block] * len(marks)
+    rounds = 0
+    while any(los[i] < his[i] for i in range(len(marks))):
+        mids = [(los[i] + his[i]) // 2 for i in range(len(marks))]
+        known = _exact_times(sorted({m for i, m in enumerate(mids) if los[i] < his[i]}))
+        for i, mark in enumerate(marks):
+            if los[i] >= his[i]:
+                continue
+            if known[str(mids[i])] < mark["ts"]:
+                los[i] = mids[i] + 1
+            else:
+                his[i] = mids[i]
+        rounds += 1
+        if rounds > 40:
+            break
+    for i, mark in enumerate(marks):
+        mark["block"] = los[i]
+    return marks
+
+
 def session_boundary_blocks(lo_block, hi_block):
     """The block number at every opening and closing bell inside the window.
 
@@ -199,8 +242,7 @@ def session_boundary_blocks(lo_block, hi_block):
         day += dt.timedelta(1)
     edges.sort(key=lambda e: e["ts"])
     print("  %d session boundaries inside the window" % len(edges))
-    if not edges:
-        return edges
+    return _locate(edges, lo_block, hi_block)
 
     los = [lo_block] * len(edges)
     his = [hi_block] * len(edges)
@@ -278,9 +320,19 @@ def main():
     print("%d equity/USDG pools, window %d..%d" % (len(pools), from_block, head))
 
     edges = session_boundary_blocks(from_block, head)
+    # A second, coarser question: how much of the out-of-session flow lands on the weekend, when even a
+    # 24/5 feed publishes nothing and the pool is the only price anywhere.
+    weekend = weekend_boundary_blocks(from_block, head)
     import bisect
 
     edge_blocks = [e["block"] for e in edges]
+    weekend_blocks = [e["block"] for e in weekend]
+
+    def is_weekend(block):
+        i = bisect.bisect_right(weekend_blocks, block) - 1
+        if i < 0:
+            return weekend and weekend[0]["kind"] == "end"
+        return weekend[i]["kind"] == "start"
 
     def state_of(block):
         """REGULAR when the block falls between an opening bell and the next closing bell."""
@@ -291,7 +343,7 @@ def main():
         return ("REGULAR" if e["kind"] == "open" else "CLOSED", e["date"])
 
     per = {}
-    totals = {"n": 0, "vol": 0.0, "nClosed": 0, "closed": 0.0}
+    totals = {"n": 0, "vol": 0.0, "nClosed": 0, "closed": 0.0, "nWeekend": 0, "weekend": 0.0}
 
     def fold(batch):
         for lg in batch:
@@ -303,7 +355,9 @@ def main():
             usdg_is_0 = pool["token0"].lower() == USDG.lower()
             usdg = abs(a0 if usdg_is_0 else a1) / 1e6
             state, _ = state_of(int(lg["blockNumber"], 16))
-            d = per.setdefault(pool["ticker"], {"vol": 0.0, "closed": 0.0, "n": 0, "nClosed": 0})
+            d = per.setdefault(
+                pool["ticker"], {"vol": 0.0, "closed": 0.0, "weekend": 0.0, "n": 0, "nClosed": 0, "nWeekend": 0}
+            )
             d["vol"] += usdg
             d["n"] += 1
             totals["vol"] += usdg
@@ -313,6 +367,11 @@ def main():
                 d["nClosed"] += 1
                 totals["closed"] += usdg
                 totals["nClosed"] += 1
+                if is_weekend(int(lg["blockNumber"], 16)):
+                    d["weekend"] += usdg
+                    d["nWeekend"] += 1
+                    totals["weekend"] += usdg
+                    totals["nWeekend"] += 1
 
     stream_swaps(pools, from_block, head, fold)
 
@@ -327,6 +386,26 @@ def main():
             totals["closed"],
             totals["closed"] / totals["vol"] * 100 if totals["vol"] else 0,
             totals["nClosed"] / totals["n"] * 100 if totals["n"] else 0,
+        )
+    )
+    session_hours = len([e for e in edges if e["kind"] == "open"]) * 6.5
+    window_hours = span_days * 24
+    shut_hours = window_hours - session_hours
+    open_vol = totals["vol"] - totals["closed"]
+    print(
+        "the other way round: the regular session is {:.1f} of {:.1f} hours ({:.0f}% of the window) and "
+        "carries ${:,.0f}/h, against ${:,.0f}/h while shut, so intensity inside the session is {:.1f}x".format(
+            session_hours,
+            window_hours,
+            session_hours / window_hours * 100,
+            open_vol / session_hours if session_hours else 0,
+            totals["closed"] / shut_hours if shut_hours else 0,
+            (open_vol / session_hours) / (totals["closed"] / shut_hours) if session_hours and shut_hours else 0,
+        )
+    )
+    print(
+        "of the out-of-session volume, ${:,.0f} ({:.1f}%) fell on a weekend, when no feed publishes at all".format(
+            totals["weekend"], totals["weekend"] / totals["closed"] * 100 if totals["closed"] else 0
         )
     )
     print("")
@@ -376,6 +455,10 @@ def main():
                 "totalUsdg": totals["vol"],
                 "closedUsdg": totals["closed"],
                 "closedSwaps": totals["nClosed"],
+                "weekendUsdg": totals["weekend"],
+                "weekendSwaps": totals["nWeekend"],
+                "sessionHours": session_hours,
+                "windowHours": window_hours,
                 "perTicker": per,
                 "boundaryCrossCheck": {"checked": checked, "mismatches": mismatch},
             },
