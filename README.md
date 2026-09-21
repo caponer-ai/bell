@@ -121,6 +121,47 @@ against $17,548 reported by Morpho's own API. That is 0.0014% of the book. The l
 stablecoin against stablecoin, where the concept of a trading session does not apply and this project has
 nothing to offer. The flow is on the DEX side; the lending side is still empty.
 
+## We tested the price story and lost
+
+The obvious way to put a number on this problem is to show that the feed is further from the market when
+the exchange is shut. We measured exactly that, and it is not true.
+
+`script/price_gap.py` takes each swap's `sqrtPriceX96` as the pool's own mid, finds the Chainlink round a
+contract would have read at that same moment, and splits the gap by session state. Over one week and
+994,000 swaps ([`docs/price_gap_4663.json`](docs/price_gap_4663.json)):
+
+| | swaps | USDG volume | median gap | p90 | p99 |
+|---|---:|---:|---:|---:|---:|
+| regular session | 357,957 | $201,805,881 | **0.169 %** | 0.415 % | 1.043 % |
+| weekday nights | 418,961 | $142,583,559 | **0.159 %** | 0.377 % | 0.700 % |
+| weekends | 205,446 | $62,212,328 | **0.063 %** | 0.479 % | 0.802 % |
+
+The out-of-session price is not a worse price, and the weekend median is the smallest of the three.
+Arbitrage does its job.
+
+Three controls, because a negative result is only worth something if it survives the objections that would
+have been raised against a positive one:
+
+- **Dollars, not a stablecoin.** The pool quotes shares in USDG and the feed quotes them in USD, so the
+  USDG/USD feed is applied rather than assumed. Its range is 1.31 basis points over the week.
+- **The price before the swap.** `sqrtPriceX96` in a Swap event is the price *after* the trade, so it
+  carries that trade's own impact. Reconstructing the pre-trade price (`d(sqrtP) = dy / L`, exact within a
+  tick) gives 0.161 % in session, 0.176 % at night, 0.085 % at weekends. Same conclusion.
+- **Direction.** Buying the share and selling it both come out at **+0.048 %** in session (n = 179,614 and
+  178,343). Identical signs, so this is a level, not a one-sided flow artefact.
+
+And the strongest boring explanation, removed rather than argued with: a threshold feed lags because it has
+not crossed its 0.5 % trigger yet. Conditioning on rounds published within the last five minutes, so the
+feed has just spoken, leaves 0.161 % in session against **0.121 % at night** (n = 62,413 and 17,698). Still
+smaller outside. The weekend cell contains zero swaps, which is its own finding: **on a weekend the feed is
+never fresh.**
+
+**So the defect this project addresses is not accuracy.** The number a contract reads out of hours is real,
+recent and roughly right. It simply belongs to a different market than the one the contract promised its
+users, and nothing in `latestRoundData()` says which. That is a semantic defect, and the audit in
+[`docs/REPLAY.md`](docs/REPLAY.md) is what it costs: 28 of 30 settlements decided by a tie rule because both
+snapshots read one round.
+
 ## We attacked it ourselves, and one attack worked
 
 [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md) lists every way a reviewer or we could find to take money
