@@ -372,6 +372,35 @@ out. If the feeds turn out to be seconds fresh inside regular hours, the guard's
 boundary alone and we will say so; if the tail is long, the staleness budget is the other half of the
 product. We are not going to decide which sentence is true before the data does.
 
+## What this adds over five lines of local checking, measured against ourselves
+
+The strongest objection to any guard is that a consumer can check `updatedAt` itself and skip the
+dependency. `script/policy_comparison.py` answers it with the 30 audited settlements run through five
+policies, all on the same 900 s budget, and writes [`docs/POLICY_COMPARISON.md`](docs/POLICY_COMPARISON.md).
+
+| Policy | Settles | Refuses |
+|---|---:|---:|
+| 1. As deployed (the market's own rule) | 30 | 0 |
+| 2. Freshness check only | 3 | 27 |
+| 3. Calendar + freshness + same-round refusal (a careful local patch) | 0 | 30 |
+| 4. PushFeedGuard alone | **2** | 28 |
+| 5. PushFeedGuard + SettlementPairGuard | 0 | 30 |
+
+Row 4 is the point of running this. **A careful local patch was stricter than our deployed guard on two
+settlements** (PLTR and AMD, 2026-08-25): both reads inside the regular session, the price four and eight
+minutes old, so every per-read check passes, yet the two reads were four and eleven seconds apart and
+returned the same feed round. A per-read guard cannot see a relationship between two reads.
+
+So we built the missing rule instead of arguing with the number. `src/SettlementPairGuard.sol`
+(`0x16dC769Ef04E77292A350298E87132994C8c293e`, tx `0x04d3242d…`) adds exactly one thing: the second read of
+a settlement pair must not carry the same `updatedAt` as the first. Seven tests, including the PLTR case
+reproduced second by second.
+
+What this comparison does **not** claim: that a careful developer could not write those rules themselves.
+Rows 3 and 5 now agree on all 30. The contribution is that the rule is written once, tested against the
+official NYSE calendar, deployed, and callable by anyone, rather than reimplemented per consumer with a
+holiday table somebody has to maintain.
+
 ## The calendar, checked day by day against NYSE's own schedule
 
 A calendar bug is the quiet kind: it does not revert, it calls a closed day open or an early close a full
