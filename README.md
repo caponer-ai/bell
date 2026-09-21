@@ -36,6 +36,23 @@ to it, and refuses when the pair is not fit to act on.
 | 5 minutes | this file |
 | an hour | [`docs/DETAILS.md`](docs/DETAILS.md), the long version of everything here |
 | a grudge | [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md), where one attack works |
+| a contract to fix | [`docs/INTEGRATION.md`](docs/INTEGRATION.md): the interface, the gas, and what to do with each answer |
+
+**Using it is one call and one branch**, against a contract that is already deployed, stateless, unowned
+and free to call:
+
+```solidity
+IPushFeedGuard constant GUARD = IPushFeedGuard(0x8aF68a9fF7583097A7476060C6B56eB33dA7a711);
+
+(Verdict v, Reason r, int256 price,) = GUARD.check(feed, 900);
+if (v != Verdict.ALLOW) revert NotNow(uint8(r));
+// price is a regular-session price, no older than your 900 seconds
+```
+
+An in-session check costs **27,305 gas**, about 0.4 US cents at this chain's gas price, and refusing costs
+**15,926** because outside the session the feed is never read. The verdict says whether to act and the
+reason says why not, so you decide between waiting and refusing rather than inheriting our opinion.
+[`docs/INTEGRATION.md`](docs/INTEGRATION.md) has the table of what each answer means.
 
 **Nine contracts sit in `src/`, but only one is the product.** `PushFeedGuard` answers the session
 question for all 35 equity feeds from one stateless deployment. `SessionCalendar` is the library inside it.
