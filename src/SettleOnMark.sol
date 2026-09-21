@@ -33,6 +33,17 @@ interface IERC20 {
 /// Units, because mixing them is how this goes wrong: the equity feeds here report **8 decimals**, so the
 /// strike is 8 decimals too. USDG has **6**. Nothing multiplies a price by a stake; the payoff is binary.
 ///
+/// What the settlement price is not: `closingPrice` in `settle()` is the feed reading recorded in the mark
+/// near the closing bell. It is not the exchange's official closing print, which is an auction result this
+/// chain never sees, and the two can differ. Anyone writing a product on top should say "the mark near the
+/// close, by this policy" in their own terms, exactly as this contract does, because a user who reads
+/// "closing price" and expects the tape has been misled by the wording rather than by the code.
+///
+/// And the calendar has an end: `SessionCalendar` tabulates 2026 and 2027 and fails closed afterwards, so a
+/// trade written for a 2028 date can never settle and can only refund. That is deliberate, and the exit
+/// path is tested for exactly that case. The migration path is a fresh deployment with a newer calendar; these
+/// contracts are immutable on purpose and will not be upgraded in place.
+///
 /// No owner, no upgrade, no fee.
 contract SettleOnMark {
     SessionLog public immutable LOG;

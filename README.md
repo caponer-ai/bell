@@ -121,6 +121,26 @@ against $17,548 reported by Morpho's own API. That is 0.0014% of the book. The l
 stablecoin against stablecoin, where the concept of a trading session does not apply and this project has
 nothing to offer. The flow is on the DEX side; the lending side is still empty.
 
+## We attacked it ourselves, and one attack worked
+
+[`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md) lists every way a reviewer or we could find to take money
+out of a trade that settles on a recorded mark, and each one is a test in
+[`test/Adversarial.t.sol`](test/Adversarial.t.sol) rather than a paragraph.
+
+| Attack | Outcome |
+|---|---|
+| The losing side controls the keeper and refuses to write the mark | **Fails.** The mark is permissionless, so the winner or a stranger writes it and the trade settles against the silent party. |
+| Nobody writes the mark at all | **Works.** The day produces nothing and `refund()` turns a loss into a draw. Unfixable in the contract, because the alternative is inventing a price. Mitigation is operational and stated. |
+| Choosing which second inside the window becomes the mark | **A real lever, bounded.** 334.90 at `C-100` pays the short, 335.10 at `C-30` pays the long. `markWindow` cuts the choice from 300 seconds to the trade's budget, and both candidates stay onchain. |
+| The guard refuses forever and the stakes are trapped | **Fails.** The exit never reads the oracle, tested three ways, the harshest being a trading date outside the calendar's tabulated years where no admissible mark can ever exist. |
+| A submitter hides a report and publishes a better rung later | **Fails.** Rungs are fixed by the calendar, so withholding produces `UNRESOLVED`, never a higher payout. |
+| An impostor token wearing a real ticker | **Filtered by lineage,** not by the symbol string, with the limit of that test stated. |
+
+Writing these surfaced a design point worth saying out loud: `SessionLog` records with an unlimited age
+budget, because the log's job is to state what the session was, while the age budget belongs to the
+consumer. A mark can therefore be admissible to the log and still unusable by the trade, and both refusal
+paths end in a refund rather than a lock.
+
 **What is not proven yet, stated before anyone asks:**
 
 - the ladder, Bell's DON-signed session reference, has never resolved on a real bell. Every signed report
@@ -138,7 +158,7 @@ nothing to offer. The flow is on the DEX side; the lending side is still empty.
 | Verifier it reads | `0xcE73c8ad08CBDEaCa6078BF0627C8fe0a9a536E7` (official Chainlink Data Streams VerifierProxy) |
 | Owner | none, and no upgrade path anywhere. `POLICY_VERSION` 2, `CALENDAR_VERSION` 1 |
 | Escrow token | Paxos USDG `0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168`, 6 decimals |
-| Tests | 144 unit tests and 6 fork tests against the real verifier, all green |
+| Tests | 152 unit tests and 6 fork tests against the real verifier, all green |
 
 Two calls that need no wallet:
 
