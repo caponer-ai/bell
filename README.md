@@ -33,6 +33,29 @@ cast call 0x88a5a0414c9fd615201814ddbec4e4d9e4d283d0 "rungTarget(uint32,bool,uin
 
 Until a poster feeds it, `checkSettle` answers `REJECT / REFERENCE_UNRESOLVED` for every day, which is the honest answer, not a failure: the contract refuses to hand out a reference it has no DON evidence for.
 
+## Check everything in one command
+
+```bash
+python script/verify.py
+```
+
+No key, no wallet, no subscription: it reads the deployed contracts and prints what they answer at the
+current block, then exits non-zero if any claim in this README fails to hold. A run from
+2026-09-21 07:40 UTC:
+
+```
+[  ok  ] chainId 4663 (Robinhood Chain), block 68625397
+[  ok  ] trading day 20260921: session 13:30:00 to 20:00:00 UTC, right now before the open
+[  ok  ] 35 feeds answered: 0 ALLOW, 0 WAIT, 35 REJECT
+[  ok  ] every verdict agrees with the calendar state above
+[  ok  ] POLICY_VERSION 2 (the ladder)
+[  ok  ] digestActive(0x00094baebfda…) = True
+[  ok  ] stored AAPL observation: mid 313.25735, observed 2026-09-09 18:00:00 UTC, marketStatus 2
+[  ok  ] checkLive says WAIT / OBS_STALE: a valid DON signature is not permission
+[  ok  ] BellFeedAdapter.latestRoundData() reverts rather than returning that price
+all checks hold at this block.
+```
+
 ## Already live on mainnet
 
 The contract is not waiting for a subscription to be useful. Two **real DON-signed reports** we extracted
