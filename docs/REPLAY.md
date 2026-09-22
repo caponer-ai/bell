@@ -18,6 +18,15 @@ Robinhood Chain (4663) has one live parimutuel market on stock prices, deployed 
 and an earlier `0x59DF30E22bdaC70764a5DbF8bBa51BC5a595759C`. Between 2026-07-03 and 2026-09-08 they
 settled 30 markets on TSLA, AMZN, PLTR, AMD and NVDA.
 
+**They found it first.** pplmaverick's own verification layer (commit `da13c80`, 2026-09-03) already
+reports that all real settlements resolved via tie-defaults-to-BULL. This audit reproduces that finding
+independently and adds the round ids and price ages. On 2026-09-22 they shipped a fix
+([V3](https://robinhoodchain.blockscout.com/address/0x06897Ce6A2492BE99B59a7c023A64A6C0Af37849)): ties now
+refund, the open price is taken at creation, and every read must be at most 4 hours old. That closes the
+tie problem. It does not ask which session a price came from: across the 35 equity feeds, a 4 hour check
+accepts the latest round in a median 27.3 % of the minutes when NYSE is shut (`script/staleness_gate_gap.py`,
+30 rounds per feed, so each window is short). Whether that matters depends on what the market promises.
+
 Their settlement, from `StockPredictionMarketV2.sol` (read 2026-09-21):
 
 ```solidity

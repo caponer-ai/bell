@@ -21,7 +21,8 @@ and not the time of the market observation behind it.
 
 That gap has a measured cost. In the only live stock market on this chain, **28 of 30 settlements read the
 same feed round on both sides** (93.3 %, 95 % Wilson interval 78.7 % to 98.2 %), so a tie-break rule decided
-them rather than any price movement. Bell is the layer that answers the session question, attaches the age
+them rather than any price movement. The market's author found this first in their own audit and fixed the
+tie rule on 2026-09-22; see [`docs/REPLAY.md`](docs/REPLAY.md). Bell is the layer that answers the session question, attaches the age
 to it, and refuses when the pair is not fit to act on.
 
 > Buildathon work (Arbitrum Open House Singapore, 14 Sept to 4 Oct 2026), solo, unaudited.
