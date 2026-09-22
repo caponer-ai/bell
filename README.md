@@ -80,6 +80,13 @@ python script/verify.py     # no key, no wallet: reads every contract and checks
 
 **What is proven today, on mainnet:**
 
+- **a real USDG trade settled on a recorded closing mark.** On 2026-09-22 a keeper wrote the MSTR closing mark
+  inside the trade's window at 19:58:05 UTC (verdict ALLOW, price 167.82, 836 s old, inside the 900 s budget;
+  [mark tx](https://robinhoodchain.blockscout.com/tx/0xf2578581097af3034493e537eada0d61b1950e5213d06d95e681082e588cfecb)),
+  and the trade settled against its 168.00 strike, paying the short side 0.40 USDG
+  ([settle tx](https://robinhoodchain.blockscout.com/tx/0x14a56c4dca329c80b1363b21db99c981c3b8430b2ba3993c3c5b3f002e744def)).
+  The stakes are 0.20 USDG a side: this proves the path, not a market.
+
 - the guard answers for all 35 Chainlink equity feeds from one stateless deployment, with the reason
   attached, and a run six hours before the bell returned **35 REJECT / OUTSIDE_SESSION** while every one
   of those feeds was happily serving a price ([full output](docs/session_report_2026-09-21T0714Z.txt));

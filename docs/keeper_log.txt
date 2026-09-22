@@ -1,2 +1,37 @@
 [20:01:16Z] read from chain: trade 0x484720AA05BcF183d80B6c2747163f47501aeae9, feed 0x396118bdfb181e6240e74d243f266b061c0edc3d, date 20260922, markWindow 120s, maxPriceAge 900s, close 1790107200
 [20:01:16Z] log accepts 1790106900..1790107200, the trade needs 1790107080 or later, so this marks from 1790107080 and not a second earlier
+[21:07:33Z] 1370 min to the window. price 169.23, age 3 min
+[21:17:36Z] 1360 min to the window. price 169.23, age 13 min
+[21:27:38Z] 1350 min to the window. price 169.23, age 23 min
+[21:37:41Z] 1340 min to the window. price 169.23, age 33 min
+[21:47:44Z] 1330 min to the window. price 169.23, age 43 min
+[21:57:46Z] 1320 min to the window. price 169.23, age 53 min
+[22:07:49Z] 1310 min to the window. price 169.23, age 63 min
+[22:17:51Z] 1300 min to the window. price 169.23, age 73 min
+[22:27:54Z] 1290 min to the window. price 169.23, age 83 min
+[22:37:57Z] 1280 min to the window. price 169.23, age 93 min
+[22:47:59Z] 1270 min to the window. price 169.23, age 103 min
+[00:47:32Z] 1150 min to the window. price 167.50, age 1 min
+[00:57:35Z] 1140 min to the window. price 166.65, age 4 min
+[01:07:37Z] 1130 min to the window. price 164.94, age 3 min
+[01:17:40Z] 1120 min to the window. price 164.94, age 13 min
+[01:27:43Z] 1110 min to the window. price 163.59, age 8 min
+[01:37:46Z] 1100 min to the window. price 164.52, age 7 min
+[01:47:48Z] 1090 min to the window. price 164.52, age 18 min
+[18:40:08Z] read from chain: trade 0x484720AA05BcF183d80B6c2747163f47501aeae9, feed 0x396118bdfb181e6240e74d243f266b061c0edc3d, date 20260922, markWindow 120s, maxPriceAge 900s, close 1790107200
+[18:40:08Z] log accepts 1790106900..1790107200, the trade needs 1790107080 or later, so this marks from 1790107080 and not a second earlier
+[19:56:31Z] 1 min to the window. price 167.82, age 12 min
+[19:56:54Z] 1 min to the window. price 167.82, age 12 min
+[19:57:11Z] 0 min to the window. price 167.82, age 13 min
+[19:57:23Z] 0 min to the window. price 167.82, age 13 min
+[19:57:33Z] 0 min to the window. price 167.82, age 13 min
+[19:57:40Z] 0 min to the window. price 167.82, age 13 min
+[19:57:46Z] 0 min to the window. price 167.82, age 13 min
+[19:57:51Z] 0 min to the window. price 167.82, age 13 min
+[19:57:57Z] 0 min to the window. price 167.82, age 13 min
+[19:58:02Z] window open
+[19:58:02Z] 118s left. verdict 0 reason 0, price 167.82, age 833s, fresh=True
+[19:58:02Z] marking now: price is inside the trade's budget
+[19:58:06Z] mark sent ok=True tx=0xf2578581097af3034493e537eada0d61b1950e5213d06d95e681082e588cfecb
+[19:58:11Z] quote says settleable=True
+[19:58:15Z] settle sent ok=True tx=0x14a56c4dca329c80b1363b21db99c981c3b8430b2ba3993c3c5b3f002e744def
