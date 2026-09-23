@@ -8,10 +8,10 @@ Thirty-five Chainlink equity feeds on Robinhood Chain, ten days. The shaded colu
 sessions. **1,003 rounds published, 509 of them outside those columns**, and the rate is different for every
 row: `RHTSLA / USD` publishes 4 rounds in 30 out of session, `Robinhood MSTR / USD` publishes 30 in 30.
 
-The obvious claim to make here would be that the out-of-hours price is worse, so we measured it on
-**982,364 swaps and $418M of USDG volume** across the 58 tokenized-equity pools on this chain. It is not
+The obvious claim would be that the out-of-hours price is worse, so I measured it on
+**968,799 swaps and $409M of USDG volume** across the 58 tokenized-equity pools on this chain. It is not
 worse: the median gap between the pool's own price and the feed is 0.168 % during the session, 0.162 % at
-night and 0.063 % at weekends. That hypothesis is dead, and the measurement that killed it is in this repo.
+night and 0.063 % at weekends. The measurement is in this repo.
 
 **So the defect is not accuracy, it is that the number does not say which market it came from.** A feed
 answers `latestRoundData()` at 03:00 on a Sunday with a real, recent, roughly right number, and nothing in
@@ -19,7 +19,7 @@ the response distinguishes it from a regular-session price. `updatedAt` gives th
 ([Chainlink API reference](https://docs.chain.link/data-feeds/api-reference)), not the session it belongs to
 and not the time of the market observation behind it.
 
-That gap has a measured cost. In the only live stock market on this chain, **28 of 30 settlements read the
+That gap has a measured cost. In the one live stock market I found on this chain (as of 2026-09-21), **28 of 30 settlements read the
 same feed round on both sides** (93.3 %, 95 % Wilson interval 78.7 % to 98.2 %), so a tie-break rule decided
 them rather than any price movement. The market's author found this first in their own audit and fixed the
 tie rule on 2026-09-22; see [`docs/REPLAY.md`](docs/REPLAY.md). Bell is the layer that answers the session question, attaches the age
@@ -50,9 +50,9 @@ if (v != Verdict.ALLOW) revert NotNow(uint8(r));
 // price is a regular-session price, no older than your 900 seconds
 ```
 
-An in-session check costs **27,305 gas**, about 0.4 US cents at this chain's gas price, and refusing costs
+An in-session check costs **27,305 gas**, and refusing costs
 **15,926** because outside the session the feed is never read. The verdict says whether to act and the
-reason says why not, so you decide between waiting and refusing rather than inheriting our opinion.
+reason says why not, so you decide between waiting and refusing rather than inheriting mine.
 [`docs/INTEGRATION.md`](docs/INTEGRATION.md) has the table of what each answer means.
 
 **Nine contracts sit in `src/`, but only one is the product.** `PushFeedGuard` answers the session
@@ -60,8 +60,10 @@ question for all 35 equity feeds from one stateless deployment. `SessionCalendar
 Everything else is either a consumer built to prove the guard does something (`SettleOnMark`, `SettleMini`),
 a different shape of the same answer (`BellFeedAdapter` reverts instead of returning, `SettlementPairGuard`
 adds the one rule a per-read check cannot express), a public record (`SessionLog`), the Data Streams half
-that has not run live yet (`Bell`), or a tool that exists only because this chain has no public router
-(`MinimalSwapper`).
+that has not run live yet (`Bell`), or a one-pool swap helper I wrote to buy the demo's USDG
+(`MinimalSwapper`). I wrote it because the canonical `SwapRouter` address does not answer on this chain;
+Uniswap's Universal Router is deployed here (`0x204FAca1764B154221e35c0d20aBb3c525710498`), which I missed
+at the time.
 
 
 ## Sixty seconds
@@ -94,7 +96,7 @@ python script/verify.py     # no key, no wallet: reads every contract and checks
   and then refused to serve them: `checkLive` answers `WAIT / OBS_STALE`. A valid signature is not
   permission;
 - the audit in [`docs/REPLAY.md`](docs/REPLAY.md) shows what the absence of this layer already permits:
-  of 30 settlements on the chain's only live stock market, **28 read the same feed round on both sides**,
+  of 30 settlements on that market, **28 read the same feed round on both sides**,
   so a tie-break rule decided them rather than any price movement. The same section attacks its own
   sample: 23 of those 30 were locked and settled within a minute of each other, which looks like an
   operator testing rather than a market trading; the 11.9 hour median price age is an out-of-session
@@ -103,19 +105,19 @@ python script/verify.py     # no key, no wallet: reads every contract and checks
   chain can settle a stock market on a price from a day the exchange never opened, and nothing in the
   data it reads can tell it so.
 
-## We tested the price story and lost
+## I tested the price story and lost
 
 The obvious way to put a number on this problem is to show that the feed is further from the market when
-the exchange is shut. We measured exactly that, and it is not true.
+the exchange is shut. I measured exactly that, and it is not true.
 
 `script/price_gap.py` takes each swap's `sqrtPriceX96` as the pool's own mid, finds the Chainlink round a
 contract would have read at that same moment, and splits the gap by session state. Over one week and
-982,364 swaps ([`docs/price_gap_4663.json`](docs/price_gap_4663.json)):
+968,799 swaps ([`docs/price_gap_4663.json`](docs/price_gap_4663.json)):
 
 | | swaps | USDG volume | median gap | p90 | p99 |
 |---|---:|---:|---:|---:|---:|
-| regular session | 357,957 | $201,805,881 | **0.168 %** | 0.415 % | 1.043 % |
-| weekday nights | 418,961 | $142,583,559 | **0.162 %** | 0.377 % | 0.700 % |
+| regular session | 259,946 | $176,805,400 | **0.168 %** | 0.427 % | 1.085 % |
+| weekday nights | 503,407 | $169,844,903 | **0.162 %** | 0.380 % | 0.696 % |
 | weekends | 205,446 | $62,212,328 | **0.063 %** | 0.479 % | 0.802 % |
 
 The out-of-session price is not a worse price, and the weekend median is the smallest of the three.
@@ -128,9 +130,12 @@ have been raised against a positive one:
   USDG/USD feed is applied rather than assumed. Its range is 1.31 basis points over the week.
 - **The price before the swap.** `sqrtPriceX96` in a Swap event is the price *after* the trade, so it
   carries that trade's own impact. Reconstructing the pre-trade price (`d(sqrtP) = dy / L`, exact within a
-  tick) gives 0.161 % in session, 0.176 % at night, 0.085 % at weekends. Same conclusion.
-- **Direction.** Buying the share and selling it both come out at **+0.048 %** in session (n = 179,614 and
-  178,343). Identical signs, so this is a level, not a one-sided flow artefact.
+  tick) gives 0.154 % in session, 0.177 % at night, 0.085 % at weekends. On this measure weeknights are
+  somewhat wider than the session and weekends narrower: nothing like the large out-of-hours gap the
+  hypothesis needed.
+- **Direction.** Buying the share and selling it come out at **+0.041 % and +0.030 %** in session
+  (n = 130,091 and 129,855), +0.079 % and +0.085 % at night. Same sign either way, so this is a level, not a
+  one-sided flow artefact.
 
 Two more objections, both measured rather than waved away, on a shorter three-day window so the sensitivity
 question does not disturb the headline sample ([`docs/price_gap_sensitivity_3d.json`](docs/price_gap_sensitivity_3d.json)):
@@ -146,7 +151,7 @@ question does not disturb the headline sample ([`docs/price_gap_sensitivity_3d.j
 
 And the strongest boring explanation, removed rather than argued with: a threshold feed lags because it has
 not crossed its 0.5 % trigger yet. Conditioning on rounds published within the last five minutes, so the
-feed has just spoken, leaves 0.161 % in session against **0.121 % at night** (n = 62,413 and 17,698). Still
+feed has just spoken, leaves 0.174 % in session against **0.124 % at night** (n = 46,620 and 32,414). Still
 smaller outside. The weekend cell contains zero swaps, which is its own finding: **on a weekend the feed is
 never fresh.**
 
@@ -156,9 +161,9 @@ users, and nothing in `latestRoundData()` says which. That is a semantic defect,
 [`docs/REPLAY.md`](docs/REPLAY.md) is what it costs: 28 of 30 settlements decided by a tie rule because both
 snapshots read one round.
 
-## We attacked it ourselves, and one attack worked
+## I attacked it myself, and one attack worked
 
-[`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md) lists every way a reviewer or we could find to take money
+[`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md) lists every way a reviewer or I could find to take money
 out of a trade that settles on a recorded mark, and each one is a test in
 [`test/Adversarial.t.sol`](test/Adversarial.t.sol) rather than a paragraph.
 
@@ -179,12 +184,12 @@ paths end in a refund rather than a lock.
 **What is not proven yet, stated before anyone asks:**
 
 - the ladder, Bell's DON-signed session reference, has never resolved on a real bell. Every signed report
-  we hold is mid-session, and US equity Data Streams are not sold to a self-serve account today, so that
-  half is code and tests waiting for access, not a live claim ([Limitations](#limitations-we-state-ourselves));
+  I hold is mid-session, and US equity Data Streams are not sold to a self-serve account today, so that
+  half is code and tests waiting for access, not a live claim ([Limitations](#limitations-stated-up-front));
 - nobody outside this repo uses any of it yet. The adapter exists so that integrating is one address
   change rather than a rewrite, but a one-line integration is still not an integration.
 
-## What happened when we ran it for real
+## What happened when I ran it for real
 
 On 2026-09-21 a trade was funded with 2 USDG on both sides and the closing mark for AAPL was written on
 chain: tx [`0x92e2ed34…acc2554`](https://github.com/caponer-ai/bell), block 69,064,362, price 339.24192943.
@@ -203,7 +208,7 @@ funds.
 
 The keeper now takes one argument, the trade address, and reads the feed, the trading date, `markWindow`,
 `maxPriceAge` and the bell itself from the contracts, because every number it got wrong was already on
-chain. The second trade, on a feed chosen from our own measurement of which feeds actually publish
+chain. The second trade, on a feed chosen from my own measurement of which feeds actually publish
 (`MSTR`, 30 rounds out of 30 in session, maximum gap 1.4 h, against AAPL going silent for days), is funded
 and waiting at `0x484720AA05BcF183d80B6c2747163f47501aeae9`.
 
@@ -229,7 +234,7 @@ cast call 0x88a5a0414c9fd615201814ddbec4e4d9e4d283d0 "checkLive(bytes32)(uint8,u
 # 1 3 = WAIT / OBS_STALE
 ```
 
-## Limitations we state ourselves
+## Limitations, stated up front
 
 - The ladder relies on Chainlink's documented window semantics (one report per time interval). If two different signed reports ever cover the same target second, Bell records a conflict and the fixing is UNRESOLVED: a liveness failure, never a chosen price. The REST semantics of "report for timestamp T" (window containing T vs. observed at T) are to be confirmed empirically on a paid stream.
 - Early-close behaviour of the DON has not been observed onchain (no equity report was verified anywhere on 2026-07-03, and the next early close is 2026-11-27); it is covered by synthetic tests only.
@@ -238,7 +243,7 @@ cast call 0x88a5a0414c9fd615201814ddbec4e4d9e4d283d0 "checkLive(bytes32)(uint8,u
 - Data Streams access is a paid subscription (from $150 per stream per month); a shared, sponsored poster is the honest ask to the chain.
 - The calendar table covers 2026 and 2027 only (`SessionCalendar._yearSupported`). From 2028 every day answers `NO_SESSION`, fail closed: no new fixing can open, while every reference and receipt recorded before then stays readable forever. A new year means a new deployment, which is the price of having no owner and no upgrade.
 - The contract compiles with `via_ir` (stack depth in the ladder loop); gas numbers will be published with the deployment.
-- **One attack in our own threat model works.** If nobody writes the closing mark, the day produces nothing and `refund()` turns a loss into a draw. It cannot be fixed inside the contract, because the alternative is inventing a price, and the mitigation is operational: the mark is permissionless and cheap, so a product built on this should ship a keeper. [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md) has the test.
+- **One attack in my own threat model works.** If nobody writes the closing mark, the day produces nothing and `refund()` turns a loss into a draw. It cannot be fixed inside the contract, because the alternative is inventing a price, and the mitigation is operational: the mark is permissionless and cheap, so a product built on this should ship a keeper. [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md) has the test.
 - **The price-gap measurement covers one week.** That is one weekend episode, so the weekend column rests on a single occurrence of the thing it describes, and the tail figures there should be read as indicative rather than as a distribution. It also measures Uniswap v3 only: the v4 PoolManager on this chain holds more than ten thousand further USDG pools, so $418M is a floor on equity flow, not a total.
 - **The genuine-token test proves lineage, not issuance.** Anyone can deploy an identical beacon proxy on the same beacon. What closes the gap in practice is that the 58 surviving pools carry 17 tickers across 17 distinct addresses with no ticker claimed twice; absent a registry published by the issuer, that is the strongest check the chain alone allows.
 
