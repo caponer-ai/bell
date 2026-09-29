@@ -352,18 +352,43 @@ def main():
                 )
                 # counts and volumes too, not only medians: on 2026-09-21 the file was regenerated and the
                 # README table kept the previous run's counts while its medians happened to match
-                claim(f"swaps in the price-gap sample, {state.lower()}", gap["totals"][state]["swaps"])
-                claim(f"USDG volume in the price-gap sample, {state.lower()}", gap["totals"][state]["volumeUsdg"])
-        claim("swaps in the price-gap sample", sum(v["swaps"] for v in gap["totals"].values()))
+                claim(
+                    f"swaps in the price-gap sample, {state.lower()}",
+                    gap["totals"][state]["swaps"],
+                )
+                claim(
+                    f"USDG volume in the price-gap sample, {state.lower()}",
+                    gap["totals"][state]["volumeUsdg"],
+                )
+        claim(
+            "swaps in the price-gap sample",
+            sum(v["swaps"] for v in gap["totals"].values()),
+        )
         g = gap["totals"]
         for state in ("REGULAR", "CLOSED", "WEEKEND"):
-            claim(f"pre-trade median gap, {state.lower()}", g[state]["gapPreSwapP50Pct"], "{:.3f} %")
-        claim("fresh-feed median gap, regular", g["REGULAR"]["freshGapP50Pct"], "{:.3f} %")
-        claim("fresh-feed median gap, closed", g["CLOSED"]["freshGapP50Pct"], "{:.3f} %")
+            claim(
+                f"pre-trade median gap, {state.lower()}",
+                g[state]["gapPreSwapP50Pct"],
+                "{:.3f} %",
+            )
+        claim(
+            "fresh-feed median gap, regular", g["REGULAR"]["freshGapP50Pct"], "{:.3f} %"
+        )
+        claim(
+            "fresh-feed median gap, closed", g["CLOSED"]["freshGapP50Pct"], "{:.3f} %"
+        )
         claim("fresh-feed swaps, regular", g["REGULAR"]["freshFeedSwaps"])
         claim("fresh-feed swaps, closed", g["CLOSED"]["freshFeedSwaps"])
-        claim("buy-side signed median, regular", g["REGULAR"]["signedP50WhenBuyingSharePct"], "{:.3f} %")
-        claim("sell-side signed median, regular", g["REGULAR"]["signedP50WhenSellingSharePct"], "{:.3f} %")
+        claim(
+            "buy-side signed median, regular",
+            g["REGULAR"]["signedP50WhenBuyingSharePct"],
+            "{:.3f} %",
+        )
+        claim(
+            "sell-side signed median, regular",
+            g["REGULAR"]["signedP50WhenSellingSharePct"],
+            "{:.3f} %",
+        )
     except FileNotFoundError:
         line(False, "docs/price_gap_4663.json missing")
 
@@ -380,6 +405,21 @@ def main():
         )
     except FileNotFoundError:
         line(False, "docs/morpho_exposure.json missing")
+
+    try:
+        loans = json.loads(
+            (ROOT / "docs" / "morpho_session_replay.json").read_text(encoding="utf-8")
+        )["summary"]
+        claim("loans against stock tokens on Morpho, all time", loans["loans"])
+        claim("USDG borrowed against stock tokens, all time", loans["grossBorrowed"])
+        claim("of it while NYSE was shut", loans["borrowedWhileClosed"])
+        claim(
+            "on a price older than the feed's 24 h heartbeat",
+            loans["borrowedOnPriceOlderThanHeartbeat"],
+        )
+        claim("liquidations", loans["liquidations"])
+    except FileNotFoundError:
+        line(False, "docs/morpho_session_replay.json missing")
 
     failures += drift[0]
 

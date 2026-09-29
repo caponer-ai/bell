@@ -88,12 +88,14 @@ them, so the week represents about thirty turns of that capital. In the largest 
 senders and 311 distinct recipients, so the flow is bot-heavy in count and broader in value. None of this
 shows anyone lost money, or that anyone wants this contract.
 
-**And the honest counterweight:** lending against equities on this chain is not where the money is. Morpho
-Blue (`0x9D53d5E3bd5E8d4Cbfa6DB1ca238AEA02E651010`) carries $461,393,489 of debt on chainId 4663, of which
-equity collateral accounts for **$17,119 measured onchain** by `balanceOf` per token, times the feed price,
-against $17,548 reported by Morpho's own API. That is 0.0014% of the book. The large markets are
-stablecoin against stablecoin, where the concept of a trading session does not apply and this project has
-nothing to offer. The flow is on the DEX side; the lending side is still empty.
+**And the honest counterweight:** lending against equities on this chain is small next to the rest of the
+book. Morpho Blue (`0x9D53d5E3bd5E8d4Cbfa6DB1ca238AEA02E651010`) carries $457,379,556 of debt on chainId 4663
+(Morpho's API, 2026-09-28), of which $675,097 is borrowed against stock tokens, 0.15 % of the book. Equity collateral
+accounts for **$1,736,010 measured onchain** by `balanceOf` per token (2026-09-28), times the feed price recorded in `docs/feed_rounds_4663.json`, against $1,720,584
+reported by Morpho's own API. A week earlier the same script measured $17,119, so this grew a hundredfold, and
+most of the growth is one address: it holds $1,542,129 of that collateral (Morpho's API, positions on 2026-09-29) and opened 94.8 % of all the borrowing
+(README, *Who borrows against stocks here*). The large markets are still stablecoin against stablecoin,
+where a trading session does not apply and this project has nothing to offer.
 
 ## Already live on mainnet
 
@@ -347,8 +349,9 @@ Bell's claim is therefore narrow: DON-signed session status and a calendar-fixed
 ## Tests
 
 ```
-forge test                                                        # mock proxy: 74 tests
-forge test --fork-url robinhood --match-contract "VerifyFixture|BellRobustnessFork" -vv   # real proxy, real signed reports: 6 tests
+forge test                                                        # no network: 156 tests; the 4 fork suites (11 tests) skip
+forge test --fork-url robinhood                                   # everything against a mainnet fork: 167 tests
+forge test --fork-url robinhood --match-contract "VerifyFixture|BellRobustnessFork" -vv   # real proxy, real signed reports
 python script/replay_prediction_market.py                         # the audit, from public data, no key
 python poster/poster.py --dry-run                                 # the poster's plan, no credentials
 ```

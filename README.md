@@ -22,8 +22,12 @@ and not the time of the market observation behind it.
 That gap has a measured cost. In the one live stock market I found on this chain (as of 2026-09-21), **28 of 30 settlements read the
 same feed round on both sides** (93.3 %, 95 % Wilson interval 78.7 % to 98.2 %), so a tie-break rule decided
 them rather than any price movement. The market's author found this first in their own audit and fixed the
-tie rule on 2026-09-22; see [`docs/REPLAY.md`](docs/REPLAY.md). Bell is the layer that answers the session question, attaches the age
-to it, and refuses when the pair is not fit to act on.
+tie rule on 2026-09-22; see [`docs/REPLAY.md`](docs/REPLAY.md). On Morpho, 735,891 of the 1,623,948 USDG ever
+borrowed against stock tokens here was opened while NYSE was shut, 304,053 of it on a price older than the
+feed's own 24 hour heartbeat, and nothing in those markets records which
+([below](#who-borrows-against-stocks-here-and-on-which-price); no loss followed, and that is said there too).
+Bell is the layer that answers the session question, attaches the age to it, and refuses when the pair is
+not fit to act on.
 
 > Buildathon work (Arbitrum Open House Singapore, 14 Sept to 4 Oct 2026), solo, unaudited.
 > Everything below is live on chainId 4663 and meant to be checked rather than believed.
@@ -38,6 +42,7 @@ to it, and refuses when the pair is not fit to act on.
 | an hour | [`docs/DETAILS.md`](docs/DETAILS.md), the long version of everything here |
 | a grudge | [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md), where one attack works |
 | a contract to fix | [`docs/INTEGRATION.md`](docs/INTEGRATION.md): the interface, the gas, and what to do with each answer |
+| another session project open in the next tab | [where this sits among them](#where-this-sits-among-the-other-session-projects), with the line of their code that decides each row |
 
 **Using it is one call and one branch**, against a contract that is already deployed, stateless, unowned
 and free to call:
@@ -161,6 +166,37 @@ users, and nothing in `latestRoundData()` says which. That is a semantic defect,
 [`docs/REPLAY.md`](docs/REPLAY.md) is what it costs: 28 of 30 settlements decided by a tie rule because both
 snapshots read one round.
 
+## Who borrows against stocks here, and on which price
+
+The same question asked of someone else's live money. `script/morpho_session_replay.py` reads every
+`Borrow`, `Repay` and `Liquidate` ever emitted by a Morpho Blue market on this chain whose collateral is a
+genuine stock token (110 markets, bytecode-checked, not symbol-matched) and labels each loan with the
+session it was opened in and the age of the price the market's oracle was reading at that moment.
+
+| From 2026-07-02 to 2026-09-29 | |
+|---|---|
+| Loans against stock tokens | **308** in 39 markets, **1,623,948** USDG in total |
+| Opened while NYSE was shut | **735,891** USDG (45.3 %): weeknights 22.3 %, weekends 23.0 % |
+| Opened on a price older than the feed's own 24 hour heartbeat | **304,053** USDG in 38 loans by 18 borrowers, all at weekends |
+| Median age of the price at the moment of the loan | 3.52 h, maximum 69.94 h |
+| Liquidations | 3, repaying 27.34 USDG in total, **no bad debt** |
+| Outstanding today (Morpho's API) | $675,040 against $1,716,018 of collateral |
+
+The largest single example: on Sunday 2026-09-27 at 04:57 UTC one transaction
+([`0x8a1335c0…5108`](https://robinhoodchain.blockscout.com/tx/0x8a1335c0241351f740dd458cac201eb25409303b67f5cc90c00c48f2d6645108))
+borrowed 300,000 USDG against AAPL, NVDA and SPCX, priced by rounds printed on Friday evening, 33.0 to 33.4
+hours earlier. The three markets' oracles do read those feeds: each one's `price()` equals the feed's answer
+times the token's `uiMultiplier()` divided by the USDG/USD price, to ten significant digits (cast, 2026-09-29).
+
+The boring explanation, which I think is the right one: nothing went wrong. One address opened 94.8 % of all
+this borrowing, and the book sits at 39 % loan-to-value ($675,040 against $1,716,018 in the table) under a
+62.5 % limit on the largest markets, and the price out of hours is not worse
+(section above). So the table is a label, not a loss. What it shows is that nearly half of the lending
+against stocks on this chain happens in hours the exchange never saw, and nothing in the markets records
+it; a curator who wanted a different rule for those hours would need exactly one reading of `sessionAt`.
+Coverage, stated: the 40 further markets whose collateral carries a stock ticker but no verified pool hold
+no debt today ($675,040 above against $675,097 for every equity market in Morpho's API on 2026-09-28).
+
 ## I attacked it myself, and one attack worked
 
 [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md) lists every way a reviewer or I could find to take money
@@ -192,7 +228,7 @@ paths end in a refund rather than a lock.
 ## What happened when I ran it for real
 
 On 2026-09-21 a trade was funded with 2 USDG on both sides and the closing mark for AAPL was written on
-chain: tx [`0x92e2ed34…acc2554`](https://github.com/caponer-ai/bell), block 69,064,362, price 339.24192943.
+chain: tx [`0x92e2ed34…acc2554`](https://robinhoodchain.blockscout.com/tx/0x92e2ed34e1f90a61ea3383abe24a99152bbcbaeb3ea8a214b4a067451acc2554), block 69,064,362, price 339.24192943.
 
 **It did not settle,** and that is the part worth reading. `quote()` returned
 `"mark taken too far from the bell"`, the stakes stayed put, and they are refundable after
@@ -209,8 +245,35 @@ funds.
 The keeper now takes one argument, the trade address, and reads the feed, the trading date, `markWindow`,
 `maxPriceAge` and the bell itself from the contracts, because every number it got wrong was already on
 chain. The second trade, on a feed chosen from my own measurement of which feeds actually publish
-(`MSTR`, 30 rounds out of 30 in session, maximum gap 1.4 h, against AAPL going silent for days), is funded
-and waiting at `0x484720AA05BcF183d80B6c2747163f47501aeae9`.
+(`MSTR`, 30 rounds out of 30 in session, maximum gap 1.4 h, against AAPL going silent for days), settled on
+2026-09-22 at `0x484720AA05BcF183d80B6c2747163f47501aeae9`: that is the trade at the top of this file.
+
+
+## Where this sits among the other session projects
+
+Eight other projects in this buildathon, or built for it on GitHub, answer part of the same question. I read
+each one's code on 2026-09-29; the last column points at the line that decides the row, so the table can be
+checked rather than believed. Getting the calendar right is not rare, and two of them get it right with a
+wider range than mine.
+
+| Project | On mainnet 4663 | How it knows the exchange is shut | Holidays / half-days / DST | Where to check |
+|---|---|---|---|---|
+| **Bell** (this repo) | yes, one guard for all 35 feeds | NYSE calendar compiled in, 2026 and 2027, `NO_SESSION` after | yes / yes / yes | `src/SessionCalendar.sol`, checked against NYSE's schedule for every day of both years |
+| [Vigil](https://github.com/mdlog/vigil) | testnet 46630 | onchain NYSE calendar | holiday table 2024-2028, a guardian can add closures / yes / 2022-2030 | `src/VigilCalendar.sol` |
+| [Gapguard](https://github.com/Bytethebuilder/gapguard) | yes, a Uniswap v4 hook on its own demo tokens | NYSE rules computed onchain | by rule / yes / yes | `src/MarketClock.sol` |
+| [Nokturn](https://github.com/wngstnr-code/nokturn) | nothing deployed yet, per its README | session manager fed by a governed table | table 2020-2035 / yes / yes | `contracts/src/SessionManager.sol` |
+| [AfterHours](https://github.com/bongbongcrypto/afterhours) | yes, the oracle of its own Morpho AAPL/USDG market | Monday to Friday 14:30-20:00 UTC, the part of the session common to both DST regimes | none, by design: its README says a holiday or a half day's afternoon is treated as open | `src/lib.rs:810-817`, README line 124 |
+| [Custos](https://github.com/robertocarlous/Custos) | testnet 46630 | open or closed per UTC day; weekends by arithmetic, holidays pushed by a keeper | via keeper / no / no hours of the day at all | `contracts/src/MarketCalendarRegistry.sol:49-64` |
+| [batpilot](https://github.com/PhiBao/batpilot) | yes, a vault and a guard | the age of the last print and a price band; no calendar | none | `contracts/src/SessionGuard.sol:40` |
+| [StockGuard](https://github.com/snit292012/stockguard) | testnet 46630, fork tests against mainnet | the age of the last print; no calendar | none | `src/StockGuardOracle.sol:113` |
+| Amen Protocol | stated in its submission; no public repo found | "after 4pm New York time" | not stated | its HackQuest description |
+
+What none of them does and this repo does: measure whether the out-of-hours price is actually worse (it is
+not, [above](#i-tested-the-price-story-and-lost)), replay someone else's live settlements
+([`docs/REPLAY.md`](docs/REPLAY.md)), and label someone else's live loans by the session they were opened in
+([below](#who-borrows-against-stocks-here-and-on-which-price)). What some of them have and this repo does
+not: a consumer of their own that holds money, AfterHours its own Morpho market and batpilot its own funded
+plan, and Stylus. None of us, me included, has an outside user yet.
 
 
 ## Deployed, in full
@@ -222,7 +285,7 @@ and waiting at `0x484720AA05BcF183d80B6c2747163f47501aeae9`.
 | Verifier it reads | `0xcE73c8ad08CBDEaCa6078BF0627C8fe0a9a536E7` (official Chainlink Data Streams VerifierProxy) |
 | Owner | none, and no upgrade path anywhere. `POLICY_VERSION` 2, `CALENDAR_VERSION` 1 |
 | Escrow token | Paxos USDG `0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168`, 6 decimals |
-| Tests | 152 unit tests and 6 fork tests against the real verifier, all green |
+| Tests | 167 pass against a mainnet fork (`forge test --fork-url robinhood`); 156 of them need no network (`forge test`) |
 
 Two calls that need no wallet:
 
