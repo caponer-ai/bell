@@ -67,7 +67,6 @@ contract MorphoOracleForkTest is Test {
         // Past the oracle's own ceiling it stops answering at all: the market freezes rather than knowing why.
         bool late = _ask("97 hours after the last print (the oracle's ceiling)", uint64(updatedAt + 97 hours + 1));
         assertFalse(late, "past 97h the oracle should refuse");
-
     }
 }
 

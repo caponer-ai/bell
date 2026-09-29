@@ -24,16 +24,31 @@ contract DemoForkTest is Test {
 
     uint64 constant BUDGET = 900; // fifteen minutes, a settlement-grade budget
 
-    // Tuesday 2026-09-22, EDT: the bell at 13:30:00 UTC, the close at 20:00:00 UTC.
-    uint64 constant TUE_OPEN = 1790083800;
-    uint64 constant TUE_CLOSE = 1790107200;
-    // Saturday 2026-09-26, 17:00 UTC. The exchange is shut; the pools are not.
-    uint64 constant SATURDAY = 1790442000;
+    // The moments are taken from the fork's own clock, never hard-coded: the next regular session that has
+    // not opened yet, and the Saturday after the fork block at 17:00 UTC. A fixed date would put the clock
+    // behind the fork once that date has passed, and every feed would then look like it printed in the future.
+    uint64 internal TUE_OPEN;
+    uint64 internal TUE_CLOSE;
+    uint32 internal TRADING_DATE;
+    uint64 internal SATURDAY;
 
     string[3] private NAMES = ["AAPL", "SPY", "NVDA"];
 
     function setUp() public {
         vm.skip(address(GUARD).code.length == 0);
+        uint64 nowTs = uint64(block.timestamp);
+        for (uint64 k = 0; k < 10; k++) {
+            SessionCalendar.Session memory s = SessionCalendar.sessionAt(nowTs + k * 1 days);
+            if (s.exists && s.openUtc > nowTs + 60) {
+                (TUE_OPEN, TUE_CLOSE, TRADING_DATE) = (s.openUtc, s.closeUtc, s.tradingDate);
+                break;
+            }
+        }
+        uint64 day = nowTs / 1 days;
+        uint64 dow = (day + 4) % 7; // 1970-01-01 was a Thursday; 0 is Sunday
+        uint64 ahead = (6 + 7 - dow) % 7;
+        if (ahead == 0 && nowTs % 1 days >= 17 hours) ahead = 7;
+        SATURDAY = (day + ahead) * 1 days + 17 hours;
     }
 
     function _feeds() internal pure returns (address[3] memory) {
@@ -83,10 +98,11 @@ contract DemoForkTest is Test {
     /// The transcript. Same contract, same feeds, four moments.
     function test_the_same_feed_at_four_different_hours() public {
         console.log("PushFeedGuard 0x8aF68a9fF7583097A7476060C6B56eB33dA7a711, budget 900 s");
-        _show("Tuesday 13:29:00 UTC, one minute before the bell:", TUE_OPEN - 60);
-        _show("Tuesday 13:35:00 UTC, five minutes after the bell:", TUE_OPEN + 300);
-        _show("Tuesday 20:01:00 UTC, one minute after the close:", TUE_CLOSE + 60);
-        _show("Saturday 17:00:00 UTC, the exchange has been shut since Friday:", SATURDAY);
+        console.log("next regular session after the fork block: trading date", TRADING_DATE);
+        _show("One minute before the bell:", TUE_OPEN - 60);
+        _show("Five minutes after the bell:", TUE_OPEN + 300);
+        _show("One minute after that day's close:", TUE_CLOSE + 60);
+        _show("The following Saturday, 17:00 UTC, the exchange shut since Friday:", SATURDAY);
     }
 
     /// The assertion behind the transcript, so this is a test and not a print statement.
