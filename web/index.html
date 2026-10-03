@@ -174,12 +174,26 @@ const signed = (v) => v >= (1n<<255n) ? v - (1n<<256n) : v;
 
 let FEEDS = [];
 
+// The public RPC answers a burst with 429 and no CORS header, which the browser reports as "Failed to fetch".
+// Transport failures are retried with backoff; an error returned by the chain itself is not.
 async function rpc(method, params){
-  const r = await fetch(RPC, {method:"POST", headers:{"content-type":"application/json"},
-    body: JSON.stringify({jsonrpc:"2.0", id:1, method, params})});
-  const j = await r.json();
-  if (j.error) throw new Error(j.error.message);
-  return j.result;
+  let wait = 400;
+  for (let attempt = 0; ; attempt++){
+    let r;
+    try {
+      r = await fetch(RPC, {method:"POST", headers:{"content-type":"application/json"},
+        body: JSON.stringify({jsonrpc:"2.0", id:1, method, params})});
+      if (r.status === 429 || r.status >= 500) throw new Error("RPC answered " + r.status);
+    } catch(e){
+      if (attempt >= 5) throw e;
+      await new Promise(done => setTimeout(done, wait + Math.random()*250));
+      wait *= 2;
+      continue;
+    }
+    const j = await r.json();
+    if (j.error) throw new Error(j.error.message);
+    return j.result;
+  }
 }
 const call = (to, data) => rpc("eth_call", [{to, data}, "latest"]);
 
