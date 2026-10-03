@@ -187,6 +187,8 @@ The largest single example: on Sunday 2026-09-27 at 04:57 UTC one transaction
 borrowed 300,000 USDG against AAPL, NVDA and SPCX, priced by rounds printed on Friday evening, 33.0 to 33.4
 hours earlier. The three markets' oracles do read those feeds: each one's `price()` equals the feed's answer
 times the token's `uiMultiplier()` divided by the USDG/USD price, to ten significant digits (cast, 2026-09-29).
+AfterHours spotted the same Sunday transaction independently and cites it in its own submission
+(`status/morpho-2026-09-30.txt` in its repo); what this replay adds is the label on all 308 loans.
 
 The boring explanation, which I think is the right one: nothing went wrong. One address opened 94.8 % of all
 this borrowing, and the book sits at 39 % loan-to-value ($675,040 against $1,716,018 in the table) under a
@@ -251,9 +253,9 @@ chain. The second trade, on a feed chosen from my own measurement of which feeds
 
 ## Where this sits among the other session projects
 
-Eight other projects in this buildathon, or built for it on GitHub, answer part of the same question. I read
-each one's code on 2026-09-29; the last column points at the line that decides the row, so the table can be
-checked rather than believed. Getting the calendar right is not rare, and two of them get it right with a
+Ten other projects in this buildathon, or built for it on GitHub, answer part of the same question. I read
+each one's code on 2026-09-29 and 2026-10-03; the last column points at the line that decides the row, so the
+table can be checked rather than believed. Getting the calendar right is not rare, and two of them get it right with a
 wider range than mine.
 
 | Project | On mainnet 4663 | How it knows the exchange is shut | Holidays / half-days / DST | Where to check |
@@ -267,11 +269,14 @@ wider range than mine.
 | [batpilot](https://github.com/PhiBao/batpilot) | yes, a vault and a guard | the age of the last print and a price band; no calendar | none | `contracts/src/SessionGuard.sol:40` |
 | [StockGuard](https://github.com/snit292012/stockguard) | testnet 46630, fork tests against mainnet | the age of the last print; no calendar | none | `src/StockGuardOracle.sol:113` |
 | Amen Protocol | stated in its submission; no public repo found | "after 4pm New York time" | not stated | its HackQuest description |
+| [Stock Hours Guard](https://github.com/Evoxravenlaude/Stock-Hours-Guard) | testnet 46630, mock feeds | five sessions (regular, pre, post, overnight, closed) written by an owner-appointed keeper from Robinhood's REST API; also halts, corporate actions and sequencer health | whatever the keeper writes | `contracts/src/StockGuard.sol:19`, `:170-205` |
+| Afterglow | testnet, per its submission; no public repo found | "follows the market clock", weekend premium priced by a Stylus contract | not stated | its HackQuest description |
 
 What none of them does and this repo does: measure whether the out-of-hours price is actually worse (it is
 not, [above](#i-tested-the-price-story-and-lost)), replay someone else's live settlements
-([`docs/REPLAY.md`](docs/REPLAY.md)), and label someone else's live loans by the session they were opened in
-([below](#who-borrows-against-stocks-here-and-on-which-price)). What some of them have and this repo does
+([`docs/REPLAY.md`](docs/REPLAY.md)), and label every live loan against stocks by the session it was opened in
+([above](#who-borrows-against-stocks-here-and-on-which-price)). AfterHours found the largest of those loans on
+its own and cites it in its submission. What some of them have and this repo does
 not: a consumer of their own that holds money, AfterHours its own Morpho market and batpilot its own funded
 plan, and Stylus. None of us, me included, has an outside user yet.
 
