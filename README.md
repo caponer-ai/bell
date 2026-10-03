@@ -2,6 +2,9 @@
 
 **The exchange has an opening bell. The onchain market for its shares does not.**
 
+Bell is one call on Robinhood Chain mainnet that a contract makes before acting on a Chainlink stock price.
+It answers ALLOW, WAIT or REJECT, with the reason, for any of the 35 equity feeds.
+
 ![When each Chainlink equity feed published a round, against the hours the exchange was open](docs/feed_rounds.svg)
 
 Thirty-five Chainlink equity feeds on Robinhood Chain, ten days. The shaded columns are the regular NYSE
@@ -10,16 +13,16 @@ row: `RHTSLA / USD` publishes 4 rounds in 30 out of session, `Robinhood MSTR / U
 
 The obvious claim would be that the out-of-hours price is worse, so I measured it on
 **968,799 swaps and $409M of USDG volume** across the 58 tokenized-equity pools on this chain. It is not
-worse: the median gap between the pool's own price and the feed is 0.168 % during the session, 0.162 % at
+materially worse: the median gap between the pool's own price and the feed is 0.168 % during the session, 0.162 % at
 night and 0.063 % at weekends. The measurement is in this repo.
 
 **So the defect is not accuracy, it is that the number does not say which market it came from.** A feed
-answers `latestRoundData()` at 03:00 on a Sunday with a real, recent, roughly right number, and nothing in
+answers `latestRoundData()` at 03:00 on a Sunday with a real, roughly right number, often more than a day old, and nothing in
 the response distinguishes it from a regular-session price. `updatedAt` gives the age of the onchain round
 ([Chainlink API reference](https://docs.chain.link/data-feeds/api-reference)), not the session it belongs to
 and not the time of the market observation behind it.
 
-That gap has a measured cost. In the one live stock market I found on this chain (as of 2026-09-21), **28 of 30 settlements read the
+That gap already sits under live contracts. In the one live stock market I found on this chain (as of 2026-09-21), **28 of 30 settlements read the
 same feed round on both sides** (93.3 %, 95 % Wilson interval 78.7 % to 98.2 %), so a tie-break rule decided
 them rather than any price movement. The market's author found this first in their own audit and fixed the
 tie rule on 2026-09-22; see [`docs/REPLAY.md`](docs/REPLAY.md). On Morpho, 735,891 of the 1,623,948 USDG ever
@@ -37,7 +40,7 @@ not fit to act on.
 
 | If you have | Read |
 |---|---|
-| 60 seconds | the chart above, then the three addresses below |
+| 60 seconds | the chart above, then the addresses below |
 | 5 minutes | this file |
 | an hour | [`docs/DETAILS.md`](docs/DETAILS.md), the long version of everything here |
 | a grudge | [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md), where one attack works |
@@ -65,7 +68,7 @@ question for all 35 equity feeds from one stateless deployment. `SessionCalendar
 Everything else is either a consumer built to prove the guard does something (`SettleOnMark`, `SettleMini`),
 a different shape of the same answer (`BellFeedAdapter` reverts instead of returning, `SettlementPairGuard`
 adds the one rule a per-read check cannot express), a public record (`SessionLog`), the Data Streams half
-that has not run live yet (`Bell`), or a one-pool swap helper I wrote to buy the demo's USDG
+whose session ladder has not resolved on a live bell yet (`Bell`), or a one-pool swap helper I wrote to buy the demo's USDG
 (`MinimalSwapper`). I wrote it because the canonical `SwapRouter` address does not answer on this chain;
 Uniswap's Universal Router is deployed here (`0x204FAca1764B154221e35c0d20aBb3c525710498`), which I missed
 at the time.
@@ -74,7 +77,7 @@ at the time.
 ## Sixty seconds
 
 ```bash
-python script/verify.py     # no key, no wallet: reads every contract and checks every claim here
+python script/verify.py     # no key, no wallet: reads the deployed contracts and rechecks the headline numbers
 ```
 
 | Contract | Answers | Address |
@@ -83,7 +86,8 @@ python script/verify.py     # no key, no wallet: reads every contract and checks
 | **SessionLog** | a public, write-once record of what the feeds said at each bell | `0xc482943C7fEE1dD7807Edad1c88260E4263fD0Ad` |
 | **Bell** | session status and a session reference price from DON-signed Data Streams reports, with a receipt | `0x88a5a0414c9fd615201814ddbec4e4d9e4d283d0` |
 | **BellFeedAdapter** | the same Chainlink signature, but it reverts instead of returning an inadmissible price | `0x4F0331DDbdDfE3349e16e37F80219A868B876655` |
-| **SettleOnMark** | a USDG trade that settles only on a recorded closing mark, and refunds otherwise | `0x52a0E0d3BD4729BCD622fed437EDb428835658Ac` |
+| **SettleOnMark** | the MSTR trade: settled on a recorded closing mark on 2026-09-22, 0.40 USDG paid | `0x484720AA05BcF183d80B6c2747163f47501aeae9` |
+| **SettleOnMark** | the AAPL trade: its mark missed the bell, so it refunds instead of paying | `0x52a0E0d3BD4729BCD622fed437EDb428835658Ac` |
 
 **What is proven today, on mainnet:**
 
@@ -187,8 +191,10 @@ The largest single example: on Sunday 2026-09-27 at 04:57 UTC one transaction
 borrowed 300,000 USDG against AAPL, NVDA and SPCX, priced by rounds printed on Friday evening, 33.0 to 33.4
 hours earlier. The three markets' oracles do read those feeds: each one's `price()` equals the feed's answer
 times the token's `uiMultiplier()` divided by the USDG/USD price, to ten significant digits (cast, 2026-09-29).
-AfterHours spotted the same Sunday transaction independently and cites it in its own submission
-(`status/morpho-2026-09-30.txt` in its repo); what this replay adds is the label on all 308 loans.
+AfterHours Oracle spotted the same Sunday transaction independently and cites it in its own submission
+(`status/morpho-2026-09-30.txt` in its repo, which also marks each of its 113 borrows since 2026-09-16 as in or
+out of the regular session by a weekday clock); what this replay adds is all 308 loans since the markets opened,
+the exact NYSE calendar and the age of the price.
 
 The boring explanation, which I think is the right one: nothing went wrong. One address opened 94.8 % of all
 this borrowing, and the book sits at 39 % loan-to-value ($675,040 against $1,716,018 in the table) under a
@@ -247,38 +253,38 @@ funds.
 The keeper now takes one argument, the trade address, and reads the feed, the trading date, `markWindow`,
 `maxPriceAge` and the bell itself from the contracts, because every number it got wrong was already on
 chain. The second trade, on a feed chosen from my own measurement of which feeds actually publish
-(`MSTR`, 30 rounds out of 30 in session, maximum gap 1.4 h, against AAPL going silent for days), settled on
+(`MSTR`, whose last 30 rounds all landed outside the session with a maximum gap of 1.4 h, against AAPL going silent for days), settled on
 2026-09-22 at `0x484720AA05BcF183d80B6c2747163f47501aeae9`: that is the trade at the top of this file.
 
 
 ## Where this sits among the other session projects
 
-Ten other projects in this buildathon, or built for it on GitHub, answer part of the same question. I read
-each one's code on 2026-09-29 and 2026-10-03; the last column points at the line that decides the row, so the
-table can be checked rather than believed. Getting the calendar right is not rare, and two of them get it right with a
-wider range than mine.
+At least ten other projects in this buildathon, or built for it on GitHub, answer part of the same question. I read
+the code of the eight with public repos on 2026-09-29 and 2026-10-03 (Amen and Afterglow from their HackQuest text); the last column points at the line that decides the row, so the
+table can be checked rather than believed. Encoding the calendar is not rare, and three of them (Vigil, Gapguard by rule, Nokturn) do it over a
+wider range of years than mine.
 
 | Project | On mainnet 4663 | How it knows the exchange is shut | Holidays / half-days / DST | Where to check |
 |---|---|---|---|---|
 | **Bell** (this repo) | yes, one guard for all 35 feeds | NYSE calendar compiled in, 2026 and 2027, `NO_SESSION` after | yes / yes / yes | `src/SessionCalendar.sol`, checked against NYSE's schedule for every day of both years |
 | [Vigil](https://github.com/mdlog/vigil) | testnet 46630 | onchain NYSE calendar | holiday table 2024-2028, a guardian can add closures / yes / 2022-2030 | `src/VigilCalendar.sol` |
 | [Gapguard](https://github.com/Bytethebuilder/gapguard) | yes, a Uniswap v4 hook on its own demo tokens | NYSE rules computed onchain | by rule / yes / yes | `src/MarketClock.sol` |
-| [Nokturn](https://github.com/wngstnr-code/nokturn) | nothing deployed yet, per its README | session manager fed by a governed table | table 2020-2035 / yes / yes | `contracts/src/SessionManager.sol` |
-| [AfterHours](https://github.com/bongbongcrypto/afterhours) | yes, the oracle of its own Morpho AAPL/USDG market | Monday to Friday 14:30-20:00 UTC, the part of the session common to both DST regimes | none, by design: its README says a holiday or a half day's afternoon is treated as open | `src/lib.rs:810-817`, README line 124 |
+| [Nokturn](https://github.com/wngstnr-code/nokturn) | yes since 2026-09-29, per its README | session manager fed by a governed table | table 2020-2035 / yes / yes | `contracts/src/SessionManager.sol` |
+| [AfterHours Oracle](https://github.com/bongbongcrypto/afterhours) | yes, the oracle of its own Morpho AAPL/USDG market | Monday to Friday 14:30-20:00 UTC, the part of the session common to both DST regimes | none, by design: its README says a holiday or a half day's afternoon is treated as open | `src/lib.rs:807-818`, README section "What it does not do" |
 | [Custos](https://github.com/robertocarlous/Custos) | testnet 46630 | open or closed per UTC day; weekends by arithmetic, holidays pushed by a keeper | via keeper / no / no hours of the day at all | `contracts/src/MarketCalendarRegistry.sol:49-64` |
 | [batpilot](https://github.com/PhiBao/batpilot) | yes, a vault and a guard | the age of the last print and a price band; no calendar | none | `contracts/src/SessionGuard.sol:40` |
 | [StockGuard](https://github.com/snit292012/stockguard) | testnet 46630, fork tests against mainnet | the age of the last print; no calendar | none | `src/StockGuardOracle.sol:113` |
-| Amen Protocol | stated in its submission; no public repo found | "after 4pm New York time" | not stated | its HackQuest description |
+| Amen Protocol | yes, per its submission (a guarded beta); no public repo found | "after 4pm New York time" | not stated | its HackQuest description |
 | [Stock Hours Guard](https://github.com/Evoxravenlaude/Stock-Hours-Guard) | testnet 46630, mock feeds | five sessions (regular, pre, post, overnight, closed) written by an owner-appointed keeper from Robinhood's REST API; also halts, corporate actions and sequencer health | whatever the keeper writes | `contracts/src/StockGuard.sol:19`, `:170-205` |
 | Afterglow | testnet, per its submission; no public repo found | "follows the market clock", weekend premium priced by a Stylus contract | not stated | its HackQuest description |
 
-What none of them does and this repo does: measure whether the out-of-hours price is actually worse (it is
-not, [above](#i-tested-the-price-story-and-lost)), replay someone else's live settlements
+Nokturn measures off-hours execution too (worse in the tail, per its README). What none of them does and this repo does: split the pool-to-feed gap by session ([above](#i-tested-the-price-story-and-lost)), replay someone else's live settlements
 ([`docs/REPLAY.md`](docs/REPLAY.md)), and label every live loan against stocks by the session it was opened in
-([above](#who-borrows-against-stocks-here-and-on-which-price)). AfterHours found the largest of those loans on
-its own and cites it in its submission. What some of them have and this repo does
+([above](#who-borrows-against-stocks-here-and-on-which-price)), all 308 since the markets opened, on the exact
+NYSE calendar. AfterHours Oracle labels its own 113 borrows since 2026-09-16 by a weekday clock, and found the
+largest of those loans on its own and cites it in its submission. What some of them have and this repo does
 not: a consumer of their own that holds money, AfterHours its own Morpho market and batpilot its own funded
-plan, and Stylus. None of us, me included, has an outside user yet.
+plan, and Stylus. None of their READMEs names an outside user, and Bell has none yet.
 
 
 ## Deployed, in full
@@ -312,7 +318,7 @@ cast call 0x88a5a0414c9fd615201814ddbec4e4d9e4d283d0 "checkLive(bytes32)(uint8,u
 - The calendar table covers 2026 and 2027 only (`SessionCalendar._yearSupported`). From 2028 every day answers `NO_SESSION`, fail closed: no new fixing can open, while every reference and receipt recorded before then stays readable forever. A new year means a new deployment, which is the price of having no owner and no upgrade.
 - The contract compiles with `via_ir` (stack depth in the ladder loop); gas numbers will be published with the deployment.
 - **One attack in my own threat model works.** If nobody writes the closing mark, the day produces nothing and `refund()` turns a loss into a draw. It cannot be fixed inside the contract, because the alternative is inventing a price, and the mitigation is operational: the mark is permissionless and cheap, so a product built on this should ship a keeper. [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md) has the test.
-- **The price-gap measurement covers one week.** That is one weekend episode, so the weekend column rests on a single occurrence of the thing it describes, and the tail figures there should be read as indicative rather than as a distribution. It also measures Uniswap v3 only: the v4 PoolManager on this chain holds more than ten thousand further USDG pools, so $418M is a floor on equity flow, not a total.
+- **The price-gap measurement covers one week.** That is one weekend episode, so the weekend column rests on a single occurrence of the thing it describes, and the tail figures there should be read as indicative rather than as a distribution. It also measures Uniswap v3 only: the v4 PoolManager on this chain holds more than ten thousand further USDG pools, so $418M (pool flow in `docs/equity_flow_4663.json`, a window shifted slightly from the $409M price-gap sample) is a floor on equity flow, not a total.
 - **The genuine-token test proves lineage, not issuance.** Anyone can deploy an identical beacon proxy on the same beacon. What closes the gap in practice is that the 58 surviving pools carry 17 tickers across 17 distinct addresses with no ticker claimed twice; absent a registry published by the issuer, that is the strongest check the chain alone allows.
 
 ## License

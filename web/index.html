@@ -179,18 +179,22 @@ let FEEDS = [];
 async function rpc(method, params){
   let wait = 400;
   for (let attempt = 0; ; attempt++){
-    let r;
+    let j;
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), 8000); // a stalled socket counts as a failed attempt
     try {
-      r = await fetch(RPC, {method:"POST", headers:{"content-type":"application/json"},
+      const r = await fetch(RPC, {method:"POST", headers:{"content-type":"application/json"}, signal: ctl.signal,
         body: JSON.stringify({jsonrpc:"2.0", id:1, method, params})});
       if (r.status === 429 || r.status >= 500) throw new Error("RPC answered " + r.status);
+      j = await r.json();
     } catch(e){
       if (attempt >= 5) throw e;
       await new Promise(done => setTimeout(done, wait + Math.random()*250));
       wait *= 2;
       continue;
+    } finally {
+      clearTimeout(timer);
     }
-    const j = await r.json();
     if (j.error) throw new Error(j.error.message);
     return j.result;
   }
