@@ -87,7 +87,7 @@ python script/verify.py     # no key, no wallet: reads the deployed contracts an
 | **Bell** | session status and a session reference price from DON-signed Data Streams reports, with a receipt | `0x88a5a0414c9fd615201814ddbec4e4d9e4d283d0` |
 | **BellFeedAdapter** | the same Chainlink signature, but it reverts instead of returning an inadmissible price | `0x4F0331DDbdDfE3349e16e37F80219A868B876655` |
 | **SettleOnMark** | the MSTR trade: settled on a recorded closing mark on 2026-09-22, 0.40 USDG paid | `0x484720AA05BcF183d80B6c2747163f47501aeae9` |
-| **SettleOnMark** | the AAPL trade: its mark missed the bell, so it refunds instead of paying | `0x52a0E0d3BD4729BCD622fed437EDb428835658Ac` |
+| **SettleOnMark** | the AAPL trade: its mark missed the bell, so it refunded 1 USDG to each side instead of paying | `0x52a0E0d3BD4729BCD622fed437EDb428835658Ac` |
 
 **What is proven today, on mainnet:**
 
@@ -235,12 +235,12 @@ paths end in a refund rather than a lock.
 
 ## What happened when I ran it for real
 
-On 2026-09-21 a trade was funded with 2 USDG on both sides and the closing mark for AAPL was written on
+On 2026-09-21 a trade was funded with 1 USDG a side and the closing mark for AAPL was written on
 chain: tx [`0x92e2ed34…acc2554`](https://robinhoodchain.blockscout.com/tx/0x92e2ed34e1f90a61ea3383abe24a99152bbcbaeb3ea8a214b4a067451acc2554), block 69,064,362, price 339.24192943.
 
 **It did not settle,** and that is the part worth reading. `quote()` returned
-`"mark taken too far from the bell"`, the stakes stayed put, and they are refundable after
-2026-09-22 22:00 UTC. Two mistakes were ours: the keeper was started with the wrong day's closing
+`"mark taken too far from the bell"`, the stakes stayed put, and on 2026-10-03 `refund()` returned
+1 USDG to each side ([tx `0xd45a8709…e3b282`](https://robinhoodchain.blockscout.com/tx/0xd45a87092a776853a70ca07b575850506f308b53b7115fbc0b03b2ecede3b282)). Two mistakes were ours: the keeper was started with the wrong day's closing
 timestamp, and the mark was written at `C-296` when the trade requires `C-120`, which burned the only write
 a write-once log allows.
 
